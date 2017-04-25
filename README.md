@@ -104,7 +104,6 @@ curl registry.npmjs.org/express | ./JSONPath.sh '$.versions.*.version'
     '$.[*].Mounts'
 
 # Show sources and destinations for all mounts
-# (Using the sample file)
 ./JSONPath.sh \
     -f test/valid/docker_stopped.json \
     '$.[*].Mounts[*].[Source,Destination]'
