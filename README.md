@@ -4,7 +4,7 @@ yo, so it's a JSONPath implementation written in Bash - and it probably only wor
 
 ## Invocation
 
-    JSONPath.sh [-n] [-s] [-b] [j] [-h] [-f FILE] pattern
+    JSONPath.sh [-n] [-s] [-b] [j] [-h] [-p] [-f FILE] pattern
 
 pattern
 > the JSONPath query
@@ -174,7 +174,7 @@ done
 | *                |     Y        | wildcard. All objects/elements regardless their names.  |
 | []               |     Y        | subscript operator.                                     |
 | [,]              |     Y        | node sets.                                              |
-| [start:end:step] |     Y        | array slice operator.                                   |
+| \[start:end:step] |     Y        | array slice operator.                                   |
 | ?()              |     Y        | applies a filter (script) expressions (see note)        |
 | ()               |     Y        | script expression, using the underlying script engine.  |
 
