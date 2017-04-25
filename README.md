@@ -174,7 +174,7 @@ done
 | *                |     Y        | wildcard. All objects/elements regardless their names.  |
 | []               |     Y        | subscript operator.                                     |
 | [,]              |     Y        | node sets.                                              |
-| [start\:end\:step] |     Y        | array slice operator.                                   |
+| [start::end::step] |     Y        | array slice operator.                                   |
 | ?()              |     Y        | applies a filter (script) expressions (see note)        |
 | ()               |     Y        | script expression, using the underlying script engine.  |
 
