@@ -1,0 +1,204 @@
+{ "store": {
+    "book": [ 
+      { "category": "reference",
+        "author": "Nigel Rees",
+        "title": "Sayings of the Century",
+        "price": 8.95
+      },
+      { "category": "fiction",
+        "author": "Evelyn Waugh",
+        "title": "Sword of Honour",
+        "price": 12.99
+      },
+      { "category": "fiction",
+        "author": "Herman Melville",
+        "title": "Moby Dick",
+        "isbn": "0-553-21311-3",
+        "price": 8.99
+      },
+      { "category": "fiction",
+        "author": "J. R. R. Tolkien",
+        "title": "The Lord of the Rings",
+        "isbn": "0-395-19395-8",
+        "price": 22.99
+      },
+      { "category": "science fiction",
+        "author": "Jennifer Matucci",
+        "title": "Planet Urth",
+        "isbn": "1495910849",
+        "rating": 4,
+        "price": 0
+      },
+      { "category": "science fiction",
+        "author": "Pippa DaCosta",
+        "title": "Girl From Above: Betrayal (The 1000 Revolution)",
+        "rating": 4,
+        "price": 2.53,
+        "series info":[
+            { "book#":1,
+              "title":"Girl From Above: Betrayal (The 1000 Revolution Book 1)",
+              "price":0.99 },
+            { "book#":2,
+              "title":"Girl From Above: Escape (The 1000 Revolution Book 2)",
+               "price":1.99 },
+            { "book#":3,
+              "title":"Girl From Above: Trapped (The 1000 Revolution Book 3)",
+              "price":2.99 },
+            { "book#":4,
+              "title":"Girl From Above: Trust (The 1000 Revolution Book 4)",
+              "price":3.99 }
+          ]
+      },
+      { "category": "science fiction",
+        "author": "Pippa DaCosta",
+        "title": "Girl From Above: Escape (The 1000 Revolution Book 2)",
+        "rating": 4,
+        "price": 2.53,
+        "all in series":[
+            "Girl From Above: Betrayal (The 1000 Revolution Book 1)",
+            "Girl From Above: Escape (The 1000 Revolution Book 2)",
+            "Girl From Above: Trapped (The 1000 Revolution Book 3)",
+            "Girl From Above: Trust (The 1000 Revolution Book 4)"
+        ]
+      },
+      { "category": "science fiction",
+        "author": "Pippa DaCosta",
+        "title": "Girl From Above: Trapped (The 1000 Revolution Book 3)",
+        "rating": 4,
+        "price": 3.53,
+        "all in series":[
+            "Girl From Above: Betrayal (The 1000 Revolution Book 1)",
+            "Girl From Above: Escape (The 1000 Revolution Book 2)",
+            "Girl From Above: Trapped (The 1000 Revolution Book 3)",
+            "Girl From Above: Trust (The 1000 Revolution Book 4)"
+        ]
+      },
+      { "category": "science fiction",
+        "author": "Pippa DaCosta",
+        "title": "Girl From Above: Trust (The 1000 Revolution Book 4)",
+        "rating": 4,
+        "price": 3.53,
+        "all in series":[
+            "Girl From Above: Betrayal (The 1000 Revolution Book 1)",
+            "Girl From Above: Escape (The 1000 Revolution Book 2)",
+            "Girl From Above: Trapped (The 1000 Revolution Book 3)",
+            "Girl From Above: Trust (The 1000 Revolution Book 4)"
+        ]
+      },
+      { "category": "science fiction",
+        "author": "James S. A. Corey",
+        "title": "Leviathan Wakes: Book 1 of the Expanse",
+        "rating": 4,
+        "price": 4.20,
+        "all in series":[
+            "Leviathan Wakes: Book 1 of the Expanse",
+            "Caliban's War: Book 2 of the Expanse",
+            "Abaddon's Gate: Book 3 of the Expanse"
+        ]
+      },
+      { "category": "science fiction",
+        "author": "James S. A. Corey",
+        "title": "Caliban's War: Book 2 of the Expanse",
+        "rating": 4,
+        "price": 4.20,
+        "all in series":[
+        ]
+      },
+      { "category": "science fiction",
+        "author": "James S. A. Corey",
+        "title": "Abaddon's Gate: Book 3 of the Expanse",
+        "rating": 4,
+        "price": 4.20,
+        "all in series":[
+        ]
+      },
+      { "category": "science fiction",
+        "author": "Peter F. Hamilton",
+        "title": "The Reality Dysfunction (Nights Dawn Book 1)",
+        "rating": 4,
+        "price": 8.20
+      },
+      { "category": "science fiction",
+        "author": "Peter F. Hamilton",
+        "title": "The Naked God (Nights Dawn Book 3)",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Peter F. Hamilton",
+        "title": "The Neutronium Alchemist (Nights Dawn Book 2)",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Peter F. Hamilton",
+        "title": "The Abyss Beyond Dreams (Chronicle of the Fallers Book 1)",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Peter F. Hamilton",
+        "title": "Night Without Stars (Chronicle of the Fallers Book 2)",
+        "reviews": [
+            "Totally awesome. Book 1 was good but this one... Wow!",
+            "Fantastic!",
+            "Another great romp in the Commonwealth universe."
+        ],
+        "rating": 5,
+        "price": 9.50
+      },
+      { "category": "science fiction",
+        "author": "Jasper T. Scott",
+        "title": "Dark Space: The Original Trilogy (Books 1-3) (Dark Space Trilogies)",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Jasper T. Scott",
+        "title": "Dark Space (Book 4): Revenge",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Jasper T. Scott",
+        "title": "Dark Space (Book 5): Avilon",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Jasper T. Scott",
+        "title": "Dark Space (Book 6): Armageddon",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Stephen Sweeney",
+        "title": "The Honour of the Knights (Battle for the Solar System, #1)",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Stephen Sweeney",
+        "title": "The Third Side (Battle for the Solar System, #2)",
+        "rating": 4,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Douglas E. Richards",
+        "title": "Split Second",
+        "rating": 5,
+        "price": 4.20
+      },
+      { "category": "science fiction",
+        "author": "Douglas E. Richards",
+        "title": "BrainWeb",
+        "rating": 5,
+        "price": 4.20
+      }
+    ],
+    "bicycle": {
+      "color": "red",
+      "price": 19.95
+    }
+  }
+}

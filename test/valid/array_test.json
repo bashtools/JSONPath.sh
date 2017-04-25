@@ -1,0 +1,30 @@
+[
+    23,
+    "base",
+    {
+        "a_text":"hello",
+        "b_text":"there",
+        "c_array": [
+            "hello c_array",
+            "there c_array",
+            {
+                "c_array_array": [
+                    1,2,3,4,5
+                ]
+            }
+        ]
+    },
+    "three",
+    [
+        "text2",
+        33,
+        [
+            "text3",
+            44,
+            [
+                "text4",
+                55
+            ]
+        ]
+    ]
+]

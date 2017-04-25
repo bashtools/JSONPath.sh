@@ -1,0 +1,156 @@
+["store","book",0,"category"]	"reference"
+["store","book",0,"author"]	"Nigel Rees"
+["store","book",0,"title"]	"Sayings of the Century"
+["store","book",0,"price"]	8.95
+["store","book",1,"category"]	"fiction"
+["store","book",1,"author"]	"Evelyn Waugh"
+["store","book",1,"title"]	"Sword of Honour"
+["store","book",1,"price"]	12.99
+["store","book",2,"category"]	"fiction"
+["store","book",2,"author"]	"Herman Melville"
+["store","book",2,"title"]	"Moby Dick"
+["store","book",2,"isbn"]	"0-553-21311-3"
+["store","book",2,"price"]	8.99
+["store","book",3,"category"]	"fiction"
+["store","book",3,"author"]	"J. R. R. Tolkien"
+["store","book",3,"title"]	"The Lord of the Rings"
+["store","book",3,"isbn"]	"0-395-19395-8"
+["store","book",3,"price"]	22.99
+["store","book",4,"category"]	"science fiction"
+["store","book",4,"author"]	"Jennifer Matucci"
+["store","book",4,"title"]	"Planet Urth"
+["store","book",4,"isbn"]	"1495910849"
+["store","book",4,"rating"]	4
+["store","book",4,"price"]	0
+["store","book",5,"category"]	"science fiction"
+["store","book",5,"author"]	"Pippa DaCosta"
+["store","book",5,"title"]	"Girl From Above: Betrayal (The 1000 Revolution)"
+["store","book",5,"rating"]	4
+["store","book",5,"price"]	2.53
+["store","book",5,"series info",0,"book#"]	1
+["store","book",5,"series info",0,"title"]	"Girl From Above: Betrayal (The 1000 Revolution Book 1)"
+["store","book",5,"series info",0,"price"]	0.99
+["store","book",5,"series info",1,"book#"]	2
+["store","book",5,"series info",1,"title"]	"Girl From Above: Escape (The 1000 Revolution Book 2)"
+["store","book",5,"series info",1,"price"]	1.99
+["store","book",5,"series info",2,"book#"]	3
+["store","book",5,"series info",2,"title"]	"Girl From Above: Trapped (The 1000 Revolution Book 3)"
+["store","book",5,"series info",2,"price"]	2.99
+["store","book",5,"series info",3,"book#"]	4
+["store","book",5,"series info",3,"title"]	"Girl From Above: Trust (The 1000 Revolution Book 4)"
+["store","book",5,"series info",3,"price"]	3.99
+["store","book",6,"category"]	"science fiction"
+["store","book",6,"author"]	"Pippa DaCosta"
+["store","book",6,"title"]	"Girl From Above: Escape (The 1000 Revolution Book 2)"
+["store","book",6,"rating"]	4
+["store","book",6,"price"]	2.53
+["store","book",6,"all in series",0]	"Girl From Above: Betrayal (The 1000 Revolution Book 1)"
+["store","book",6,"all in series",1]	"Girl From Above: Escape (The 1000 Revolution Book 2)"
+["store","book",6,"all in series",2]	"Girl From Above: Trapped (The 1000 Revolution Book 3)"
+["store","book",6,"all in series",3]	"Girl From Above: Trust (The 1000 Revolution Book 4)"
+["store","book",7,"category"]	"science fiction"
+["store","book",7,"author"]	"Pippa DaCosta"
+["store","book",7,"title"]	"Girl From Above: Trapped (The 1000 Revolution Book 3)"
+["store","book",7,"rating"]	4
+["store","book",7,"price"]	3.53
+["store","book",7,"all in series",0]	"Girl From Above: Betrayal (The 1000 Revolution Book 1)"
+["store","book",7,"all in series",1]	"Girl From Above: Escape (The 1000 Revolution Book 2)"
+["store","book",7,"all in series",2]	"Girl From Above: Trapped (The 1000 Revolution Book 3)"
+["store","book",7,"all in series",3]	"Girl From Above: Trust (The 1000 Revolution Book 4)"
+["store","book",8,"category"]	"science fiction"
+["store","book",8,"author"]	"Pippa DaCosta"
+["store","book",8,"title"]	"Girl From Above: Trust (The 1000 Revolution Book 4)"
+["store","book",8,"rating"]	4
+["store","book",8,"price"]	3.53
+["store","book",8,"all in series",0]	"Girl From Above: Betrayal (The 1000 Revolution Book 1)"
+["store","book",8,"all in series",1]	"Girl From Above: Escape (The 1000 Revolution Book 2)"
+["store","book",8,"all in series",2]	"Girl From Above: Trapped (The 1000 Revolution Book 3)"
+["store","book",8,"all in series",3]	"Girl From Above: Trust (The 1000 Revolution Book 4)"
+["store","book",9,"category"]	"science fiction"
+["store","book",9,"author"]	"James S. A. Corey"
+["store","book",9,"title"]	"Leviathan Wakes: Book 1 of the Expanse"
+["store","book",9,"rating"]	4
+["store","book",9,"price"]	4.20
+["store","book",9,"all in series",0]	"Leviathan Wakes: Book 1 of the Expanse"
+["store","book",9,"all in series",1]	"Caliban's War: Book 2 of the Expanse"
+["store","book",9,"all in series",2]	"Abaddon's Gate: Book 3 of the Expanse"
+["store","book",10,"category"]	"science fiction"
+["store","book",10,"author"]	"James S. A. Corey"
+["store","book",10,"title"]	"Caliban's War: Book 2 of the Expanse"
+["store","book",10,"rating"]	4
+["store","book",10,"price"]	4.20
+["store","book",11,"category"]	"science fiction"
+["store","book",11,"author"]	"James S. A. Corey"
+["store","book",11,"title"]	"Abaddon's Gate: Book 3 of the Expanse"
+["store","book",11,"rating"]	4
+["store","book",11,"price"]	4.20
+["store","book",12,"category"]	"science fiction"
+["store","book",12,"author"]	"Peter F. Hamilton"
+["store","book",12,"title"]	"The Reality Dysfunction (Nights Dawn Book 1)"
+["store","book",12,"rating"]	4
+["store","book",12,"price"]	8.20
+["store","book",13,"category"]	"science fiction"
+["store","book",13,"author"]	"Peter F. Hamilton"
+["store","book",13,"title"]	"The Naked God (Nights Dawn Book 3)"
+["store","book",13,"rating"]	4
+["store","book",13,"price"]	4.20
+["store","book",14,"category"]	"science fiction"
+["store","book",14,"author"]	"Peter F. Hamilton"
+["store","book",14,"title"]	"The Neutronium Alchemist (Nights Dawn Book 2)"
+["store","book",14,"rating"]	4
+["store","book",14,"price"]	4.20
+["store","book",15,"category"]	"science fiction"
+["store","book",15,"author"]	"Peter F. Hamilton"
+["store","book",15,"title"]	"The Abyss Beyond Dreams (Chronicle of the Fallers Book 1)"
+["store","book",15,"rating"]	4
+["store","book",15,"price"]	4.20
+["store","book",16,"category"]	"science fiction"
+["store","book",16,"author"]	"Peter F. Hamilton"
+["store","book",16,"title"]	"Night Without Stars (Chronicle of the Fallers Book 2)"
+["store","book",16,"reviews",0]	"Totally awesome. Book 1 was good but this one... Wow!"
+["store","book",16,"reviews",1]	"Fantastic!"
+["store","book",16,"reviews",2]	"Another great romp in the Commonwealth universe."
+["store","book",16,"rating"]	5
+["store","book",16,"price"]	9.50
+["store","book",17,"category"]	"science fiction"
+["store","book",17,"author"]	"Jasper T. Scott"
+["store","book",17,"title"]	"Dark Space: The Original Trilogy (Books 1-3) (Dark Space Trilogies)"
+["store","book",17,"rating"]	4
+["store","book",17,"price"]	4.20
+["store","book",18,"category"]	"science fiction"
+["store","book",18,"author"]	"Jasper T. Scott"
+["store","book",18,"title"]	"Dark Space (Book 4): Revenge"
+["store","book",18,"rating"]	4
+["store","book",18,"price"]	4.20
+["store","book",19,"category"]	"science fiction"
+["store","book",19,"author"]	"Jasper T. Scott"
+["store","book",19,"title"]	"Dark Space (Book 5): Avilon"
+["store","book",19,"rating"]	4
+["store","book",19,"price"]	4.20
+["store","book",20,"category"]	"science fiction"
+["store","book",20,"author"]	"Jasper T. Scott"
+["store","book",20,"title"]	"Dark Space (Book 6): Armageddon"
+["store","book",20,"rating"]	4
+["store","book",20,"price"]	4.20
+["store","book",21,"category"]	"science fiction"
+["store","book",21,"author"]	"Stephen Sweeney"
+["store","book",21,"title"]	"The Honour of the Knights (Battle for the Solar System, #1)"
+["store","book",21,"rating"]	4
+["store","book",21,"price"]	4.20
+["store","book",22,"category"]	"science fiction"
+["store","book",22,"author"]	"Stephen Sweeney"
+["store","book",22,"title"]	"The Third Side (Battle for the Solar System, #2)"
+["store","book",22,"rating"]	4
+["store","book",22,"price"]	4.20
+["store","book",23,"category"]	"science fiction"
+["store","book",23,"author"]	"Douglas E. Richards"
+["store","book",23,"title"]	"Split Second"
+["store","book",23,"rating"]	5
+["store","book",23,"price"]	4.20
+["store","book",24,"category"]	"science fiction"
+["store","book",24,"author"]	"Douglas E. Richards"
+["store","book",24,"title"]	"BrainWeb"
+["store","book",24,"rating"]	5
+["store","book",24,"price"]	4.20
+["store","bicycle","color"]	"red"
+["store","bicycle","price"]	19.95

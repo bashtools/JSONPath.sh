@@ -1,0 +1,15 @@
+[0,"Mounts",0,"Source"]	"/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/containers/busybox/f40c651f"
+[0,"Mounts",0,"Destination"]	"/dev/termination-log"
+[0,"Mounts",0,"Mode"]	"Z"
+[0,"Mounts",0,"RW"]	true
+[0,"Mounts",0,"Propagation"]	"rprivate"
+[0,"Mounts",1,"Source"]	"/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/etc-hosts"
+[0,"Mounts",1,"Destination"]	"/etc/hosts"
+[0,"Mounts",1,"Mode"]	"Z"
+[0,"Mounts",1,"RW"]	true
+[0,"Mounts",1,"Propagation"]	"rprivate"
+[0,"Mounts",2,"Source"]	"/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/volumes/kubernetes.io~secret/default-token-k8t1d"
+[0,"Mounts",2,"Destination"]	"/var/run/secrets/kubernetes.io/serviceaccount"
+[0,"Mounts",2,"Mode"]	"ro,Z"
+[0,"Mounts",2,"RW"]	false
+[0,"Mounts",2,"Propagation"]	"rprivate"

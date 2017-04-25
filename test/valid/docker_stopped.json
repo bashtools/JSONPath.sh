@@ -1,0 +1,205 @@
+[
+    {
+        "Id": "dfe55ba7f69016228ebcadf80c0b8a7b6dbac858897d8071549982287254460b",
+        "Created": "2017-03-23T07:43:05.360208788Z",
+        "Path": "sleep",
+        "Args": [
+            "3600"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 137,
+            "Error": "",
+            "StartedAt": "2017-03-23T07:43:09.774003821Z",
+            "FinishedAt": "2017-03-23T08:41:09.250104366Z"
+        },
+        "Image": "sha256:00f017a8c2a6e1fe2ffd05c281f27d069d2a99323a8cd514dd35f228ba26d2ff",
+        "ResolvConfPath": "/var/lib/docker/containers/499b4e889ea6820c70d1bc8c2691dc1d13a0dc89832b9c6ee17945f6d04d6558/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/499b4e889ea6820c70d1bc8c2691dc1d13a0dc89832b9c6ee17945f6d04d6558/hostname",
+        "HostsPath": "/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/etc-hosts",
+        "LogPath": "",
+        "Name": "/k8s_busybox.ecd2134f_busybox_default_399124b3-08c1-11e7-a167-0010c6b1e9f0_f40c651f",
+        "RestartCount": 0,
+        "Driver": "devicemapper",
+        "MountLabel": "system_u:object_r:container_file_t:s0:c440,c832",
+        "ProcessLabel": "system_u:system_r:container_t:s0:c440,c832",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/volumes/kubernetes.io~secret/default-token-k8t1d:/var/run/secrets/kubernetes.io/serviceaccount:ro,Z",
+                "/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/etc-hosts:/etc/hosts:Z",
+                "/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/containers/busybox/f40c651f:/dev/termination-log:Z"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "journald",
+                "Config": {}
+            },
+            "NetworkMode": "container:499b4e889ea6820c70d1bc8c2691dc1d13a0dc89832b9c6ee17945f6d04d6558",
+            "PortBindings": null,
+            "RestartPolicy": {
+                "Name": "",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "container:499b4e889ea6820c70d1bc8c2691dc1d13a0dc89832b9c6ee17945f6d04d6558",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 1000,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": [
+                "seccomp=unconfined",
+                "label=user:system_u",
+                "label=role:system_r",
+                "label=type:container_t",
+                "label=level:s0:c440,c832"
+            ],
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "oci",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 2,
+            "Memory": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DiskQuota": 0,
+            "KernelMemory": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": -1,
+            "MemorySwappiness": -1,
+            "OomKillDisable": false,
+            "PidsLimit": 0,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0
+        },
+        "GraphDriver": {
+            "Name": "devicemapper",
+            "Data": {
+                "DeviceId": "25445",
+                "DeviceName": "docker-253:1-2631693-481be6ad2b8aa9ffe70a0116e005b613882c6403a85f2e7073c4c9f52b3cd9d8",
+                "DeviceSize": "10737418240"
+            }
+        },
+        "Mounts": [
+            {
+                "Source": "/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/containers/busybox/f40c651f",
+                "Destination": "/dev/termination-log",
+                "Mode": "Z",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Source": "/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/etc-hosts",
+                "Destination": "/etc/hosts",
+                "Mode": "Z",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Source": "/var/lib/kubelet/pods/399124b3-08c1-11e7-a167-0010c6b1e9f0/volumes/kubernetes.io~secret/default-token-k8t1d",
+                "Destination": "/var/run/secrets/kubernetes.io/serviceaccount",
+                "Mode": "ro,Z",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "busybox",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "KUBERNETES_SERVICE_PORT=443",
+                "KUBERNETES_SERVICE_PORT_HTTPS=443",
+                "KUBERNETES_PORT=tcp://10.0.0.1:443",
+                "KUBERNETES_PORT_443_TCP=tcp://10.0.0.1:443",
+                "KUBERNETES_PORT_443_TCP_PROTO=tcp",
+                "KUBERNETES_PORT_443_TCP_PORT=443",
+                "KUBERNETES_PORT_443_TCP_ADDR=10.0.0.1",
+                "KUBERNETES_SERVICE_HOST=10.0.0.1",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": null,
+            "Image": "busybox",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "sleep",
+                "3600"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "io.kubernetes.container.hash": "ecd2134f",
+                "io.kubernetes.container.name": "busybox",
+                "io.kubernetes.container.restartCount": "209",
+                "io.kubernetes.container.terminationMessagePath": "/dev/termination-log",
+                "io.kubernetes.pod.name": "busybox",
+                "io.kubernetes.pod.namespace": "default",
+                "io.kubernetes.pod.terminationGracePeriod": "30",
+                "io.kubernetes.pod.uid": "399124b3-08c1-11e7-a167-0010c6b1e9f0"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": null,
+            "SandboxKey": "",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": null
+        }
+    }
+]
