@@ -2,23 +2,6 @@
 
 yo, so it's a JSONPath implementation written in Bash - and it probably only works in Bash.
 
-## Installation
-
-Install with pip:
-
-* `sudo pip install git+https://github.com/mclarkson/JSONPath.sh#egg=JSONPath.sh`
-
-Install with npm:
-
-* `sudo npm install -g JSONPath.sh` -  Soon!
-
-Or copy the `JSONPath.sh` script to your PATH, for example:
-
-* ```curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.sh
-chmod +x JSONPath.sh
-mv JSONPath.sh ~/bin
-```
-
 ## Invocation
 
     JSONPath.sh [-n] [-s] [-b] [-i] [-j] [-h] [-p] [-f FILE] pattern
@@ -49,6 +32,24 @@ pattern
 
 -h
 > Show help text.
+
+## Installation
+
+Install with pip:
+
+* `sudo pip install git+https://github.com/mclarkson/JSONPath.sh#egg=JSONPath.sh`
+
+Install with npm:
+
+* `sudo npm install -g JSONPath.sh` -  Soon!
+
+Or copy the `JSONPath.sh` script to your PATH, for example:
+
+``` bash
+curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.sh
+chmod +x JSONPath.sh
+mv JSONPath.sh ~/bin
+```
 
 ## Examples
 
