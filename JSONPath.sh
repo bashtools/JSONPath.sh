@@ -472,7 +472,6 @@ indexmatcher() {
           step=${INDEXMATCH_QUERY[i]##*:}
           step=${step%]}
           INDEXMATCH_QUERY[i]="${INDEXMATCH_QUERY[i]%:*}]"
-          echo "${INDEXMATCH_QUERY[i]}"
         }
         q=${INDEXMATCH_QUERY[i]:1:-1} # <- strip '[' and ']'
         a=${q%:*}                     # <- number before ':'
