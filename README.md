@@ -54,7 +54,7 @@ mv JSONPath.sh ~/bin
 ## Examples
 
 ``` bash
-$ ./JSONPath.sh -f package.json '$.*'
+$ ./JSONPath.sh '$.*' < package.json
 ["name"]        "JSONPath.sh"
 ["version"]     "0.0.0"
 ["description"] "JSONPath implementation written in Bash"
