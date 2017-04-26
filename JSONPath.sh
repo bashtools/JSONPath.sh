@@ -330,7 +330,7 @@ create_filter() {
               a=${PATHTOKENS[i]#[}
               a=${a%]}
               if [[ $a =~ [[:alpha:]] ]]; then
-                a=$(echo $a | sed -r "s/[\"']//g;s/([[:alpha:][^,]]*)/\"\1\"/g")
+                a=$(echo $a | sed -r "s/[\"']//g;s/([^,]*)/\"\1\"/g")
               fi
               #idx=$(echo "${PATHTOKENS[i]}" | tr -d "[]")
               query+="$comma$a"
@@ -531,8 +531,6 @@ json() {
   else
     while read -r line; do
       a=${line#[};a=${a%%]*}
-      #a=${a//,/ }
-      #eval path=($a)
       readarray -t path < <(echo "$a" | grep -o "[^,]*")
       value=${line#*$tab}
 
@@ -593,12 +591,13 @@ json() {
         }
         if [[ ${path[i]} == '"'* ]]; then
           # Object
-          #[[ $i -gt $((prevpathlen)) ]] && {
           [[ $i -ge $broken ]] && {
             let indent=i*4
             printf "%0${indent}s" ""
-            echo "{"
+            #echo "($i)${comma[i]}{"
+            echo "${comma[i]}{"
             closers[i]='}'
+            comma[i]=
           }
           let indent=(i+1)*4
           printf "%0${indent}s" ""
@@ -612,15 +611,13 @@ json() {
             echo "["
             closers[i]=']'
             arrays[i]=1
+            comma[i]=
           else
             let indent=(i+1)*4
             printf "%0${indent}s" ""
             echo "${closers[i-1]}"
-            #unset closers[i-1]
-            let indent=i*4
-            #printf "%0${indent}s" ""
             direction=$DOWN
-            comma[i]=
+            comma[i+1]=","
           fi
         fi
       done
@@ -639,6 +636,7 @@ json() {
         let indent=(pathlen+1)*4
         printf "%0${indent}s" ""
         echo "${comma[pathlen]}${path[-1]}:$value"
+        comma[pathlen]=","
       else
         # Array
         [[ ${path[-1]} == 0 ]] && {
@@ -646,16 +644,16 @@ json() {
           printf "%0${indent}s" ""
           echo "["
           closers[pathlen]=']'
+          comma[pathlen]=
         }
         let indent=(pathlen+1)*4
         printf "%0${indent}s" ""
         echo "${comma[pathlen]}$value"
+        comma[pathlen]=","
       fi
 
-      comma[pathlen]=","
       prevpath=("${path[@]}")
       prevpathlen=$pathlen
-      prevbroken=$broken
     done
 
     # closing braces
