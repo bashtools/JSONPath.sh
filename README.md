@@ -6,13 +6,17 @@ yo, so it's a JSONPath implementation written in Bash - and it probably only wor
 
 Install with pip:
 
-* `pip install git+https://github.com/mclarkson/JSONPath.sh#egg=JSONPath.sh`
+* `sudo pip install git+https://github.com/mclarkson/JSONPath.sh#egg=JSONPath.sh`
 
 Install with npm:
 
-* `npm install -g JSONPath.sh` -  Soon!
+* `sudo npm install -g JSONPath.sh` -  Soon!
 
-Or copy the `JSONPath.sh` script to your PATH.
+Or copy the `JSONPath.sh` script to your PATH, for example:
+
+* `curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.sh`
+* `chmod +x JSONPath.sh`
+* `mv JSONPath.sh /usr/local/bin`
 
 ## Invocation
 
