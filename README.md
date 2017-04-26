@@ -2,6 +2,18 @@
 
 yo, so it's a JSONPath implementation written in Bash - and it probably only works in Bash.
 
+## Installation
+
+Install with pip:
+
+* `pip install git+https://github.com/mclarkson/JSONPath.sh#egg=JSONPath.sh`
+
+Install with npm:
+
+* `npm install -g JSONPath.sh` -  Soon!
+
+Or copy the `JSONPATH.sh` script to your PATH.
+
 ## Invocation
 
     JSONPath.sh [-n] [-s] [-b] [-i] [-j] [-h] [-p] [-f FILE] pattern
@@ -276,13 +288,6 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author' | \
 ## Cool Links
 
 * [dominictarr/JSON.sh](https://github.com/dominictarr/JSON.sh) The original, the best, JSON.sh.
-
-## Installation
-
-Install with npm or pip:
-
-* `npm install -g JSONPath.sh` -  Soon!
-* `pip install git+https://github.com/mclarkson/JSONPath.sh#egg=JSONPath.sh`
 
 ## Performance
 
