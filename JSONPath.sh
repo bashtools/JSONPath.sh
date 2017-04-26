@@ -302,7 +302,7 @@ create_filter() {
               if [[ $a =~ [[:alpha:]] ]]; then
                 # converts only one comma: s/("[^"]+),([^"]+")/\1`\2/g;s/"//g
                 #a=$(echo $a | sed 's/\([[:alpha:]]*\)/"\1"/g')
-                a=$(echo $a | sed -r "s/[\"']//g;s/([[:alpha:]]*)/\"\1\"/g")
+                a=$(echo $a | sed -r "s/[\"']//g;s/([^,]*)/\"\1\"/g")
               fi
               query+="$comma(${a//,/|})"
             elif [[ ${PATHTOKENS[i]} =~ : ]]; then
@@ -330,7 +330,7 @@ create_filter() {
               a=${PATHTOKENS[i]#[}
               a=${a%]}
               if [[ $a =~ [[:alpha:]] ]]; then
-                a=$(echo $a | sed -r "s/[\"']//g;s/([[:alpha:]]*)/\"\1\"/g")
+                a=$(echo $a | sed -r "s/[\"']//g;s/([[:alpha:][^,]]*)/\"\1\"/g")
               fi
               #idx=$(echo "${PATHTOKENS[i]}" | tr -d "[]")
               query+="$comma$a"
