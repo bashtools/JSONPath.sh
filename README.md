@@ -2,6 +2,8 @@
 
 yo, so it's a JSONPath implementation written in Bash - and it probably only works in Bash.
 
+[![travis](https://secure.travis-ci.org/mclarkson/JSONPath.sh.png?branch=master)](https://travis-ci.org/mclarkson/JSONPath.sh)
+
 ## Invocation
 
     JSONPath.sh [-n] [-s] [-b] [-i] [-j] [-h] [-p] [-f FILE] pattern
