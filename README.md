@@ -14,9 +14,10 @@ Install with npm:
 
 Or copy the `JSONPath.sh` script to your PATH, for example:
 
-* `curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.sh`
-* `chmod +x JSONPath.sh`
-* `mv JSONPath.sh /usr/local/bin`
+* ```curl -O https://raw.githubusercontent.com/mclarkson/JSONPath.sh/master/JSONPath.sh
+chmod +x JSONPath.sh
+mv JSONPath.sh ~/bin
+```
 
 ## Invocation
 
