@@ -299,14 +299,16 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author' | \
 
 ## Performance
 
-* Generally poor performance overall
+* Performance is acceptable for small data sizes
 * Worse when using:
-    * filter (script) expressions (An extra pass is required)
+    * large data files (hundreds of kilobytes).
+    * filter (script) expressions (An extra pass is required).
     * Indexes greater than 9.
     * Indexes with steps even with indexes less than 10.
 * Better with:
-    * Indexes less than 10 (then matching is done by regex unless a step is used)
-    * No filter (script) expressions (so no extra pass through the data)
+    * Small data files (A few kilobytes).
+    * Indexes less than 10 (then matching is done by regex, unless a step is used).
+    * No filter (script) expressions (so no extra pass through the data).
 
 ## License
 
