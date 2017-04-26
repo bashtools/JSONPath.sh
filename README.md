@@ -12,7 +12,7 @@ Install with npm:
 
 * `npm install -g JSONPath.sh` -  Soon!
 
-Or copy the `JSONPATH.sh` script to your PATH.
+Or copy the `JSONPath.sh` script to your PATH.
 
 ## Invocation
 
