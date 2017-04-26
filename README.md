@@ -126,17 +126,19 @@ done
     -f test/valid/goessner.net.expanded.json \
     '$.store.book[16].title'
 
-# bracket-notation ('$[' needs escaping within double quotes)
+# bracket-notation ('$[' needs escaping at the
+# command line, so bash doesn't think it's an
+# arithmetic expression)
 ./JSONPath.sh \
     -f test/valid/goessner.net.expanded.json \
     "\$['store']['book'][16]['title']"
 
-# bracket-notation with a set (and added an array slice)
+# bracket-notation with an array slice and a set
 ./JSONPath.sh \
     -f test/valid/goessner.net.expanded.json \
     "\$['store']['book'][14:25:2]['title','reviews']"
 
-# mixed-notation ('$[' needs escaping within double quotes)
+# Mixed bracket- and dot- notation
 ./JSONPath.sh \
     -f test/valid/goessner.net.expanded.json \
     "\$['store'].book[16].title"
@@ -164,18 +166,18 @@ done
 
 ### Supported JSONPath options
 
-| JSONPath         | Supported    | Comment                                                 |
-| -----------------|--------------|---------------------------------------------------------|
-| $                |     Y        | the root object/element                                 |
-| @                |     Y        | the current object/element                              |
-| . or []          |     Y        | child operator.                                         |
-| ..               |     Y        | recusive descent.                                       |
-| *                |     Y        | wildcard. All objects/elements regardless their names.  |
-| []               |     Y        | subscript operator.                                     |
-| [,]              |     Y        | node sets.                                              |
-| ```[start:end:step]``` |     Y        | array slice operator.                                   |
-| ?()              |     Y        | applies a filter (script) expressions (see note)        |
-| ()               |     Y        | script expression, using the underlying script engine.  |
+| JSONPath               | Supported | Comment                                                 |
+| -----------------------|-----------|---------------------------------------------------------|
+| $                      |     Y     | the root object/element                                 |
+| @                      |     Y     | the current object/element                              |
+| . or []                |     Y     | child operator.                                         |
+| ..                     |     Y     | recusive descent.                                       |
+| *                      |     Y     | wildcard. All objects/elements regardless their names.  |
+| []                     |     Y     | subscript operator.                                     |
+| [,]                    |     Y     | node sets.                                              |
+| ```[start:end:step]``` |     Y     | array slice operator.                                   |
+| ?()                    |     Y     | applies a filter (script) expressions (see note)        |
+| ()                     |     Y     | script expression, using the underlying script engine.  |
 
 NOTE: For filter expressions only the equality operator, '==', is implmented.
 
