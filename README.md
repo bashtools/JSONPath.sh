@@ -23,6 +23,9 @@ pattern
 -j
 > Output in JSON format.
 
+-u
+> Strip unnecessary leading path elements.
+
 -p
 > Pass-through to the JSON parser. Useful with 'grep'.
 

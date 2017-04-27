@@ -16,6 +16,7 @@ PASSTHROUGH=0
 JSON=0
 PRINT=1
 MULTIPASS=0
+FLATTEN=0
 declare -a INDEXMATCH_QUERY
 
 # ---------------------------------------------------------------------------
@@ -55,7 +56,7 @@ main() {
         continue
       }
 
-      cat $PASSFILE | json | brief
+      cat $PASSFILE | flatten | json | brief
 
       break
     done
@@ -71,9 +72,10 @@ main() {
       JSON=1
       json
     elif [[ -z $FILE ]]; then
-      tokenize | parse | filter | indexmatcher | json | brief
+      tokenize | parse | filter | indexmatcher | flatten | json | brief
     else
-      cat "$FILE" | tokenize | parse | filter | indexmatcher | json | brief
+      cat "$FILE" | tokenize | parse | filter | indexmatcher | flatten | \
+        json | brief
     fi
 
   fi 
@@ -90,6 +92,7 @@ usage() {
   echo "-s      - Remove escaping of the solidus symbol (straight slash)."
   echo "-b      - Brief. Only show values."
   echo "-j      - JSON ouput."
+  echo "-u      - Strip unnecessary leading path elements."
   echo "-i      - Case insensitive."
   echo "-p      - Pass-through to the JSON parser. Useful with 'grep'."
   echo "-w      - Match whole words only (for filter script expression)."
@@ -121,6 +124,8 @@ parse_options() {
       -n) NO_HEAD=1
       ;;
       -b) BRIEF=1
+      ;;
+      -u) FLATTEN=1
       ;;
       -p) PASSTHROUGH=1
       ;;
@@ -449,6 +454,41 @@ parse_value () {
 }
 
 # ---------------------------------------------------------------------------
+flatten() {
+# ---------------------------------------------------------------------------
+# Take out
+
+  local path a prevpath pathlen
+
+  if [[ $FLATTEN -eq 1 ]]; then
+    STDINFILE=/var/tmp/JSONPath.$$.stdin
+    cat >"$STDINFILE"
+    
+    highest=999
+
+    while read line; do
+      a=${line#[};a=${a%%]*}
+      readarray -t path < <(grep -o "[^,]*"<<<"$a")
+      pathlen=$((${#path[*]}-1))
+
+      for i in `seq 0 $pathlen`; do
+        [[ ${path[i]} != ${prevpath[i]} ]] && {
+          high=$((i-1))
+        }
+      done
+
+      [[ $high -lt $highest ]] && highest=$high
+
+      prevpath=("${path[@]}")
+    done <"$STDINFILE"
+    
+    sed -r 's/\[(([0-9]+|"[^"]+")[],]){'$((highest+1))'}(.*)/[\3/' "$STDINFILE"
+  else
+    cat
+  fi
+}
+
+# ---------------------------------------------------------------------------
 indexmatcher() {
 # ---------------------------------------------------------------------------
 # For double digit or greater indexes match each line individually
@@ -522,7 +562,7 @@ json() {
 
   local a tab=$(echo -e "\t")
   local UP=1 DOWN=2 SAME=3
-  local prevpathlen=-1 prevpath=()
+  local prevpathlen=-1 prevpath=() path a
   declare -a closers
 
   if [[ $JSON -eq 0 ]]; then
