@@ -482,7 +482,7 @@ flatten() {
       prevpath=("${path[@]}")
     done <"$STDINFILE"
     
-    sed -r 's/\[(([0-9]+|"[^"]+")[],]){'$((highest+1))'}(.*)/[\3/' "$STDINFILE"
+    sed -r 's/\[(([0-9]+|"[^"]+")[],]){'$((highest))'}(.*)/[\3/' "$STDINFILE"
   else
     cat
   fi
