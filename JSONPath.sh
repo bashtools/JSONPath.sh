@@ -553,8 +553,7 @@ json() {
           do
             [[ -n ${closers[j]} ]] && {
               let indent=j*4
-              printf "%0${indent}s" ""
-              echo "${closers[j]}"
+              printf "\n%0${indent}s${closers[j]}" ""
               unset closers[j]
               arrays[j]=0
               comma[j]=
@@ -570,8 +569,7 @@ json() {
         do
           [[ -n ${closers[i]} ]] && {
             let indent=i*4
-            printf "%0${indent}s" ""
-            echo "${closers[i]}"
+            printf "\n%0${indent}s${closers[i]}" ""
             unset closers[i]
             arrays[i]=0
             comma[i]=
@@ -592,16 +590,13 @@ json() {
           # Object
           [[ $i -ge $broken ]] && {
             let indent=i*4
-            printf "%0${indent}s" ""
-            #echo "($i)${comma[i]}{"
-            echo "${comma[i]}{"
+            printf "${comma[i]}%0${indent}s{\n" ""
             closers[i]='}'
             comma[i]=
           }
           let indent=(i+1)*4
-          printf "%0${indent}s" ""
-          echo "${comma[i]}${path[i]}:"
-          comma[i]=","
+          printf "${comma[i]}%0${indent}s${path[i]}:\n" ""
+          comma[i]=",\n"
         else
           # Array
           if [[ ${arrays[i]} != 1 ]]; then
@@ -613,10 +608,9 @@ json() {
             comma[i]=
           else
             let indent=(i+1)*4
-            printf "%0${indent}s" ""
-            echo "${closers[i-1]}"
+            printf "\n%0${indent}s${closers[i-1]}" ""
             direction=$DOWN
-            comma[i+1]=","
+            comma[i+1]=",\n"
           fi
         fi
       done
@@ -627,28 +621,26 @@ json() {
         # Object
         [[ $direction -eq $DOWN ]] && {
           let indent=pathlen*4
-          printf "%0${indent}s" ""
-          echo "${comma[pathlen]}{"
+          printf "${comma[pathlen]}%0${indent}s{\n" ""
           closers[pathlen]='}'
           comma[pathlen]=
         }
         let indent=(pathlen+1)*4
-        printf "%0${indent}s" ""
-        echo "${comma[pathlen]}${path[-1]}:$value"
-        comma[pathlen]=","
+        printf "${comma[pathlen]}%0${indent}s${path[-1]}:" ""
+        echo -n "$value"
+        comma[pathlen]=",\n"
       else
         # Array
         [[ ${path[-1]} == 0 ]] && {
           let indent=(pathlen-0)*4
-          printf "%0${indent}s" ""
-          echo "["
+          printf "%0${indent}s[\n" ""
           closers[pathlen]=']'
           comma[pathlen]=
         }
         let indent=(pathlen+1)*4
-        printf "%0${indent}s" ""
-        echo "${comma[pathlen]}$value"
-        comma[pathlen]=","
+        printf "${comma[pathlen]}%0${indent}s" ""
+        echo -n "$value"
+        comma[pathlen]=",\n"
       fi
 
       prevpath=("${path[@]}")
@@ -660,9 +652,9 @@ json() {
     for i in `seq $((pathlen)) -1 0`
     do
       let indent=i*4
-      printf "%0${indent}s" ""
-      echo "${closers[i]}"
+      printf "\n%0${indent}s${closers[i]}" ""
     done
+    echo
   fi
 }
 
