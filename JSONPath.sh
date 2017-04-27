@@ -530,7 +530,7 @@ json() {
   else
     while read -r line; do
       a=${line#[};a=${a%%]*}
-      readarray -t path < <(echo "$a" | grep -o "[^,]*")
+      readarray -t path < <(grep -o "[^,]*"<<<"$a")
       value=${line#*$tab}
 
       # Not including the object itself (last item)
