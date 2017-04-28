@@ -521,8 +521,7 @@ indexmatcher() {
         q=${INDEXMATCH_QUERY[i]:1:-1} # <- strip '[' and ']'
         a=${q%:*}                     # <- number before ':'
         b=${q#*:}                     # <- number after ':'
-        readarray -t num < <( \
-          echo "$line" | grep -Eo ',[0-9]+,' | tr -d , )
+        readarray -t num < <( grep -Eo ',[0-9]+,' | tr -d , <<<"$line" )
         if [[ ${num[i]} -ge $a && ${num[i]} -lt $b && matched -eq 1 ]]; then
           matched=1
           [[ $i -eq $((${#INDEXMATCH_QUERY[*]}-1)) ]] && {
@@ -676,11 +675,12 @@ json() {
         comma[pathlen]=",\n"
       else
         # Array
-        [[ ${path[-1]} == 0 ]] && {
+        [[ ${arrays[i]} != 1 ]] && {
           let indent=(pathlen-0)*4
           printf "%0${indent}s[\n" ""
           closers[pathlen]=']'
           comma[pathlen]=
+          arrays[i]=1
         }
         let indent=(pathlen+1)*4
         printf "${comma[pathlen]}%0${indent}s" ""
