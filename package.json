@@ -1,5 +1,5 @@
 {
-  "name": "JSONPath.sh",
+  "name": "jsonpath.sh",
   "version": "0.0.3",
   "description": "JSONPath implementation written in Bash",
   "homepage": "http://github.com/mclarkson/JSONPath.sh",

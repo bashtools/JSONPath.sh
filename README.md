@@ -149,6 +149,11 @@ done
     -f test/valid/goessner.net.expanded.json \
     '$.store.book[16].title'
 
+# dot-notation with a node set
+./JSONPath.sh \
+    -f test/valid/goessner.net.expanded.json \
+    '$.store.book[4,6,16,22].title'
+
 # bracket-notation ('$[' needs escaping at the
 # command line, so bash doesn't think it's an
 # arithmetic expression)
