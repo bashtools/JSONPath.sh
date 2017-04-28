@@ -46,7 +46,7 @@ Install with pip:
 
 Install with npm:
 
-* `sudo npm install -g JSONPath.sh` -  Soon!
+* `sudo npm install -g jsonpath.sh`
 
 Or copy the `JSONPath.sh` script to your PATH, for example:
 
