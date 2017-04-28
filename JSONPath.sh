@@ -595,14 +595,20 @@ json() {
           direction=$DOWN
           for j in `seq $((prevpathlen)) -1 $((i+1))`
           do
+            arrays[j]=
             [[ -n ${closers[j]} ]] && {
               let indent=j*4
               printf "\n%0${indent}s${closers[j]}" ""
               unset closers[j]
-              arrays[j]=0
               comma[j]=
             }
           done
+          a=(${!arrays[*]})
+          [[ -n $a ]] && {
+            for k in `seq $i ${a[-1]}`; do
+              arrays[k]=
+            done
+          }
           break
         done
       }
@@ -611,14 +617,20 @@ json() {
         [[ $prevpathlen != -1 ]] && comma[prevpathlen]=
         for i in `seq $((prevpathlen+1)) -1 $((pathlen+1))`
         do
+          arrays[i]=
           [[ -n ${closers[i]} ]] && {
             let indent=i*4
             printf "\n%0${indent}s${closers[i]}" ""
             unset closers[i]
-            arrays[i]=0
             comma[i]=
           }
         done
+        a=(${!arrays[*]})
+        [[ -n $a ]] && {
+          for k in `seq $i ${a[-1]}`; do
+            arrays[k]=
+          done
+        }
       }
 
       # Opening braces (the path leading up to the key)
