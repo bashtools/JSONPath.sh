@@ -464,7 +464,7 @@ flatten() {
     STDINFILE=/var/tmp/JSONPath.$$.stdin
     cat >"$STDINFILE"
     
-    highest=999
+    highest=9999
 
     while read line; do
       a=${line#[};a=${a%%]*}
@@ -482,7 +482,12 @@ flatten() {
       prevpath=("${path[@]}")
     done <"$STDINFILE"
     
-    sed -r 's/\[(([0-9]+|"[^"]+")[],]){'$((highest))'}(.*)/[\3/' "$STDINFILE"
+    if [[ $highest -gt 0 ]]; then
+      sed -r 's/\[(([0-9]+|"[^"]+")[],]){'$((highest))'}(.*)/[\3/' \
+        "$STDINFILE"
+    else 
+      cat "$STDINFILE"
+    fi
   else
     cat
   fi
