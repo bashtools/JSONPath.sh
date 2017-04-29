@@ -1,0 +1,2 @@
+["web-app","servlet",4,"init-param","dataLog"]	1
+["web-app","servlet",4,"init-param","dataLogLocation"]	"/usr/local/tomcat/logs/dataLog.log"
