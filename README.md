@@ -284,7 +284,7 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author' \
 And pipe (re-inject - 'cos it sounds cool) the output into JSONPath.sh:
 
 ```
-$ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author' | \
+$ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author' \
     | sort -k2 | uniq -f 1 \
     | ./JSONPath.sh -p
 {
@@ -299,6 +299,25 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author' | \
                 "author":"Evelyn Waugh"
             }
 ... JSON output with unique data ...
+```
+
+Use the '-u' option to flatten the output:
+
+```
+$ ./JSONPath.sh -f test/valid/goessner.net.expanded.json \
+    '$..author' -u \
+    | sort -k2 | uniq -f 1 \
+    | ./JSONPath.sh -p
+... JSON flattened output ...
+{
+    "book":
+    [
+        {
+            "author":"Douglas E. Richards" 
+        },
+        {
+            "author":"Evelyn Waugh"
+        },
 ```
 
 ## Cool Links
