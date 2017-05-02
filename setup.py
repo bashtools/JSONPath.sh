@@ -12,7 +12,7 @@ setup(
     scripts=[
         'JSONPath.sh',
     ],
-    version='0.0.5',
+    version='0.0.6',
     description="JSONPath implementation written in Bash",
     long_description="",
     author='Mark Clarkson',
