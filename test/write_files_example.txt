@@ -1,0 +1,6 @@
+# For example
+#
+# cd valid
+# vim goessner.net.expanded.argp1
+# rewrite all the ..argpN.parsed files:
+for i in goessner.net.expanded.argp*; do echo; cat goessner.net.expanded.${i##*.}; ../../JSONPath.sh -f goessner.net.expanded.json "`cat goessner.net.expanded.${i##*.}`" | tee goessner.net.expanded_${i##*.}.parsed; echo; done

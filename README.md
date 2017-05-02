@@ -207,7 +207,7 @@ done
 | ?()                    |     Y     | applies a filter (script) expressions (see note)        |
 | ()                     |     Y     | script expression, using the underlying script engine.  |
 
-NOTE: For filter expressions only the equality operator, '==', is implmented.
+NOTE: For filter expressions only the equality operator, '==', is implemented.
 
 *TODO*: >=, >, <=, and <
 
@@ -336,6 +336,11 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json \
     * Small data files (A few kilobytes).
     * Indexes less than 10 (then matching is done by regex, unless a step is used).
     * No filter (script) expressions (so no extra pass through the data).
+
+## Limitations (todo)
+
+* Only one filter expression, '?(@', per query.
+* Only equality operator, '==' and '=', is implemented for filter expressions.
 
 ## License
 

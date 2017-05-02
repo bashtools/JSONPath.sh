@@ -264,7 +264,7 @@ create_filter() {
       ;;
       '*') query+="$comma(\"[^\"]*\"|[0-9]+[^],]*).*"
       ;;
-      '?(@.'*) a=${PATHTOKENS[i]#?(@.}
+      '?(@'*) a=${PATHTOKENS[i]#?(@.}
                elem="${a%%[<>=!]*}"
                rhs="${a##*[<>=!]}"
                a="${a#$elem}"
@@ -273,7 +273,15 @@ create_filter() {
                if [[ $rhs == *'"'* || $rhs == *"'"* ]]; then
                  case $operator in
                    '=='|'=')  operator=
-                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*${rhs//\"/}"
+                          if [[ $elem == '?(@' ]]; then
+                            # To allow search on @.property such as:
+                            #   $..book[?(@.title==".*Book 1.*")]
+                            query+="$comma[0-9]+[],][[:space:]\"]*${rhs//\"/}"
+                          else
+                            # To allow search on @ (this node) such as:
+                            #   $..reviews[?(@==".*Fant.*")]
+                            query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*${rhs//\"/}"
+                          fi
                           FILTER="$query"
                      ;;
                    '>=')  operator="-ge"
@@ -521,7 +529,8 @@ indexmatcher() {
         q=${INDEXMATCH_QUERY[i]:1:-1} # <- strip '[' and ']'
         a=${q%:*}                     # <- number before ':'
         b=${q#*:}                     # <- number after ':'
-        readarray -t num < <( grep -Eo ',[0-9]+,' | tr -d , <<<"$line" )
+        [[ -z $b ]] && b=99999999999
+        readarray -t num < <( (grep -Eo ',[0-9]+[],]' | tr -d ,])<<<$line )
         if [[ ${num[i]} -ge $a && ${num[i]} -lt $b && matched -eq 1 ]]; then
           matched=1
           [[ $i -eq $((${#INDEXMATCH_QUERY[*]}-1)) ]] && {
