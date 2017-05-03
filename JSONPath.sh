@@ -262,7 +262,8 @@ create_filter() {
       '[*]') query+="$comma[^,]*"
              comma=","
       ;;
-      '*') query+="$comma(\"[^\"]*\"|[0-9]+[^],]*).*"
+      '*') query+="$comma(\"[^\"]*\"|[0-9]+[^],]*)"
+           comma=","
       ;;
       '?(@'*) a=${PATHTOKENS[i]#?(@.}
                elem="${a%%[<>=!]*}"
