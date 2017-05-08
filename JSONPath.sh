@@ -601,7 +601,32 @@ json() {
       [[ $prevpathlen != -1 ]] && {
         for i in `seq 0 $((pathlen-1))`; do
           [[ ${prevpath[i]} == ${path[i]} ]] && continue
-          [[ ${path[i]} != '"'* ]] && continue
+          [[ ${path[i]} != '"'* ]] && {
+            a=(${!arrays[*]})
+            [[ -n $a ]] && {
+              for k in `seq $((i+1)) ${a[-1]}`; do
+                arrays[k]=
+              done
+            }
+            a=(${!comma[*]})
+            [[ -n $a ]] && {
+              for k in `seq $((i+1)) ${a[-1]}`; do
+                comma[k]=
+              done
+            }
+            for j in `seq $((prevpathlen)) -1 $((i+2))`
+            do
+              arrays[j]=
+              [[ -n ${closers[j]} ]] && {
+                let indent=j*4
+                printf "\n%0${indent}s${closers[j]}" ""
+                unset closers[j]
+                comma[j]=
+              }
+            done
+          direction=$DOWN
+            break
+          }
           direction=$DOWN
           for j in `seq $((prevpathlen)) -1 $((i+1))`
           do

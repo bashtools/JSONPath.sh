@@ -1,0 +1,174 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                },
+                "creationTimestamp": "2017-05-05T10:20:14Z",
+                "generation": 1,
+                "labels": {
+                    "app": "bob",
+                    "version": "1.4"
+                },
+                "name": "bob",
+                "namespace": "default",
+                "resourceVersion": "10304",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/bob",
+                "uid": "6d982695-317c-11e7-bf0f-0800276b4166"
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "app": "bob",
+                        "version": "1.4"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": 1,
+                        "maxUnavailable": 1
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "bob",
+                            "version": "1.4"
+                        },
+                        "name": "bob"
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "image": "gcr.io/google_containers/echoserver:1.4",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "bob",
+                                "resources": {},
+                                "securityContext": {
+                                    "privileged": false
+                                },
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File"
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2017-05-05T10:20:14Z",
+                        "lastUpdateTime": "2017-05-05T10:20:14Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    }
+                ],
+                "observedGeneration": 1,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        },
+        {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "Deployment",
+            "metadata": {
+                "annotations": {
+                    "deployment.kubernetes.io/revision": "1"
+                },
+                "creationTimestamp": "2017-05-05T14:09:06Z",
+                "generation": 1,
+                "labels": {
+                    "run": "whatever"
+                },
+                "name": "whatever",
+                "namespace": "default",
+                "resourceVersion": "25391",
+                "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/whatever",
+                "uid": "66a3d00b-319c-11e7-bf0f-0800276b4166"
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "run": "whatever"
+                    }
+                },
+                "strategy": {
+                    "rollingUpdate": {
+                        "maxSurge": 1,
+                        "maxUnavailable": 1
+                    },
+                    "type": "RollingUpdate"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "run": "whatever"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "image": "gcr.io/google_containers/echoserver:1.4",
+                                "imagePullPolicy": "IfNotPresent",
+                                "name": "whatever",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File"
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "restartPolicy": "Always",
+                        "schedulerName": "default-scheduler",
+                        "securityContext": {},
+                        "terminationGracePeriodSeconds": 30
+                    }
+                }
+            },
+            "status": {
+                "availableReplicas": 1,
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2017-05-05T14:09:06Z",
+                        "lastUpdateTime": "2017-05-05T14:09:06Z",
+                        "message": "Deployment has minimum availability.",
+                        "reason": "MinimumReplicasAvailable",
+                        "status": "True",
+                        "type": "Available"
+                    }
+                ],
+                "observedGeneration": 1,
+                "readyReplicas": 1,
+                "replicas": 1,
+                "updatedReplicas": 1
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {},
+    "resourceVersion": "",
+    "selfLink": ""
+}
