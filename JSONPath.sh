@@ -269,6 +269,7 @@ create_filter() {
                elem="${a%%[<>=!]*}"
                rhs="${a##*[<>=!]}"
                a="${a#$elem}"
+               elem="${elem//./[\",.]+}" # Allows child node matching
                operator="${a%$rhs}"
                [[ -z $operator ]] && { operator="=="; rhs=; }
                if [[ $rhs == *'"'* || $rhs == *"'"* ]]; then

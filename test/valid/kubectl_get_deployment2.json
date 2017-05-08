@@ -1,0 +1,145 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "creationTimestamp": "2017-05-08T11:33:54Z",
+                "labels": {
+                    "app": "bob",
+                    "version": "1.4"
+                },
+                "name": "bob",
+                "namespace": "default",
+                "resourceVersion": "299018",
+                "selfLink": "/api/v1/namespaces/default/services/bob",
+                "uid": "378429d3-33e2-11e7-bf0f-0800276b4166"
+            },
+            "spec": {
+                "clusterIP": "10.0.0.100",
+                "ports": [
+                    {
+                        "nodePort": 31612,
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "app": "bob",
+                    "version": "1.4"
+                },
+                "sessionAffinity": "None",
+                "type": "NodePort"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "creationTimestamp": "2017-05-05T08:29:13Z",
+                "labels": {
+                    "run": "hello-minikube"
+                },
+                "name": "hello-minikube",
+                "namespace": "default",
+                "resourceVersion": "2864",
+                "selfLink": "/api/v1/namespaces/default/services/hello-minikube",
+                "uid": "eb612171-316c-11e7-bf0f-0800276b4166"
+            },
+            "spec": {
+                "clusterIP": "10.0.0.152",
+                "ports": [
+                    {
+                        "nodePort": 31370,
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "run": "hello-minikube"
+                },
+                "sessionAffinity": "None",
+                "type": "NodePort"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "creationTimestamp": "2017-05-05T07:48:37Z",
+                "labels": {
+                    "component": "apiserver",
+                    "provider": "kubernetes"
+                },
+                "name": "kubernetes",
+                "namespace": "default",
+                "resourceVersion": "10",
+                "selfLink": "/api/v1/namespaces/default/services/kubernetes",
+                "uid": "3fa39d2b-3167-11e7-bf0f-0800276b4166"
+            },
+            "spec": {
+                "clusterIP": "10.0.0.1",
+                "ports": [
+                    {
+                        "name": "https",
+                        "port": 443,
+                        "protocol": "TCP",
+                        "targetPort": 8443
+                    }
+                ],
+                "sessionAffinity": "ClientIP",
+                "type": "ClusterIP"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "creationTimestamp": "2017-05-05T14:09:47Z",
+                "labels": {
+                    "run": "whatever"
+                },
+                "name": "whatever",
+                "namespace": "default",
+                "resourceVersion": "25438",
+                "selfLink": "/api/v1/namespaces/default/services/whatever",
+                "uid": "7f0a2733-319c-11e7-bf0f-0800276b4166"
+            },
+            "spec": {
+                "clusterIP": "10.0.0.35",
+                "ports": [
+                    {
+                        "nodePort": 32150,
+                        "port": 8080,
+                        "protocol": "TCP",
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "run": "whatever"
+                },
+                "sessionAffinity": "None",
+                "type": "NodePort"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {},
+    "resourceVersion": "",
+    "selfLink": ""
+}

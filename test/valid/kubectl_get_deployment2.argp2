@@ -1,0 +1,1 @@
+$..items[?(@.metadata.name==whatever)].spec.ports[0].nodePort
