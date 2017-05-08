@@ -1,0 +1,116 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "Pod",
+            "metadata": {
+                "creationTimestamp": "2017-03-14T14:19:24Z",
+                "name": "busybox",
+                "namespace": "default",
+                "resourceVersion": "2069334",
+                "selfLink": "/api/v1/namespaces/default/pods/busybox",
+                "uid": "399124b3-08c1-11e7-a167-0010c6b1e9f0"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "command": [
+                            "sleep",
+                            "3600"
+                        ],
+                        "image": "busybox",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "busybox",
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "default-token-k8t1d",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "nodeName": "127.0.0.1",
+                "restartPolicy": "Always",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "volumes": [
+                    {
+                        "name": "default-token-k8t1d",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "default-token-k8t1d"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2017-03-14T14:19:24Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2017-05-03T10:31:11Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastProbeTime": null,
+                        "lastTransitionTime": "2017-03-14T14:19:24Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://a8b43976b5661264058a94f76fa2460328a3836cd4fd322a9f67c290f08f766a",
+                        "image": "busybox",
+                        "imageID": "docker-pullable://docker.io/busybox@sha256:32f093055929dbc23dec4d03e09dfe971f5973a9ca5cf059cbfb644c206aa83f",
+                        "lastState": {
+                            "terminated": {
+                                "containerID": "docker://d7e63be7c16e8124b2c331a19d53643c57603fa6e49b8b63a2eac63e1d260924",
+                                "exitCode": 0,
+                                "finishedAt": "2017-05-03T10:31:05Z",
+                                "reason": "Completed",
+                                "startedAt": "2017-05-03T09:31:05Z"
+                            }
+                        },
+                        "name": "busybox",
+                        "ready": true,
+                        "restartCount": 259,
+                        "fake": {
+                            "state": {
+                                "running": {
+                                    "startedAt": "2017-05-03T10:31:11Z"
+                                }
+                            }
+                        },
+                        "state": {
+                            "running": {
+                                "startedAt": "2017-05-03T10:31:11Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "127.0.0.1",
+                "phase": "Running",
+                "podIP": "172.17.0.4",
+                "startTime": "2017-03-14T14:19:24Z"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {},
+    "resourceVersion": "",
+    "selfLink": ""
+}

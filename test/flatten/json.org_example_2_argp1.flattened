@@ -1,0 +1,8 @@
+["id"]	"file"
+["value"]	"File"
+["popup","menuitem",0,"value"]	"New"
+["popup","menuitem",0,"onclick"]	"CreateNewDoc()"
+["popup","menuitem",1,"value"]	"Open"
+["popup","menuitem",1,"onclick"]	"OpenDoc()"
+["popup","menuitem",2,"value"]	"Close"
+["popup","menuitem",2,"onclick"]	"CloseDoc()"

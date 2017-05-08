@@ -1,0 +1,1 @@
+$.results[?(@.name=="Obi.*")].films[0:3]

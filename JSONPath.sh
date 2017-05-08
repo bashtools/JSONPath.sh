@@ -478,11 +478,18 @@ flatten() {
     while read line; do
       a=${line#[};a=${a%%]*}
       readarray -t path < <(grep -o "[^,]*"<<<"$a")
+      [[ -z $prevpath ]] && {
+        prevpath=("${path[@]}")
+        highest=$((${#path[*]}-1))
+        continue
+      }
+
       pathlen=$((${#path[*]}-1))
 
       for i in `seq 0 $pathlen`; do
         [[ ${path[i]} != ${prevpath[i]} ]] && {
-          high=$((i-1))
+          high=$i
+          break
         }
       done
 
@@ -624,7 +631,7 @@ json() {
                 comma[j]=
               }
             done
-          direction=$DOWN
+            direction=$DOWN
             break
           }
           direction=$DOWN

@@ -1,0 +1,10 @@
+["LinkLocalIPv6PrefixLen"]	0
+["SecondaryIPAddresses"]	null
+["SecondaryIPv6Addresses"]	null
+["GlobalIPv6PrefixLen"]	0
+["IPAddress"]	"172.17.0.2"
+["IPPrefixLen"]	16
+["Networks","bridge","IPAMConfig"]	null
+["Networks","bridge","IPAddress"]	"172.17.0.2"
+["Networks","bridge","IPPrefixLen"]	16
+["Networks","bridge","GlobalIPv6PrefixLen"]	0

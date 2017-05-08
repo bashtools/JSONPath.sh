@@ -4,3 +4,32 @@
 # vim goessner.net.expanded.argp1
 # rewrite all the ..argpN.parsed files:
 for i in goessner.net.expanded.argp*; do echo; cat goessner.net.expanded.${i##*.}; ../../JSONPath.sh -f goessner.net.expanded.json "`cat goessner.net.expanded.${i##*.}`" | tee goessner.net.expanded_${i##*.}.parsed; echo; done
+
+# flatten
+for i in *.argp*; do echo ${i%.*} ; ../../JSONPath.sh -f "${i%.*}.json" "`cat ${i}`"; read a; ../../JSONPath.sh -f "${i%.*}.json" "`cat ${i}`" -u ; read a ;done
+
+# show
+for i in d*.argp*; do echo "../../JSONPath.sh -f \"${i%.*}.json\" '`cat ${i}`' -u"; ../../JSONPath.sh -f "${i%.*}.json" "`cat ${i}`"; read a; ../../JSONPath.sh -f "${i%.*}.json" "`cat ${i}`" -u ; read a ;done
+../../JSONPath.sh -f "docker_running.json" '$..".*IP.*"' -u
+[0,"NetworkSettings","LinkLocalIPv6PrefixLen"]  0
+[0,"NetworkSettings","SecondaryIPAddresses"]    null
+[0,"NetworkSettings","SecondaryIPv6Addresses"]  null
+[0,"NetworkSettings","GlobalIPv6PrefixLen"]     0
+[0,"NetworkSettings","IPAddress"]       "172.17.0.2"
+[0,"NetworkSettings","IPPrefixLen"]     16
+[0,"NetworkSettings","Networks","bridge","IPAMConfig"]  null
+[0,"NetworkSettings","Networks","bridge","IPAddress"]   "172.17.0.2"
+[0,"NetworkSettings","Networks","bridge","IPPrefixLen"] 16
+[0,"NetworkSettings","Networks","bridge","GlobalIPv6PrefixLen"] 0
+
+["LinkLocalIPv6PrefixLen"]      0
+["SecondaryIPAddresses"]        null
+["SecondaryIPv6Addresses"]      null
+["GlobalIPv6PrefixLen"] 0
+["IPAddress"]   "172.17.0.2"
+["IPPrefixLen"] 16
+["Networks","bridge","IPAMConfig"]      null
+["Networks","bridge","IPAddress"]       "172.17.0.2"
+["Networks","bridge","IPPrefixLen"]     16
+["Networks","bridge","GlobalIPv6PrefixLen"]     0
+
