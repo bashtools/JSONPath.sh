@@ -317,9 +317,9 @@ Use the '-u' option to flatten the output:
 
 ```
 $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json \
-    '$..author' -u \
+    '$..author' \
     | sort -k2 | uniq -f 1 \
-    | ./JSONPath.sh -p
+    | ./JSONPath.sh -p -u
 ... JSON flattened output ...
 {
     "book":

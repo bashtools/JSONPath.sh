@@ -70,7 +70,7 @@ main() {
 
     if [[ $PASSTHROUGH -eq 1 ]]; then
       JSON=1
-      json
+      flatten | json
     elif [[ -z $FILE ]]; then
       tokenize | parse | filter | indexmatcher | flatten | json | brief
     else
