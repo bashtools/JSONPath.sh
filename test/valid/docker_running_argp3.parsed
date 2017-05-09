@@ -1,0 +1,5 @@
+[0,"NetworkSettings","IPAddress"]	"172.17.0.2"
+[0,"NetworkSettings","IPPrefixLen"]	16
+[0,"NetworkSettings","Networks","bridge","IPAMConfig"]	null
+[0,"NetworkSettings","Networks","bridge","IPAddress"]	"172.17.0.2"
+[0,"NetworkSettings","Networks","bridge","IPPrefixLen"]	16

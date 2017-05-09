@@ -352,7 +352,7 @@ create_filter() {
             fi
             comma=","
       ;;
-      *)    PATHTOKENS[i]=${PATHTOKENS[i]//\'/\"/}
+      *)    PATHTOKENS[i]=${PATHTOKENS[i]//\'/\"}
             query+="$comma\"${PATHTOKENS[i]//\"/}\""
             comma=","
       ;;
