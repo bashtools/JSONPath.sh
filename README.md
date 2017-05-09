@@ -105,6 +105,18 @@ curl registry.npmjs.org/express | ./JSONPath.sh '$.versions.*.version'
     '$.phoneNumbers[?(@.type=iPhone)]'
 ```
 
+*KUBERNETES EXAMPLES*
+
+``` bash
+# Show the NodePort of a service named bob
+# from a list of all services
+kubectl get svc -o json | JSONPath.sh \
+    '$..items[?(@.metadata.name==bob)].spec.ports[0].nodePort' -b
+
+# Or, more simply, show the NodePort of the service
+kubectl get svc bob -o json | JSONPath.sh '$..nodePort' -b
+```
+
 *DOCKER EXAMPLES*
 
 ``` bash
