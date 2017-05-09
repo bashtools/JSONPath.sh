@@ -76,6 +76,10 @@ more complex examples:
 *NPMJS.ORG EXAMPLES*
 
 ``` bash
+# Number of downloads yesterday
+curl -s https://api.npmjs.org/downloads/point/last-day/jsonpath.sh | \
+    JSONPath.sh '$.downloads' -b
+
 # Show all versions
 curl registry.npmjs.org/express | ./JSONPath.sh '$.versions.*.version'
 
@@ -115,6 +119,10 @@ kubectl get svc -o json | JSONPath.sh \
 
 # Or, more simply, show the NodePort of the service
 kubectl get svc bob -o json | JSONPath.sh '$..nodePort' -b
+
+# Get the port of the kubernetes-dashboard and output as json:
+kubectl get svc --all-namespaces -o json | JSONPath.sh -j -u \
+    '$.items[?(@.spec.selector.app=".*dashboard")]..ports[*].nodePort'
 ```
 
 *DOCKER EXAMPLES*
