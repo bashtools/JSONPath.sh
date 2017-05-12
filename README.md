@@ -201,13 +201,17 @@ done
     -f test/valid/goessner.net.expanded.json \
     -i '$..book[?(@.title==".*Book 1.*")].title'
 
-# The following do not work yet (TODO) 
+# All books with a price less than or equal to 4.20
+# Show both the title and the price and output in
+# JSON format but without redundant path elements.
+./JSONPath.sh -j -u \
+    -f test/valid/goessner.net.expanded.json \
+    '$.store.book[?(@.price<4.20)].[title,price]'
+
+# The following does not work yet (TODO) 
 ./JSONPath.sh \
     -f test/valid/goessner.net.expanded.json \
     '$.store.book[(@.length-1)].title'
-./JSONPath.sh \
-    -f test/valid/goessner.net.expanded.json \
-    '$.store.book[?(@.price < 10)].title'
 ```
 
 ## JSONPath patterns and extensions
@@ -224,12 +228,8 @@ done
 | []                     |     Y     | subscript operator.                                     |
 | [,]                    |     Y     | node sets.                                              |
 | ```[start:end:step]``` |     Y     | array slice operator.                                   |
-| ?()                    |     Y     | applies a filter (script) expressions (see note)        |
+| ?()                    |     Y     | applies a filter (script) expressions                   |
 | ()                     |     Y     | script expression, using the underlying script engine.  |
-
-NOTE: For filter expressions only the equality operator, '==', is implemented.
-
-*TODO*: >=, >, <=, and <
 
 ### Searching for things
 
@@ -360,7 +360,6 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json \
 ## Limitations (todo)
 
 * Only one filter expression, '?(@', per query.
-* Only equality operator, '==' and '=', is implemented for filter expressions.
 
 ## License
 
