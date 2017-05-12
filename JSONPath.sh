@@ -41,18 +41,12 @@ main() {
       cat "$STDINFILE" | tokenize | parse | filter | indexmatcher >$PASSFILE
 
       [[ $MULTIPASS -eq 1 ]] && {
-        # replace filter with index sequence
+        # replace filter expression with index sequence
         SET=$(sed -rn 's/.*,([0-9]+)[],].*/\1/p' $PASSFILE | tr '\n' ,)
         SET=${SET%,}
         QUERY=$(echo $QUERY | sed "s/?(@[^)]\+)/$SET/")
-        [[ $DEBUG -eq 1 ]] && {
-          echo "QUERY=$QUERY"
-        }
-        # Reset some vars
-        declare -a INDEXMATCH_QUERY
-        PATHTOKENS=
-        FILTER=
-        MULTIPASS=0
+        [[ $DEBUG -eq 1 ]] && echo "QUERY=$QUERY"
+        reset
         continue
       }
 
@@ -79,6 +73,19 @@ main() {
     fi
 
   fi 
+}
+
+# ---------------------------------------------------------------------------
+reset() {
+# ---------------------------------------------------------------------------
+
+  # Reset some vars
+  declare -a INDEXMATCH_QUERY
+  PATHTOKENS=
+  FILTER=
+  OPERATOR=
+  RHS=
+  MULTIPASS=0
 }
 
 # ---------------------------------------------------------------------------
@@ -274,7 +281,7 @@ create_filter() {
                [[ -z $operator ]] && { operator="=="; rhs=; }
                if [[ $rhs == *'"'* || $rhs == *"'"* ]]; then
                  case $operator in
-                   '=='|'=')  operator=
+                   '=='|'=')  OPERATOR=
                           if [[ $elem == '?(@' ]]; then
                             # To allow search on @.property such as:
                             #   $..book[?(@.title==".*Book 1.*")]
@@ -286,27 +293,42 @@ create_filter() {
                           fi
                           FILTER="$query"
                      ;;
-                   '>=')  operator="-ge"
+                   '>='|'>')  OPERATOR=">"
+                              RHS="$rhs"
+                              query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                              FILTER="$query"
                      ;;
-                   '>')   operator="-gt"
+                   '<='|'<')  OPERATOR="<"
+                              RHS="$rhs"
+                              query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                              FILTER="$query"
                      ;;
-                   '<=')  operator="-le"
-                     ;;
-                   '<')   operator="-lt"
                  esac
                else
                  case $operator in
-                   '=='|'=')  operator=
+                   '=='|'=')  OPERATOR=
                           query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*$rhs"
                           FILTER="$query"
                      ;;
-                   '>=')  operator="-ge"
+                   '>=')  OPERATOR="-ge"
+                          RHS="$rhs"
+                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                          FILTER="$query"
                      ;;
-                   '>')   operator="-gt"
+                   '>')   OPERATOR="-gt"
+                          RHS="$rhs"
+                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                          FILTER="$query"
                      ;;
-                   '<=')  operator="-le"
+                   '<=')  OPERATOR="-le"
+                          RHS="$rhs"
+                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                          FILTER="$query"
                      ;;
-                   '<')   operator="-lt"
+                   '<')   OPERATOR="-lt"
+                          RHS="$rhs"
+                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                          FILTER="$query"
                  esac
                fi
                MULTIPASS=1
@@ -361,9 +383,7 @@ create_filter() {
   done
 
   [[ -z $FILTER ]] && FILTER="$query[],]"
-  [[ $DEBUG -eq 1 ]] && {
-    echo "FILTER=$FILTER"
-  }
+  [[ $DEBUG -eq 1 ]] && echo "FILTER=$FILTER"
 }
 
 # ---------------------------------------------------------------------------
@@ -763,9 +783,36 @@ filter() {
 # ---------------------------------------------------------------------------
 # Apply the query filter
 
+  local a tab=$(echo -e "\t") v
+
   [[ $NOCASE -eq 1 ]] && opts+="-i"
   [[ $WHOLEWORD -eq 1 ]] && opts+=" -w"
-  egrep $opts "$FILTER"
+  if [[ -z $OPERATOR ]]; then
+    egrep $opts "$FILTER"
+  else
+    egrep $opts "$FILTER" | \
+      while read line; do
+        v=${line#*$tab}
+        case $OPERATOR in
+          '-ge') if awk '{exit !($1>=$2)}'<<<"$v $RHS";then echo "$line"; fi
+            ;;
+          '-gt') if awk '{exit !($1>$2) }'<<<"$v $RHS";then echo "$line"; fi
+            ;;
+          '-le') if awk '{exit !($1<=$2) }'<<<"$v $RHS";then echo "$line"; fi
+            ;;
+          '-lt') if awk '{exit !($1<$2) }'<<<"$v $RHS";then echo "$line"; fi
+            ;;
+          '>') v=${v#\"};v=${v%\"}
+               RHS=${RHS#\"};RHS=${RHS%\"}
+               [[ "$v" > "$RHS" ]] && echo "$line"
+            ;;
+          '<') v=${v#\"};v=${v%\"}
+               RHS=${RHS#\"};RHS=${RHS%\"}
+               [[ "$v" < "$RHS" ]] && echo "$line"
+            ;;
+        esac
+      done #< <(egrep $opts "$FILTER")
+  fi
 }
 
 # ---------------------------------------------------------------------------

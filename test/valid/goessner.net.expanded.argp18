@@ -1,0 +1,1 @@
+$.store.book[?(@.price>4.2)].[title,price]
