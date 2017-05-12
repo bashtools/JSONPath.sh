@@ -17,6 +17,9 @@ JSON=0
 PRINT=1
 MULTIPASS=0
 FLATTEN=0
+STDINFILE=/var/tmp/JSONPath.$$.stdin
+STDINFILE2=/var/tmp/JSONPath.$$.stdin2
+PASSFILE=/var/tmp/JSONPath.$$.pass1
 declare -a INDEXMATCH_QUERY
 
 # ---------------------------------------------------------------------------
@@ -26,13 +29,13 @@ main() {
 
   parse_options "$@"
 
+  trap cleanup EXIT
+
   if [[ $QUERY == *'?(@'* ]]; then
     # This will be a multipass query
 
-    STDINFILE=/var/tmp/JSONPath.$$.stdin
     [[ -n $FILE ]] && STDINFILE=$FILE
     [[ -z $FILE ]] && cat >$STDINFILE
-    PASSFILE=/var/tmp/JSONPath.$$.pass1
 
     while true; do
       tokenize_path
@@ -55,8 +58,6 @@ main() {
       break
     done
 
-    [[ -z $FILE ]] && rm -f $STDINFILE
-    rm -f $PASSFILE
   else
 
     tokenize_path
@@ -86,6 +87,15 @@ reset() {
   OPERATOR=
   RHS=
   MULTIPASS=0
+}
+
+# ---------------------------------------------------------------------------
+cleanup() {
+# ---------------------------------------------------------------------------
+
+  [[ -e "$PASSFILE" ]] && rm -f "$PASSFILE"
+  [[ -e "$STDINFILE2" ]] && rm -f "$STDINFILE2"
+  [[ -z "$FILE" && -e "$STDINFILE" ]] && rm -f "$STDINFILE"
 }
 
 # ---------------------------------------------------------------------------
@@ -491,8 +501,7 @@ flatten() {
   local path a prevpath pathlen
 
   if [[ $FLATTEN -eq 1 ]]; then
-    STDINFILE=/var/tmp/JSONPath.$$.stdin
-    cat >"$STDINFILE"
+    cat >"$STDINFILE2"
     
     highest=9999
 
@@ -517,13 +526,13 @@ flatten() {
       [[ $high -lt $highest ]] && highest=$high
 
       prevpath=("${path[@]}")
-    done <"$STDINFILE"
+    done <"$STDINFILE2"
     
     if [[ $highest -gt 0 ]]; then
       sed -r 's/\[(([0-9]+|"[^"]+")[],]){'$((highest))'}(.*)/[\3/' \
-        "$STDINFILE"
+        "$STDINFILE2"
     else 
-      cat "$STDINFILE"
+      cat "$STDINFILE2"
     fi
   else
     cat
