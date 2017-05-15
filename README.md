@@ -275,12 +275,12 @@ This tool, JSONPath.sh, is really handy for handing json formatted
 data to other tools, and using pass-through mode (-p) comes in quite
 handy for creating complex queries and outputting in json.
 
-*Standard Re-injection* allows the user to overcome the limitation
+**Re-injection** allows the user to overcome the limitation
 of a single filter expression per invocation. To do this the first
 query, or set of queries, should output in JSON format using the
 '-j' option.
 
-*Usage Example*
+**Usage Example**
 
 Show all books with a price greater than 4 that also have a 5 star
 rating (note that the first process in the pipeline outputs in json):
@@ -291,11 +291,11 @@ rating (note that the first process in the pipeline outputs in json):
     '$..book[?(@.rating==5)].title'
 ```
 
-*Pass-through mode* reads the standard output JSONPath.sh (or JSON.sh)
+**Pass-through mode** reads the standard output JSONPath.sh (or JSON.sh)
 produces and outputs JSON. This gives the user an opportunity to filter
 or modify the results:
 
-*Usage Example*
+**Usage Example**
 
 Show all authors, without showing duplicates and output in JSON format.
 
@@ -377,6 +377,7 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json \
 ## Limitations (todo)
 
 * Only one filter expression, '?(@', per query.
+  Use re-injection, detailed above, to overcome this limitation.
 
 ## License
 
