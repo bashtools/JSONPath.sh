@@ -38,6 +38,18 @@ pattern
 -h
 > Show help text.
 
+## Requirements
+
+JSONPath.sh is a Bash script that uses standard GNU tools.
+The following GNU programs are required:
+
+* bash
+* cat
+* sed
+* awk
+* grep
+* seq
+
 ## Installation
 
 Install with pip:
