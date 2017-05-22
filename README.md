@@ -307,7 +307,7 @@ rating (note that the first process in the pipeline outputs in json):
 produces and outputs JSON. This gives the user an opportunity to filter
 or modify the results:
 
-**Usage Example**
+**Filtering Usage Example**
 
 Show all authors, without showing duplicates and output in JSON format.
 
@@ -367,6 +367,79 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json \
         {
             "author":"Evelyn Waugh"
         },
+```
+
+**Filter and Merge Usage Example**
+
+Different parts of JSON input, or entirely different JSON input, can be merged
+together with Unix 'sort' and output in json format.
+
+This is a complex kubernetes example that uses JSONPath.sh and standard Unix
+tools to output just the command, pod mounts, and container mounts (output from
+different parts of the tree) for the first matched kube-proxy pod.
+
+```
+# Get details of all pods
+kubectl get -n kube-system pods -o json >/tmp/kpod
+
+# Get the index of the first pod with name starting 'kube-proxy'
+idx=`JSONPath.sh -f /tmp/kpod '$.items[?(@.metadata.name=="kube-proxy.*")].apiVersion' \
+     | head -n1 | grep -o ',[0-9]\+,' | tr -d ,`
+
+# Get three subtrees using the index and merge them using sort
+# and then output in json format
+( JSONPath.sh -f /tmp/kpod '$.items['$idx'].spec.volumes'; \
+  JSONPath.sh -f /tmp/kpod '$.items['$idx']..volumeMounts'; \
+  JSONPath.sh -f /tmp/kpod '$.items['$idx']..containers[*].command'
+) | sort | JSONPath.sh -p -u
+```
+
+, which produces:
+
+```
+{
+    "containers":
+    [
+        {
+            "command":
+            [
+                "/usr/local/bin/kube-proxy",
+                "--kubeconfig=/var/lib/kube-proxy/kubeconfig.conf"
+            ],
+            "volumeMounts":
+            [
+                {
+                    "mountPath":"/var/lib/kube-proxy",
+                    "name":"kube-proxy"
+                },
+                {
+                    "mountPath":"/var/run/secrets/kubernetes.io/serviceaccount",
+                    "name":"kube-proxy-token-m9b6j",
+                    "readOnly":true
+                }
+            ]
+        }
+    ],
+    "volumes":
+    [
+        {
+            "configMap":
+            {
+                "defaultMode":420,
+                "name":"kube-proxy"
+            },
+            "name":"kube-proxy"
+        },
+        {
+            "name":"kube-proxy-token-m9b6j",
+            "secret":
+            {
+                "defaultMode":420,
+                "secretName":"kube-proxy-token-m9b6j"
+            }
+        }
+    ]
+}
 ```
 
 ## Cool Links
