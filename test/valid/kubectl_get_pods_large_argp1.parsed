@@ -1,0 +1,7 @@
+["items",0,"metadata","name"]	"hello-deployment-4182353395-75ktx"
+["items",0,"metadata","ownerReferences",0,"apiVersion"]	"extensions/v1beta1"
+["items",0,"metadata","ownerReferences",0,"kind"]	"ReplicaSet"
+["items",0,"metadata","ownerReferences",0,"name"]	"hello-deployment-4182353395"
+["items",0,"metadata","ownerReferences",0,"uid"]	"b647a805-3a22-11e7-877b-02193b8aadb3"
+["items",0,"metadata","ownerReferences",0,"controller"]	true
+["items",0,"metadata","ownerReferences",0,"blockOwnerDeletion"]	true

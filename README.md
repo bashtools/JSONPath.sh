@@ -6,10 +6,10 @@ yo, so it's a JSONPath implementation written in Bash - and it probably only wor
 
 ## Invocation
 
-    JSONPath.sh [-n] [-s] [-b] [-i] [-j] [-h] [-p] [-u] [-f FILE] pattern
+    JSONPath.sh [-n] [-s] [-b] [-i] [-j] [-h] [-p] [-u] [-f FILE] [pattern]
 
 pattern
-> the JSONPath query
+> the JSONPath query. Defaults to '$.\*' if not supplied.
 
 -b
 > Brief output. Only show the values, not the path and key.
@@ -71,7 +71,7 @@ mv JSONPath.sh ~/bin
 ## Examples
 
 ``` bash
-$ ./JSONPath.sh '$.*' < package.json
+$ ./JSONPath.sh < package.json
 ["name"]        "JSONPath.sh"
 ["version"]     "0.0.0"
 ["description"] "JSONPath implementation written in Bash"

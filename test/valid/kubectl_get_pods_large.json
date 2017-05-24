@@ -1,0 +1,2533 @@
+{
+  "kind": "PodList",
+  "apiVersion": "v1",
+  "metadata": {
+    "selfLink": "/api/v1/pods",
+    "resourceVersion": "1482614"
+  },
+  "items": [
+    {
+      "metadata": {
+        "name": "hello-deployment-4182353395-75ktx",
+        "generateName": "hello-deployment-4182353395-",
+        "namespace": "default",
+        "selfLink": "/api/v1/namespaces/default/pods/hello-deployment-4182353395-75ktx",
+        "uid": "b6674a12-3a22-11e7-877b-02193b8aadb3",
+        "resourceVersion": "585121",
+        "creationTimestamp": "2017-05-16T10:30:42Z",
+        "labels": {
+          "app": "hello",
+          "pod-template-hash": "4182353395"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicaSet\",\"namespace\":\"default\",\"name\":\"hello-deployment-4182353395\",\"uid\":\"b647a805-3a22-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"584169\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "ReplicaSet",
+            "name": "hello-deployment-4182353395",
+            "uid": "b647a805-3a22-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-5702b",
+            "secret": {
+              "secretName": "default-token-5702b",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "hello",
+            "image": "davidkbainbridge/docker-hello-world:latest",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "default-token-5702b",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/health",
+                "port": 8080,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "Always"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "k8s2",
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:30:42Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:42:09Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:30:42Z"
+          }
+        ],
+        "hostIP": "172.42.42.2",
+        "podIP": "10.46.0.2",
+        "startTime": "2017-05-16T10:30:42Z",
+        "containerStatuses": [
+          {
+            "name": "hello",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-16T10:42:08Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "davidkbainbridge/docker-hello-world:latest",
+            "imageID": "docker-pullable://davidkbainbridge/docker-hello-world@sha256:7468d1477aa09f6cc6bebd9ee84c47eb29d41b216a3f84daf6a814de270c402d",
+            "containerID": "docker://2d8fd11a453d1a73c9ad9f1a62ea56661161969532cea4487e1fb676d6777d39"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "hello-deployment-4182353395-fp7rt",
+        "generateName": "hello-deployment-4182353395-",
+        "namespace": "default",
+        "selfLink": "/api/v1/namespaces/default/pods/hello-deployment-4182353395-fp7rt",
+        "uid": "b6675b40-3a22-11e7-877b-02193b8aadb3",
+        "resourceVersion": "585112",
+        "creationTimestamp": "2017-05-16T10:30:42Z",
+        "labels": {
+          "app": "hello",
+          "pod-template-hash": "4182353395"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicaSet\",\"namespace\":\"default\",\"name\":\"hello-deployment-4182353395\",\"uid\":\"b647a805-3a22-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"584169\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "ReplicaSet",
+            "name": "hello-deployment-4182353395",
+            "uid": "b647a805-3a22-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-5702b",
+            "secret": {
+              "secretName": "default-token-5702b",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "hello",
+            "image": "davidkbainbridge/docker-hello-world:latest",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "default-token-5702b",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/health",
+                "port": 8080,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "Always"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "k8s2",
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:30:42Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:42:07Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:30:42Z"
+          }
+        ],
+        "hostIP": "172.42.42.2",
+        "podIP": "10.46.0.1",
+        "startTime": "2017-05-16T10:30:42Z",
+        "containerStatuses": [
+          {
+            "name": "hello",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-16T10:42:06Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "davidkbainbridge/docker-hello-world:latest",
+            "imageID": "docker-pullable://davidkbainbridge/docker-hello-world@sha256:7468d1477aa09f6cc6bebd9ee84c47eb29d41b216a3f84daf6a814de270c402d",
+            "containerID": "docker://eccf3f1ac87b4580bed10e81540b70b0078c5a4efb1a31a8a24bafb558f314a6"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "hello-deployment-4182353395-st5nf",
+        "generateName": "hello-deployment-4182353395-",
+        "namespace": "default",
+        "selfLink": "/api/v1/namespaces/default/pods/hello-deployment-4182353395-st5nf",
+        "uid": "b66768b8-3a22-11e7-877b-02193b8aadb3",
+        "resourceVersion": "585154",
+        "creationTimestamp": "2017-05-16T10:30:42Z",
+        "labels": {
+          "app": "hello",
+          "pod-template-hash": "4182353395"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicaSet\",\"namespace\":\"default\",\"name\":\"hello-deployment-4182353395\",\"uid\":\"b647a805-3a22-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"584169\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "ReplicaSet",
+            "name": "hello-deployment-4182353395",
+            "uid": "b647a805-3a22-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "default-token-5702b",
+            "secret": {
+              "secretName": "default-token-5702b",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "hello",
+            "image": "davidkbainbridge/docker-hello-world:latest",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "default-token-5702b",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/health",
+                "port": 8080,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "Always"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "default",
+        "serviceAccount": "default",
+        "nodeName": "k8s3",
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:30:42Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:42:28Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-16T10:30:42Z"
+          }
+        ],
+        "hostIP": "172.42.42.3",
+        "podIP": "10.32.0.2",
+        "startTime": "2017-05-16T10:30:42Z",
+        "containerStatuses": [
+          {
+            "name": "hello",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-16T10:42:28Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "davidkbainbridge/docker-hello-world:latest",
+            "imageID": "docker-pullable://davidkbainbridge/docker-hello-world@sha256:7468d1477aa09f6cc6bebd9ee84c47eb29d41b216a3f84daf6a814de270c402d",
+            "containerID": "docker://14e4b39f3dee766371766d53366b401127eb7361dce31c5f9cbb236eb8dd7875"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "etcd-k8s1",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/etcd-k8s1",
+        "uid": "2ace455f-3645-11e7-877b-02193b8aadb3",
+        "resourceVersion": "417",
+        "creationTimestamp": "2017-05-11T12:27:15Z",
+        "labels": {
+          "component": "etcd",
+          "tier": "control-plane"
+        },
+        "annotations": {
+          "kubernetes.io/config.hash": "7075157cfd4524dbe0951e00a8e3129e",
+          "kubernetes.io/config.mirror": "7075157cfd4524dbe0951e00a8e3129e",
+          "kubernetes.io/config.seen": "2017-05-11T12:25:15.624671144Z",
+          "kubernetes.io/config.source": "file"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "certs",
+            "hostPath": {
+              "path": "/etc/ssl/certs"
+            }
+          },
+          {
+            "name": "etcd",
+            "hostPath": {
+              "path": "/var/lib/etcd"
+            }
+          },
+          {
+            "name": "k8s",
+            "hostPath": {
+              "path": "/etc/kubernetes"
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "etcd",
+            "image": "gcr.io/google_containers/etcd-amd64:3.0.17",
+            "command": [
+              "etcd",
+              "--listen-client-urls=http://127.0.0.1:2379",
+              "--advertise-client-urls=http://127.0.0.1:2379",
+              "--data-dir=/var/lib/etcd"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "certs",
+                "mountPath": "/etc/ssl/certs"
+              },
+              {
+                "name": "etcd",
+                "mountPath": "/var/lib/etcd"
+              },
+              {
+                "name": "k8s",
+                "readOnly": true,
+                "mountPath": "/etc/kubernetes/"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/health",
+                "port": 2379,
+                "host": "127.0.0.1",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 15,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 8
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "nodeName": "k8s1",
+        "hostNetwork": true,
+        "securityContext": {
+          "seLinuxOptions": {
+            "type": "spc_t"
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:20Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:26:10Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:20Z"
+          }
+        ],
+        "hostIP": "172.42.42.1",
+        "podIP": "172.42.42.1",
+        "startTime": "2017-05-11T12:25:20Z",
+        "containerStatuses": [
+          {
+            "name": "etcd",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-11T12:26:10Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/etcd-amd64:3.0.17",
+            "imageID": "docker-pullable://gcr.io/google_containers/etcd-amd64@sha256:d83d3545e06fb035db8512e33bd44afb55dea007a3abd7b17742d3ac6d235940",
+            "containerID": "docker://60c49c492f25de1b7af9a16da0ca4a0552a4e3664d263c5388aa2fef5cc2ee39"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-apiserver-k8s1",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/kube-apiserver-k8s1",
+        "uid": "1a1df35c-3645-11e7-877b-02193b8aadb3",
+        "resourceVersion": "378",
+        "creationTimestamp": "2017-05-11T12:26:47Z",
+        "labels": {
+          "component": "kube-apiserver",
+          "tier": "control-plane"
+        },
+        "annotations": {
+          "kubernetes.io/config.hash": "ec32b5b6e23058ce97a4d8bdc3628e81",
+          "kubernetes.io/config.mirror": "ec32b5b6e23058ce97a4d8bdc3628e81",
+          "kubernetes.io/config.seen": "2017-05-11T12:25:15.624685591Z",
+          "kubernetes.io/config.source": "file"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "k8s",
+            "hostPath": {
+              "path": "/etc/kubernetes"
+            }
+          },
+          {
+            "name": "certs",
+            "hostPath": {
+              "path": "/etc/ssl/certs"
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "kube-apiserver",
+            "image": "gcr.io/google_containers/kube-apiserver-amd64:v1.6.3",
+            "command": [
+              "kube-apiserver",
+              "--tls-cert-file=/etc/kubernetes/pki/apiserver.crt",
+              "--kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt",
+              "--requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt",
+              "--requestheader-group-headers=X-Remote-Group",
+              "--storage-backend=etcd3",
+              "--requestheader-username-headers=X-Remote-User",
+              "--service-account-key-file=/etc/kubernetes/pki/sa.pub",
+              "--client-ca-file=/etc/kubernetes/pki/ca.crt",
+              "--insecure-port=0",
+              "--requestheader-extra-headers-prefix=X-Remote-Extra-",
+              "--service-cluster-ip-range=10.96.0.0/12",
+              "--tls-private-key-file=/etc/kubernetes/pki/apiserver.key",
+              "--kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key",
+              "--secure-port=6443",
+              "--allow-privileged=true",
+              "--experimental-bootstrap-token-auth=true",
+              "--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname",
+              "--requestheader-allowed-names=front-proxy-client",
+              "--admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,ResourceQuota,DefaultTolerationSeconds",
+              "--authorization-mode=RBAC",
+              "--advertise-address=172.42.42.1",
+              "--etcd-servers=http://127.0.0.1:2379"
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "250m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "k8s",
+                "readOnly": true,
+                "mountPath": "/etc/kubernetes/"
+              },
+              {
+                "name": "certs",
+                "mountPath": "/etc/ssl/certs"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": 6443,
+                "host": "127.0.0.1",
+                "scheme": "HTTPS"
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 15,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 8
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "nodeName": "k8s1",
+        "hostNetwork": true,
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:20Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:43Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:20Z"
+          }
+        ],
+        "hostIP": "172.42.42.1",
+        "podIP": "172.42.42.1",
+        "startTime": "2017-05-11T12:25:20Z",
+        "containerStatuses": [
+          {
+            "name": "kube-apiserver",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-11T12:25:43Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/kube-apiserver-amd64:v1.6.3",
+            "imageID": "docker-pullable://gcr.io/google_containers/kube-apiserver-amd64@sha256:5a1623ec941d6fcde6922dd501b8a03f7dd9ffa0f612d00dae7920321ef3681e",
+            "containerID": "docker://8671d3dfdfb44a0bda3078c1dff174660871726aff3b45aac11489d694920da7"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-controller-manager-k8s1",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/kube-controller-manager-k8s1",
+        "uid": "2c983046-3645-11e7-877b-02193b8aadb3",
+        "resourceVersion": "416",
+        "creationTimestamp": "2017-05-11T12:27:18Z",
+        "labels": {
+          "component": "kube-controller-manager",
+          "tier": "control-plane"
+        },
+        "annotations": {
+          "kubernetes.io/config.hash": "486934a46943fb93f1aa597c8263b5eb",
+          "kubernetes.io/config.mirror": "486934a46943fb93f1aa597c8263b5eb",
+          "kubernetes.io/config.seen": "2017-05-11T12:25:15.624691197Z",
+          "kubernetes.io/config.source": "file"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "k8s",
+            "hostPath": {
+              "path": "/etc/kubernetes"
+            }
+          },
+          {
+            "name": "certs",
+            "hostPath": {
+              "path": "/etc/ssl/certs"
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "kube-controller-manager",
+            "image": "gcr.io/google_containers/kube-controller-manager-amd64:v1.6.3",
+            "command": [
+              "kube-controller-manager",
+              "--cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt",
+              "--cluster-signing-key-file=/etc/kubernetes/pki/ca.key",
+              "--leader-elect=true",
+              "--use-service-account-credentials=true",
+              "--kubeconfig=/etc/kubernetes/controller-manager.conf",
+              "--root-ca-file=/etc/kubernetes/pki/ca.crt",
+              "--address=127.0.0.1",
+              "--insecure-experimental-approve-all-kubelet-csrs-for-group=system:bootstrappers",
+              "--controllers=*,bootstrapsigner,tokencleaner",
+              "--service-account-private-key-file=/etc/kubernetes/pki/sa.key"
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "200m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "k8s",
+                "readOnly": true,
+                "mountPath": "/etc/kubernetes/"
+              },
+              {
+                "name": "certs",
+                "mountPath": "/etc/ssl/certs"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": 10252,
+                "host": "127.0.0.1",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 15,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 8
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "nodeName": "k8s1",
+        "hostNetwork": true,
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:20Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:54Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:20Z"
+          }
+        ],
+        "hostIP": "172.42.42.1",
+        "podIP": "172.42.42.1",
+        "startTime": "2017-05-11T12:25:20Z",
+        "containerStatuses": [
+          {
+            "name": "kube-controller-manager",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-11T12:25:54Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/kube-controller-manager-amd64:v1.6.3",
+            "imageID": "docker-pullable://gcr.io/google_containers/kube-controller-manager-amd64@sha256:d139bae530be2ece28417715b55f97b0f19f594d8357ea6b8bd4a42dd66aad5a",
+            "containerID": "docker://673e6094fe43e914a5aa9184e5c3195fb766315e8d2c0a3a4f5d0b5f6b649e2f"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-dns-3913472980-mbxbg",
+        "generateName": "kube-dns-3913472980-",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/kube-dns-3913472980-mbxbg",
+        "uid": "09cbfa2c-3645-11e7-877b-02193b8aadb3",
+        "resourceVersion": "484637",
+        "creationTimestamp": "2017-05-11T12:26:20Z",
+        "labels": {
+          "k8s-app": "kube-dns",
+          "pod-template-hash": "3913472980"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicaSet\",\"namespace\":\"kube-system\",\"name\":\"kube-dns-3913472980\",\"uid\":\"09c93449-3645-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"239\"}}\n",
+          "scheduler.alpha.kubernetes.io/critical-pod": ""
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "ReplicaSet",
+            "name": "kube-dns-3913472980",
+            "uid": "09c93449-3645-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "kube-dns-config",
+            "configMap": {
+              "name": "kube-dns",
+              "defaultMode": 420,
+              "optional": true
+            }
+          },
+          {
+            "name": "kube-dns-token-2pn7r",
+            "secret": {
+              "secretName": "kube-dns-token-2pn7r",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "kubedns",
+            "image": "gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.1",
+            "args": [
+              "--domain=cluster.local.",
+              "--dns-port=10053",
+              "--config-dir=/kube-dns-config",
+              "--v=2"
+            ],
+            "ports": [
+              {
+                "name": "dns-local",
+                "containerPort": 10053,
+                "protocol": "UDP"
+              },
+              {
+                "name": "dns-tcp-local",
+                "containerPort": 10053,
+                "protocol": "TCP"
+              },
+              {
+                "name": "metrics",
+                "containerPort": 10055,
+                "protocol": "TCP"
+              }
+            ],
+            "env": [
+              {
+                "name": "PROMETHEUS_PORT",
+                "value": "10055"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "memory": "170Mi"
+              },
+              "requests": {
+                "cpu": "100m",
+                "memory": "70Mi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "kube-dns-config",
+                "mountPath": "/kube-dns-config"
+              },
+              {
+                "name": "kube-dns-token-2pn7r",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthcheck/kubedns",
+                "port": 10054,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 60,
+              "timeoutSeconds": 5,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 5
+            },
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/readiness",
+                "port": 8081,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 3,
+              "timeoutSeconds": 5,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          },
+          {
+            "name": "dnsmasq",
+            "image": "gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.1",
+            "args": [
+              "-v=2",
+              "-logtostderr",
+              "-configDir=/etc/k8s/dns/dnsmasq-nanny",
+              "-restartDnsmasq=true",
+              "--",
+              "-k",
+              "--cache-size=1000",
+              "--log-facility=-",
+              "--server=/cluster.local/127.0.0.1#10053",
+              "--server=/in-addr.arpa/127.0.0.1#10053",
+              "--server=/ip6.arpa/127.0.0.1#10053"
+            ],
+            "ports": [
+              {
+                "name": "dns",
+                "containerPort": 53,
+                "protocol": "UDP"
+              },
+              {
+                "name": "dns-tcp",
+                "containerPort": 53,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "150m",
+                "memory": "20Mi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "kube-dns-config",
+                "mountPath": "/etc/k8s/dns/dnsmasq-nanny"
+              },
+              {
+                "name": "kube-dns-token-2pn7r",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthcheck/dnsmasq",
+                "port": 10054,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 60,
+              "timeoutSeconds": 5,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 5
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          },
+          {
+            "name": "sidecar",
+            "image": "gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.1",
+            "args": [
+              "--v=2",
+              "--logtostderr",
+              "--probe=kubedns,127.0.0.1:10053,kubernetes.default.svc.cluster.local,5,A",
+              "--probe=dnsmasq,127.0.0.1:53,kubernetes.default.svc.cluster.local,5,A"
+            ],
+            "ports": [
+              {
+                "name": "metrics",
+                "containerPort": 10054,
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "10m",
+                "memory": "20Mi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "kube-dns-token-2pn7r",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/metrics",
+                "port": 10054,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 60,
+              "timeoutSeconds": 5,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 5
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "Default",
+        "serviceAccountName": "kube-dns",
+        "serviceAccount": "kube-dns",
+        "nodeName": "k8s1",
+        "securityContext": {},
+        "affinity": {
+          "nodeAffinity": {
+            "requiredDuringSchedulingIgnoredDuringExecution": {
+              "nodeSelectorTerms": [
+                {
+                  "matchExpressions": [
+                    {
+                      "key": "beta.kubernetes.io/arch",
+                      "operator": "In",
+                      "values": [
+                        "amd64"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/master",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "CriticalAddonsOnly",
+            "operator": "Exists"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute",
+            "tolerationSeconds": 300
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:46:35Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T13:32:25Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:46:35Z"
+          }
+        ],
+        "hostIP": "172.42.42.1",
+        "podIP": "10.40.0.1",
+        "startTime": "2017-05-15T10:46:35Z",
+        "containerStatuses": [
+          {
+            "name": "dnsmasq",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T13:32:10Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.1",
+            "imageID": "docker-pullable://gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64@sha256:89c9a1d3cfbf370a9c1a949f39f92c1dc2dbe8c3e6cc1802b7f2b48e4dfe9a9e",
+            "containerID": "docker://b8b711f0e0f6737213228c6d2fcf65127635eae8d5c90f3514d6df4c891d7229"
+          },
+          {
+            "name": "kubedns",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T13:32:22Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.1",
+            "imageID": "docker-pullable://gcr.io/google_containers/k8s-dns-kube-dns-amd64@sha256:33914315e600dfb756e550828307dfa2b21fb6db24fe3fe495e33d1022f9245d",
+            "containerID": "docker://f32e71d054cbb80875f4bb2b14ffdd4f6845ba0b972b8a0d765eac2dda634722"
+          },
+          {
+            "name": "sidecar",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T13:32:15Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.1",
+            "imageID": "docker-pullable://gcr.io/google_containers/k8s-dns-sidecar-amd64@sha256:d33a91a5d65c223f410891001cd379ac734d036429e033865d700a4176e944b0",
+            "containerID": "docker://77ae6f016890941ce527019eaddc86617a3a930b5129a52e9ceeabc06f475114"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-proxy-7r5p1",
+        "generateName": "kube-proxy-",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/kube-proxy-7r5p1",
+        "uid": "e23b5a5c-3645-11e7-877b-02193b8aadb3",
+        "resourceVersion": "468207",
+        "creationTimestamp": "2017-05-11T12:32:23Z",
+        "labels": {
+          "k8s-app": "kube-proxy",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"DaemonSet\",\"namespace\":\"kube-system\",\"name\":\"kube-proxy\",\"uid\":\"087615a5-3645-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"578\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "DaemonSet",
+            "name": "kube-proxy",
+            "uid": "087615a5-3645-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "kube-proxy",
+            "configMap": {
+              "name": "kube-proxy",
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "kube-proxy-token-m9b6j",
+            "secret": {
+              "secretName": "kube-proxy-token-m9b6j",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "kube-proxy",
+            "image": "gcr.io/google_containers/kube-proxy-amd64:v1.6.3",
+            "command": [
+              "/usr/local/bin/kube-proxy",
+              "--kubeconfig=/var/lib/kube-proxy/kubeconfig.conf"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "kube-proxy",
+                "mountPath": "/var/lib/kube-proxy"
+              },
+              {
+                "name": "kube-proxy-token-m9b6j",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "kube-proxy",
+        "serviceAccount": "kube-proxy",
+        "nodeName": "k8s3",
+        "hostNetwork": true,
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/master",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:32:27Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:32:42Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:32:42Z"
+          }
+        ],
+        "hostIP": "172.42.42.3",
+        "podIP": "172.42.42.3",
+        "startTime": "2017-05-11T12:32:27Z",
+        "containerStatuses": [
+          {
+            "name": "kube-proxy",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-11T12:32:42Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/kube-proxy-amd64:v1.6.3",
+            "imageID": "docker-pullable://gcr.io/google_containers/kube-proxy-amd64@sha256:d91cd43993437515ad36e0b2c52ad8595c5c1591e664605c14708fd4c74f6222",
+            "containerID": "docker://f7bf001bd341c23b918ba793a660bb7e20ebdd5bc4866a0eaf89c61fa899b22f"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-proxy-l6dq4",
+        "generateName": "kube-proxy-",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/kube-proxy-l6dq4",
+        "uid": "68983d77-3645-11e7-877b-02193b8aadb3",
+        "resourceVersion": "468171",
+        "creationTimestamp": "2017-05-11T12:28:59Z",
+        "labels": {
+          "k8s-app": "kube-proxy",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"DaemonSet\",\"namespace\":\"kube-system\",\"name\":\"kube-proxy\",\"uid\":\"087615a5-3645-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"322\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "DaemonSet",
+            "name": "kube-proxy",
+            "uid": "087615a5-3645-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "kube-proxy",
+            "configMap": {
+              "name": "kube-proxy",
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "kube-proxy-token-m9b6j",
+            "secret": {
+              "secretName": "kube-proxy-token-m9b6j",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "kube-proxy",
+            "image": "gcr.io/google_containers/kube-proxy-amd64:v1.6.3",
+            "command": [
+              "/usr/local/bin/kube-proxy",
+              "--kubeconfig=/var/lib/kube-proxy/kubeconfig.conf"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "kube-proxy",
+                "mountPath": "/var/lib/kube-proxy"
+              },
+              {
+                "name": "kube-proxy-token-m9b6j",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "kube-proxy",
+        "serviceAccount": "kube-proxy",
+        "nodeName": "k8s2",
+        "hostNetwork": true,
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/master",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:29:03Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:29:18Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:29:18Z"
+          }
+        ],
+        "hostIP": "172.42.42.2",
+        "podIP": "172.42.42.2",
+        "startTime": "2017-05-11T12:29:03Z",
+        "containerStatuses": [
+          {
+            "name": "kube-proxy",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-11T12:29:17Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/kube-proxy-amd64:v1.6.3",
+            "imageID": "docker-pullable://gcr.io/google_containers/kube-proxy-amd64@sha256:d91cd43993437515ad36e0b2c52ad8595c5c1591e664605c14708fd4c74f6222",
+            "containerID": "docker://67886c3bc9d0fe390b6db12ae77f53671638f1d0c5373e16832ca65909693e07"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-proxy-rsdbd",
+        "generateName": "kube-proxy-",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/kube-proxy-rsdbd",
+        "uid": "09c2216f-3645-11e7-877b-02193b8aadb3",
+        "resourceVersion": "328",
+        "creationTimestamp": "2017-05-11T12:26:20Z",
+        "labels": {
+          "k8s-app": "kube-proxy",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"DaemonSet\",\"namespace\":\"kube-system\",\"name\":\"kube-proxy\",\"uid\":\"087615a5-3645-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"185\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "DaemonSet",
+            "name": "kube-proxy",
+            "uid": "087615a5-3645-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "kube-proxy",
+            "configMap": {
+              "name": "kube-proxy",
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "kube-proxy-token-m9b6j",
+            "secret": {
+              "secretName": "kube-proxy-token-m9b6j",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "kube-proxy",
+            "image": "gcr.io/google_containers/kube-proxy-amd64:v1.6.3",
+            "command": [
+              "/usr/local/bin/kube-proxy",
+              "--kubeconfig=/var/lib/kube-proxy/kubeconfig.conf"
+            ],
+            "resources": {},
+            "volumeMounts": [
+              {
+                "name": "kube-proxy",
+                "mountPath": "/var/lib/kube-proxy"
+              },
+              {
+                "name": "kube-proxy-token-m9b6j",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "kube-proxy",
+        "serviceAccount": "kube-proxy",
+        "nodeName": "k8s1",
+        "hostNetwork": true,
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/master",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:26:20Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:26:31Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:26:31Z"
+          }
+        ],
+        "hostIP": "172.42.42.1",
+        "podIP": "172.42.42.1",
+        "startTime": "2017-05-11T12:26:20Z",
+        "containerStatuses": [
+          {
+            "name": "kube-proxy",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-11T12:26:30Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/kube-proxy-amd64:v1.6.3",
+            "imageID": "docker-pullable://gcr.io/google_containers/kube-proxy-amd64@sha256:d91cd43993437515ad36e0b2c52ad8595c5c1591e664605c14708fd4c74f6222",
+            "containerID": "docker://bd3b7b148dfd1a5900a7d3ce79c5ae4fcc9b5e8d68da92446266bf26692a3153"
+          }
+        ],
+        "qosClass": "BestEffort"
+      }
+    },
+    {
+      "metadata": {
+        "name": "kube-scheduler-k8s1",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/kube-scheduler-k8s1",
+        "uid": "2014361d-3645-11e7-877b-02193b8aadb3",
+        "resourceVersion": "389",
+        "creationTimestamp": "2017-05-11T12:26:57Z",
+        "labels": {
+          "component": "kube-scheduler",
+          "tier": "control-plane"
+        },
+        "annotations": {
+          "kubernetes.io/config.hash": "cd96302b5ee69cddc1b533f361310930",
+          "kubernetes.io/config.mirror": "cd96302b5ee69cddc1b533f361310930",
+          "kubernetes.io/config.seen": "2017-05-11T12:25:15.624695271Z",
+          "kubernetes.io/config.source": "file"
+        }
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "k8s",
+            "hostPath": {
+              "path": "/etc/kubernetes"
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "kube-scheduler",
+            "image": "gcr.io/google_containers/kube-scheduler-amd64:v1.6.3",
+            "command": [
+              "kube-scheduler",
+              "--kubeconfig=/etc/kubernetes/scheduler.conf",
+              "--address=127.0.0.1",
+              "--leader-elect=true"
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "100m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "k8s",
+                "readOnly": true,
+                "mountPath": "/etc/kubernetes/"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/healthz",
+                "port": 10251,
+                "host": "127.0.0.1",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 15,
+              "timeoutSeconds": 15,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 8
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent"
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "nodeName": "k8s1",
+        "hostNetwork": true,
+        "securityContext": {},
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:20Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:33Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-11T12:25:20Z"
+          }
+        ],
+        "hostIP": "172.42.42.1",
+        "podIP": "172.42.42.1",
+        "startTime": "2017-05-11T12:25:20Z",
+        "containerStatuses": [
+          {
+            "name": "kube-scheduler",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-11T12:25:33Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "gcr.io/google_containers/kube-scheduler-amd64:v1.6.3",
+            "imageID": "docker-pullable://gcr.io/google_containers/kube-scheduler-amd64@sha256:35df4809217cac17e420fcc33e041db691cd41a72a5f4c416d49e7437a23cbb5",
+            "containerID": "docker://5fd33007f06c786206739afc547a703101c72c8aac0fdb633663df5282008270"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "weave-net-pfv92",
+        "generateName": "weave-net-",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/weave-net-pfv92",
+        "uid": "6781d2ec-395b-11e7-877b-02193b8aadb3",
+        "resourceVersion": "467441",
+        "creationTimestamp": "2017-05-15T10:43:59Z",
+        "labels": {
+          "name": "weave-net",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"DaemonSet\",\"namespace\":\"kube-system\",\"name\":\"weave-net\",\"uid\":\"677ef551-395b-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"467230\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "DaemonSet",
+            "name": "weave-net",
+            "uid": "677ef551-395b-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "weavedb",
+            "emptyDir": {}
+          },
+          {
+            "name": "cni-bin",
+            "hostPath": {
+              "path": "/opt"
+            }
+          },
+          {
+            "name": "cni-bin2",
+            "hostPath": {
+              "path": "/home"
+            }
+          },
+          {
+            "name": "cni-conf",
+            "hostPath": {
+              "path": "/etc"
+            }
+          },
+          {
+            "name": "dbus",
+            "hostPath": {
+              "path": "/var/lib/dbus"
+            }
+          },
+          {
+            "name": "lib-modules",
+            "hostPath": {
+              "path": "/lib/modules"
+            }
+          },
+          {
+            "name": "weave-net-token-njdtx",
+            "secret": {
+              "secretName": "weave-net-token-njdtx",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "weave",
+            "image": "weaveworks/weave-kube:1.9.5",
+            "command": [
+              "/home/weave/launch.sh"
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "10m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "weavedb",
+                "mountPath": "/weavedb"
+              },
+              {
+                "name": "cni-bin",
+                "mountPath": "/host/opt"
+              },
+              {
+                "name": "cni-bin2",
+                "mountPath": "/host/home"
+              },
+              {
+                "name": "cni-conf",
+                "mountPath": "/host/etc"
+              },
+              {
+                "name": "dbus",
+                "mountPath": "/host/var/lib/dbus"
+              },
+              {
+                "name": "lib-modules",
+                "mountPath": "/lib/modules"
+              },
+              {
+                "name": "weave-net-token-njdtx",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/status",
+                "port": 6784,
+                "host": "127.0.0.1",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 30,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          },
+          {
+            "name": "weave-npc",
+            "image": "weaveworks/weave-npc:1.9.5",
+            "resources": {
+              "requests": {
+                "cpu": "10m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "weave-net-token-njdtx",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "weave-net",
+        "serviceAccount": "weave-net",
+        "nodeName": "k8s1",
+        "hostNetwork": true,
+        "hostPID": true,
+        "securityContext": {
+          "seLinuxOptions": {
+            "type": "spc_t"
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/master",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:44:00Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:46:03Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:46:03Z"
+          }
+        ],
+        "hostIP": "172.42.42.1",
+        "podIP": "172.42.42.1",
+        "startTime": "2017-05-15T10:44:00Z",
+        "containerStatuses": [
+          {
+            "name": "weave",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T10:45:47Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "weaveworks/weave-kube:1.9.5",
+            "imageID": "docker-pullable://weaveworks/weave-kube@sha256:8db0db57ee3c03224f63171b020bbdb50bd2bde6409780543ed9100765b164ed",
+            "containerID": "docker://6d5628ae51a0f25fafd4841af02275738e50cc90eedcfe13f0c398bdc8123a50"
+          },
+          {
+            "name": "weave-npc",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T10:46:03Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "weaveworks/weave-npc:1.9.5",
+            "imageID": "docker-pullable://weaveworks/weave-npc@sha256:182ccae504a5faae0fbe65f42a0a9f45eaa4923b313a43da2652b28348821694",
+            "containerID": "docker://45bcb10cff73f650c7452dca7a78f02bbab5f0d4c090e560fe3777c22cce8c0a"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "weave-net-tnwjt",
+        "generateName": "weave-net-",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/weave-net-tnwjt",
+        "uid": "6781e30d-395b-11e7-877b-02193b8aadb3",
+        "resourceVersion": "484585",
+        "creationTimestamp": "2017-05-15T10:43:59Z",
+        "labels": {
+          "name": "weave-net",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"DaemonSet\",\"namespace\":\"kube-system\",\"name\":\"weave-net\",\"uid\":\"677ef551-395b-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"467230\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "DaemonSet",
+            "name": "weave-net",
+            "uid": "677ef551-395b-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "weavedb",
+            "emptyDir": {}
+          },
+          {
+            "name": "cni-bin",
+            "hostPath": {
+              "path": "/opt"
+            }
+          },
+          {
+            "name": "cni-bin2",
+            "hostPath": {
+              "path": "/home"
+            }
+          },
+          {
+            "name": "cni-conf",
+            "hostPath": {
+              "path": "/etc"
+            }
+          },
+          {
+            "name": "dbus",
+            "hostPath": {
+              "path": "/var/lib/dbus"
+            }
+          },
+          {
+            "name": "lib-modules",
+            "hostPath": {
+              "path": "/lib/modules"
+            }
+          },
+          {
+            "name": "weave-net-token-njdtx",
+            "secret": {
+              "secretName": "weave-net-token-njdtx",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "weave",
+            "image": "weaveworks/weave-kube:1.9.5",
+            "command": [
+              "/home/weave/launch.sh"
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "10m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "weavedb",
+                "mountPath": "/weavedb"
+              },
+              {
+                "name": "cni-bin",
+                "mountPath": "/host/opt"
+              },
+              {
+                "name": "cni-bin2",
+                "mountPath": "/host/home"
+              },
+              {
+                "name": "cni-conf",
+                "mountPath": "/host/etc"
+              },
+              {
+                "name": "dbus",
+                "mountPath": "/host/var/lib/dbus"
+              },
+              {
+                "name": "lib-modules",
+                "mountPath": "/lib/modules"
+              },
+              {
+                "name": "weave-net-token-njdtx",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/status",
+                "port": 6784,
+                "host": "127.0.0.1",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 30,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          },
+          {
+            "name": "weave-npc",
+            "image": "weaveworks/weave-npc:1.9.5",
+            "resources": {
+              "requests": {
+                "cpu": "10m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "weave-net-token-njdtx",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "weave-net",
+        "serviceAccount": "weave-net",
+        "nodeName": "k8s3",
+        "hostNetwork": true,
+        "hostPID": true,
+        "securityContext": {
+          "seLinuxOptions": {
+            "type": "spc_t"
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/master",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:43:59Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T13:32:00Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:45:35Z"
+          }
+        ],
+        "hostIP": "172.42.42.3",
+        "podIP": "172.42.42.3",
+        "startTime": "2017-05-15T10:43:59Z",
+        "containerStatuses": [
+          {
+            "name": "weave",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T13:32:00Z"
+              }
+            },
+            "lastState": {
+              "terminated": {
+                "exitCode": 1,
+                "reason": "Error",
+                "startedAt": null,
+                "finishedAt": "2017-05-15T13:26:48Z",
+                "containerID": "docker://56fdd17dc7d2627493defb00e77d217bec6b12f484685776142e61e4b330c146"
+              }
+            },
+            "ready": true,
+            "restartCount": 35,
+            "image": "weaveworks/weave-kube:1.9.5",
+            "imageID": "docker-pullable://weaveworks/weave-kube@sha256:8db0db57ee3c03224f63171b020bbdb50bd2bde6409780543ed9100765b164ed",
+            "containerID": "docker://45c877ebdedc5d1fe0a3e7ffa2df8604b78079d4807fa74d51863514fe72a321"
+          },
+          {
+            "name": "weave-npc",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T10:45:35Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "weaveworks/weave-npc:1.9.5",
+            "imageID": "docker-pullable://weaveworks/weave-npc@sha256:182ccae504a5faae0fbe65f42a0a9f45eaa4923b313a43da2652b28348821694",
+            "containerID": "docker://41f21ca2ea8b5c7104a2c7d21a6a916a342d52763f74dd60de7b516c86a36d33"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    },
+    {
+      "metadata": {
+        "name": "weave-net-xnfk9",
+        "generateName": "weave-net-",
+        "namespace": "kube-system",
+        "selfLink": "/api/v1/namespaces/kube-system/pods/weave-net-xnfk9",
+        "uid": "6781aa15-395b-11e7-877b-02193b8aadb3",
+        "resourceVersion": "484689",
+        "creationTimestamp": "2017-05-15T10:43:59Z",
+        "labels": {
+          "name": "weave-net",
+          "pod-template-generation": "1"
+        },
+        "annotations": {
+          "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"DaemonSet\",\"namespace\":\"kube-system\",\"name\":\"weave-net\",\"uid\":\"677ef551-395b-11e7-877b-02193b8aadb3\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"467230\"}}\n"
+        },
+        "ownerReferences": [
+          {
+            "apiVersion": "extensions/v1beta1",
+            "kind": "DaemonSet",
+            "name": "weave-net",
+            "uid": "677ef551-395b-11e7-877b-02193b8aadb3",
+            "controller": true,
+            "blockOwnerDeletion": true
+          }
+        ]
+      },
+      "spec": {
+        "volumes": [
+          {
+            "name": "weavedb",
+            "emptyDir": {}
+          },
+          {
+            "name": "cni-bin",
+            "hostPath": {
+              "path": "/opt"
+            }
+          },
+          {
+            "name": "cni-bin2",
+            "hostPath": {
+              "path": "/home"
+            }
+          },
+          {
+            "name": "cni-conf",
+            "hostPath": {
+              "path": "/etc"
+            }
+          },
+          {
+            "name": "dbus",
+            "hostPath": {
+              "path": "/var/lib/dbus"
+            }
+          },
+          {
+            "name": "lib-modules",
+            "hostPath": {
+              "path": "/lib/modules"
+            }
+          },
+          {
+            "name": "weave-net-token-njdtx",
+            "secret": {
+              "secretName": "weave-net-token-njdtx",
+              "defaultMode": 420
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "weave",
+            "image": "weaveworks/weave-kube:1.9.5",
+            "command": [
+              "/home/weave/launch.sh"
+            ],
+            "resources": {
+              "requests": {
+                "cpu": "10m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "weavedb",
+                "mountPath": "/weavedb"
+              },
+              {
+                "name": "cni-bin",
+                "mountPath": "/host/opt"
+              },
+              {
+                "name": "cni-bin2",
+                "mountPath": "/host/home"
+              },
+              {
+                "name": "cni-conf",
+                "mountPath": "/host/etc"
+              },
+              {
+                "name": "dbus",
+                "mountPath": "/host/var/lib/dbus"
+              },
+              {
+                "name": "lib-modules",
+                "mountPath": "/lib/modules"
+              },
+              {
+                "name": "weave-net-token-njdtx",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "livenessProbe": {
+              "httpGet": {
+                "path": "/status",
+                "port": 6784,
+                "host": "127.0.0.1",
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 30,
+              "timeoutSeconds": 1,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "failureThreshold": 3
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          },
+          {
+            "name": "weave-npc",
+            "image": "weaveworks/weave-npc:1.9.5",
+            "resources": {
+              "requests": {
+                "cpu": "10m"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "weave-net-token-njdtx",
+                "readOnly": true,
+                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "imagePullPolicy": "IfNotPresent",
+            "securityContext": {
+              "privileged": true
+            }
+          }
+        ],
+        "restartPolicy": "Always",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "serviceAccountName": "weave-net",
+        "serviceAccount": "weave-net",
+        "nodeName": "k8s2",
+        "hostNetwork": true,
+        "hostPID": true,
+        "securityContext": {
+          "seLinuxOptions": {
+            "type": "spc_t"
+          }
+        },
+        "schedulerName": "default-scheduler",
+        "tolerations": [
+          {
+            "key": "node-role.kubernetes.io/master",
+            "effect": "NoSchedule"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/notReady",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          },
+          {
+            "key": "node.alpha.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "effect": "NoExecute"
+          }
+        ]
+      },
+      "status": {
+        "phase": "Running",
+        "conditions": [
+          {
+            "type": "Initialized",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:43:59Z"
+          },
+          {
+            "type": "Ready",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T13:32:56Z"
+          },
+          {
+            "type": "PodScheduled",
+            "status": "True",
+            "lastProbeTime": null,
+            "lastTransitionTime": "2017-05-15T10:48:12Z"
+          }
+        ],
+        "hostIP": "172.42.42.2",
+        "podIP": "172.42.42.2",
+        "startTime": "2017-05-15T10:43:59Z",
+        "containerStatuses": [
+          {
+            "name": "weave",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T13:32:55Z"
+              }
+            },
+            "lastState": {
+              "terminated": {
+                "exitCode": 1,
+                "reason": "Error",
+                "startedAt": null,
+                "finishedAt": "2017-05-15T13:27:51Z",
+                "containerID": "docker://d455a1965c36250cadf62cfd854e4532e36495212c39eb6a14a0a0306869152e"
+              }
+            },
+            "ready": true,
+            "restartCount": 34,
+            "image": "weaveworks/weave-kube:1.9.5",
+            "imageID": "docker-pullable://weaveworks/weave-kube@sha256:8db0db57ee3c03224f63171b020bbdb50bd2bde6409780543ed9100765b164ed",
+            "containerID": "docker://00d457ca37ca95014526992c6f7ac30b026795206692ab193a0fa3c23d1ebd42"
+          },
+          {
+            "name": "weave-npc",
+            "state": {
+              "running": {
+                "startedAt": "2017-05-15T10:47:20Z"
+              }
+            },
+            "lastState": {},
+            "ready": true,
+            "restartCount": 0,
+            "image": "weaveworks/weave-npc:1.9.5",
+            "imageID": "docker-pullable://weaveworks/weave-npc@sha256:182ccae504a5faae0fbe65f42a0a9f45eaa4923b313a43da2652b28348821694",
+            "containerID": "docker://465dbd61b393217d90e0234c61ae0a5e86444d4334d44b1daa43a6c18951e039"
+          }
+        ],
+        "qosClass": "Burstable"
+      }
+    }
+  ]
+}

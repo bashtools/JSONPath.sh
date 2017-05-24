@@ -103,9 +103,9 @@ usage() {
 # ---------------------------------------------------------------------------
 
   echo
-  echo "Usage: JSONPath.sh [-n] [-s] [-b] [j] [-h] [-f FILE] pattern"
+  echo "Usage: JSONPath.sh [-n] [-s] [-b] [j] [-h] [-f FILE] [pattern]"
   echo
-  echo "pattern - the JSON Path query, e.g. \"$..\""
+  echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
   echo "-s      - Remove escaping of the solidus symbol (straight slash)."
   echo "-b      - Brief. Only show values."
   echo "-j      - JSON ouput."
@@ -156,6 +156,7 @@ parse_options() {
     shift 1
     ARGN=$((ARGN-1))
   done
+  [[ -z $QUERY ]] && QUERY='$.*'
 }
 
 # ---------------------------------------------------------------------------
@@ -378,6 +379,8 @@ create_filter() {
               a=${a%]}
               if [[ $a =~ [[:alpha:]] ]]; then
                 a=$(echo $a | sed -r "s/[\"']//g;s/([^,]*)/\"\1\"/g")
+              else
+                [[ $i -gt 0 ]] && comma=","
               fi
               #idx=$(echo "${PATHTOKENS[i]}" | tr -d "[]")
               query+="$comma$a"

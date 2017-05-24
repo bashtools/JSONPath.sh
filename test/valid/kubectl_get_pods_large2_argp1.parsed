@@ -1,0 +1,7 @@
+[0,"items",0,"metadata","name"]	"kube-dns-3913472980"
+[0,"items",0,"metadata","ownerReferences",0,"apiVersion"]	"extensions/v1beta1"
+[0,"items",0,"metadata","ownerReferences",0,"blockOwnerDeletion"]	true
+[0,"items",0,"metadata","ownerReferences",0,"controller"]	true
+[0,"items",0,"metadata","ownerReferences",0,"kind"]	"Deployment"
+[0,"items",0,"metadata","ownerReferences",0,"name"]	"kube-dns"
+[0,"items",0,"metadata","ownerReferences",0,"uid"]	"087726b6-3645-11e7-877b-02193b8aadb3"
