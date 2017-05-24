@@ -232,7 +232,7 @@ done
 
 | JSONPath               | Supported | Comment                                                 |
 | -----------------------|-----------|---------------------------------------------------------|
-| $                      |     Y     | the root object/element                                 |
+| $                      |     Y     | the root object/element (optional)                      |
 | @                      |     Y     | the current object/element                              |
 | . or []                |     Y     | child operator.                                         |
 | ..                     |     Y     | recusive descent.                                       |
