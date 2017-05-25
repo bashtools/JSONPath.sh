@@ -103,7 +103,7 @@ usage() {
 # ---------------------------------------------------------------------------
 
   echo
-  echo "Usage: JSONPath.sh [-n] [-s] [-b] [j] [-h] [-f FILE] [pattern]"
+  echo "Usage: JSONPath.sh [-b] [j] [-h] [-f FILE] [pattern]"
   echo
   echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
   #echo "-s      - Remove escaping of the solidus symbol (straight slash)."

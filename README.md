@@ -6,7 +6,7 @@ yo, so it's a JSONPath implementation written in Bash - and it probably only wor
 
 ## Invocation
 
-    JSONPath.sh [-n] [-s] [-b] [-i] [-j] [-h] [-p] [-u] [-f FILE] [pattern]
+    JSONPath.sh [-b] [-i] [-j] [-h] [-p] [-u] [-f FILE] [pattern]
 
 pattern
 > the JSONPath query. Defaults to '$.\*' if not supplied.
