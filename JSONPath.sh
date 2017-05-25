@@ -106,15 +106,15 @@ usage() {
   echo "Usage: JSONPath.sh [-n] [-s] [-b] [j] [-h] [-f FILE] [pattern]"
   echo
   echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
-  echo "-s      - Remove escaping of the solidus symbol (straight slash)."
+  #echo "-s      - Remove escaping of the solidus symbol (straight slash)."
   echo "-b      - Brief. Only show values."
   echo "-j      - JSON ouput."
   echo "-u      - Strip unnecessary leading path elements."
   echo "-i      - Case insensitive."
-  echo "-p      - Pass-through to the JSON parser. Useful with 'grep'."
+  echo "-p      - Pass-through to the JSON parser."
   echo "-w      - Match whole words only (for filter script expression)."
   echo "-f FILE - Read a FILE instead of stdin."
-  echo "-n      - No-head. Do not show nodes that have no path (lines that start with [])."
+  #echo "-n      - No-head. Do not show nodes that have no path (lines that start with [])."
   echo "-h      - This help text."
   echo
 }

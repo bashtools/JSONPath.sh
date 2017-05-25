@@ -21,19 +21,14 @@ pattern
 > Case insensitive searching.
 
 -j
-> Output in JSON format.
+> Output in JSON format, instead of JSON.sh format.
 
 -u
 > Strip unnecessary leading path elements.
 
 -p
-> Pass-through to the JSON parser. Useful with 'grep'.
-
--n
-> No-head. Don't show nodes that have no path. Normally these output a leading '[]', which you can't use in a bash array.
-
--s
-> Remove escaping of the solidus symbol (stright slash).
+> Pass JSON.sh formatted data through to the JSON parser only. Useful after
+> JSON.sh data has been manipulated.
 
 -h
 > Show help text.
