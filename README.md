@@ -299,7 +299,7 @@ original deployment with the newly changed one (using 'kubectl replace ...'.
 ```
 kubectl get deployment sample-deployment -o json | \
 JSONPath.sh | \
-sed 's/\["spec","replicas"\].*/["spec","replicas"]\t'"$2"'/' | \
+sed 's/\["spec","replicas"\].*/["spec","replicas"]\t5/' | \
 JSONPath.sh -p | \
 kubectl replace deployment sample-deployment -f -
 ```
