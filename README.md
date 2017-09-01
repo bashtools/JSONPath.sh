@@ -294,7 +294,7 @@ For example: The following 'one-liner' will read a kubernetes deployment
 configuration (using 'kubectl get ...'), output it in *JSON.sh* format (using
 'JSONPath.sh'), change the number of replicas from the existing value to 5
 (using *sed*), output again in JSON (using 'JSONPath.sh -p'), then replace the
-original deployment with the newly changed one (using 'kubectl replace ...'.
+original deployment with the newly changed one (using 'kubectl replace ...').
 
 ```
 kubectl get deployment sample-deployment -o json | \
