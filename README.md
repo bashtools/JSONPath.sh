@@ -276,6 +276,37 @@ Show all book titles by authors starting with 'Doug'.
     '$..book[?(@.author="Doug")].["author","title",rating]'
 ```
 
+### Modification
+
+A common task is to modify JSON data on-the-fly. Unix style 'one-liners' can be
+created to easily and logically modify JSON data.
+
+The key to data modification (that is: add, modify or deletion of data) is to
+modify the *JSON.sh* formatted data, then use the passthrough, '-p', option to
+output again as JSON. Sequence is:
+
+1. Read JSON data and output as *JSON.sh* data.
+2. Modify *JSON.sh* data using standard Unix tools.
+3. Pipe modified *JSON.sh* data to JSONPath.sh with passthrough option producing
+   JSON data again.
+
+For example: The following 'one-liner' will read a kubernetes deployment
+configuration (using 'kubectl get ...'), output it in *JSON.sh* format (using
+'JSONPath.sh'), change the number of replicas from the existing value to 5
+(using *sed*), output again in JSON (using 'JSONPath.sh -p'), then replace the
+original deployment with the newly changed one (using 'kubectl replace ...'.
+
+```
+kubectl get deployment sample-deployment -o json | \
+JSONPath.sh | \
+sed 's/\["spec","replicas"\].*/["spec","replicas"]\t'"$2"'/' | \
+JSONPath.sh -p | \
+kubectl replace deployment sample-deployment -f -
+```
+
+This allows you to reuse your Unix skills rather than learn new terse syntax
+or Domain Specific Language.
+
 ### Re-injection
 
 This tool, JSONPath.sh, is really handy for handing json formatted
