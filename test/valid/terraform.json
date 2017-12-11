@@ -1,0 +1,73 @@
+{
+    "version": 3,
+    "terraform_version": "0.10.8",
+    "serial": 283,
+    "lineage": "6bd3d27b-e8d4-4a35-a691-7658ec82dda0",
+    "modules": [
+        {
+            "path": [
+                "root"
+            ],
+            "outputs": {},
+            "resources": {
+                "data.aws_ami.rds_backup_ami": {
+                    "type": "aws_ami",
+                    "depends_on": [],
+                    "primary": {
+                        "id": "ami-6eb6c80b",
+                        "attributes": {
+                            "architecture": "x86_64",
+                            "block_device_mappings.#": "3",
+                            "block_device_mappings.1634610537.device_name": "/dev/sdb",
+                            "block_device_mappings.1634610537.ebs.%": "0",
+                            "block_device_mappings.1634610537.no_device": "",
+                            "block_device_mappings.1634610537.virtual_name": "ephemeral0",
+                            "block_device_mappings.2547816212.device_name": "/dev/sda1",
+                            "block_device_mappings.2547816212.ebs.%": "6",
+                            "block_device_mappings.2547816212.ebs.delete_on_termination": "true",
+                            "block_device_mappings.2547816212.ebs.encrypted": "false",
+                            "block_device_mappings.2547816212.ebs.iops": "0",
+                            "block_device_mappings.2547816212.ebs.snapshot_id": "snap-03cf8fd8dbcfb9ef9",
+                            "block_device_mappings.2547816212.ebs.volume_size": "8",
+                            "block_device_mappings.2547816212.ebs.volume_type": "gp2",
+                            "block_device_mappings.2547816212.no_device": "",
+                            "block_device_mappings.2547816212.virtual_name": "",
+                            "block_device_mappings.3850042718.device_name": "/dev/sdc",
+                            "block_device_mappings.3850042718.ebs.%": "0",
+                            "block_device_mappings.3850042718.no_device": "",
+                            "block_device_mappings.3850042718.virtual_name": "ephemeral1",
+                            "creation_date": "2017-12-11T10:31:14.000Z",
+                            "hypervisor": "xen",
+                            "id": "ami-6eb6f89a",
+                            "image_id": "ami-6e96f80a",
+                            "image_location": "419923423128/ubuntu-1604-blah-1512988117",
+                            "image_type": "machine",
+                            "most_recent": "true",
+                            "name": "ubuntu-1604-blah-1512988117",
+                            "name_regex": "ubuntu-1604-blah-*",
+                            "owner_id": "419129293927",
+                            "owners.#": "1",
+                            "owners.0": "419129293927",
+                            "product_codes.#": "0",
+                            "public": "false",
+                            "root_device_name": "/dev/sda1",
+                            "root_device_type": "ebs",
+                            "root_snapshot_id": "snap-05be5ad8dbcfb9ef9",
+                            "sriov_net_support": "simple",
+                            "state": "available",
+                            "state_reason.%": "2",
+                            "state_reason.code": "UNSET",
+                            "state_reason.message": "UNSET",
+                            "tags.%": "0",
+                            "virtualization_type": "hvm"
+                        },
+                        "meta": {},
+                        "tainted": false
+                    },
+                    "deposed": [],
+                    "provider": ""
+                }
+            }
+        }
+    ]
+}

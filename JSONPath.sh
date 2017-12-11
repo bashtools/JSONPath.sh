@@ -757,8 +757,8 @@ json() {
           comma[pathlen]=
         }
         let indent=(pathlen+1)*4
-        printf "${comma[pathlen]}%0${indent}s${path[-1]}:" ""
-        echo -n "$value"
+        printf "${comma[pathlen]}%0${indent}s" ""
+        echo -n "${path[-1]}:$value"
         comma[pathlen]=",\n"
       else
         # Array
