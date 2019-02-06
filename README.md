@@ -222,7 +222,7 @@ done
 | $                      |     Y     | the root object/element (optional)                      |
 | @                      |     Y     | the current object/element                              |
 | . or []                |     Y     | child operator.                                         |
-| ..                     |     Y     | recusive descent.                                       |
+| ..                     |     Y     | recursive descent.                                       |
 | *                      |     Y     | wildcard. All objects/elements regardless their names.  |
 | []                     |     Y     | subscript operator.                                     |
 | [,]                    |     Y     | node sets.                                              |
