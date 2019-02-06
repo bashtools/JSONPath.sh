@@ -108,7 +108,7 @@ usage() {
   echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
   #echo "-s      - Remove escaping of the solidus symbol (straight slash)."
   echo "-b      - Brief. Only show values."
-  echo "-j      - JSON ouput."
+  echo "-j      - JSON output."
   echo "-u      - Strip unnecessary leading path elements."
   echo "-i      - Case insensitive."
   echo "-p      - Pass-through to the JSON parser."
