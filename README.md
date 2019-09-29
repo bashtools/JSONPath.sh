@@ -4,6 +4,9 @@ yo, so it's a JSONPath implementation written in Bash - and it probably only wor
 
 [![travis](https://secure.travis-ci.org/mclarkson/JSONPath.sh.png?branch=master)](https://travis-ci.org/mclarkson/JSONPath.sh)
 
+Currently we rely on GNU implementations of the underlying tools. On OSX you can
+try wrapping the command like `./ensure_deps.sh ./JSONPath.sh`.
+
 ## Invocation
 
     JSONPath.sh [-b] [-i] [-j] [-h] [-p] [-u] [-f FILE] [pattern]
@@ -67,7 +70,7 @@ $ ./JSONPath.sh < package.json
 ["repository","url"]    "https://github.com/mclarkson/JSONPath.sh.git"
 ["bin","JSONPath.sh"]   "./JSONPath.sh"
 ["author"]      "Mark Clarkson <mark.clarkson@smorg.co.uk>"
-["scripts","test"]      "./all-tests.sh"
+["scripts","test"]      "./ensure_deps.sh ./all-tests.sh"
 ```
 
 more complex examples:

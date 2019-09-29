@@ -14,6 +14,6 @@
   "devDependencies": {},
   "author": "Mark Clarkson <mark.clarkson@smorg.co.uk>",
   "scripts": {
-    "test": "./all-tests.sh"
+    "test": "./ensure_deps.sh ./all-tests.sh"
   }
 }
