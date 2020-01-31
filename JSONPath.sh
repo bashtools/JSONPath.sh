@@ -27,6 +27,7 @@ main() {
 # ---------------------------------------------------------------------------
 # It all starts here
 
+  sanity_checks
   parse_options "$@"
 
   trap cleanup EXIT
@@ -74,6 +75,19 @@ main() {
     fi
 
   fi 
+}
+
+# ---------------------------------------------------------------------------
+sanity_checks() {
+# ---------------------------------------------------------------------------
+
+  # Reset some vars
+  for binary in gawk grep sed; do
+    if ! which $binary >& /dev/null; then
+      echo "$UNKNOWN: $binary binary not found in path. Aborting."
+      exit 1
+    fi
+  done
 }
 
 # ---------------------------------------------------------------------------
@@ -362,7 +376,7 @@ create_filter() {
                 else
                   # Index in the range of 0-9 can be handled by regex
                   query+="${comma}$(echo ${PATHTOKENS[i]} | \
-                  awk '/:/ { a=substr($0,0,index($0,":")-1);
+                  gawk '/:/ { a=substr($0,0,index($0,":")-1);
                          b=substr($0,index($0,":")+1,index($0,"]")-index($0,":")-1);
                          if(b>0) { print a ":" b-1 "]" };
                          if(b<=0) { print a ":]" } }' | \
@@ -571,7 +585,7 @@ indexmatcher() {
         a=${q%:*}                     # <- number before ':'
         b=${q#*:}                     # <- number after ':'
         [[ -z $b ]] && b=99999999999
-        readarray -t num < <( (grep -Eo ',[0-9]+[],]' | tr -d ,])<<<$line )
+        readarray -t num < <( (grep -Eo '[0-9]+[],]' | tr -d ,])<<<$line )
         if [[ ${num[i]} -ge $a && ${num[i]} -lt $b && matched -eq 1 ]]; then
           matched=1
           [[ $i -eq $((${#INDEXMATCH_QUERY[*]}-1)) ]] && {
@@ -806,21 +820,21 @@ filter() {
       while read line; do
         v=${line#*$tab}
         case $OPERATOR in
-          '-ge') if awk '{exit !($1>=$2)}'<<<"$v $RHS";then echo "$line"; fi
+          '-ge') if gawk '{exit !($1>=$2)}'<<<"$v $RHS";then echo "$line"; fi
             ;;
-          '-gt') if awk '{exit !($1>$2) }'<<<"$v $RHS";then echo "$line"; fi
+          '-gt') if gawk '{exit !($1>$2) }'<<<"$v $RHS";then echo "$line"; fi
             ;;
-          '-le') if awk '{exit !($1<=$2) }'<<<"$v $RHS";then echo "$line"; fi
+          '-le') if gawk '{exit !($1<=$2) }'<<<"$v $RHS";then echo "$line"; fi
             ;;
-          '-lt') if awk '{exit !($1<$2) }'<<<"$v $RHS";then echo "$line"; fi
+          '-lt') if gawk '{exit !($1<$2) }'<<<"$v $RHS";then echo "$line"; fi
             ;;
           '>') v=${v#\"};v=${v%\"}
                RHS=${RHS#\"};RHS=${RHS%\"}
-               [[ "$v" > "$RHS" ]] && echo "$line"
+               [[ "${v,,}" > "${RHS,,}" ]] && echo "$line"
             ;;
           '<') v=${v#\"};v=${v%\"}
                RHS=${RHS#\"};RHS=${RHS%\"}
-               [[ "$v" < "$RHS" ]] && echo "$line"
+               [[ "${v,,}" < "${RHS,,}" ]] && echo "$line"
             ;;
         esac
       done #< <(egrep $opts "$FILTER")

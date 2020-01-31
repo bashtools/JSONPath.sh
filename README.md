@@ -38,7 +38,9 @@ pattern
 
 ## Requirements
 
-JSONPath.sh is a Bash script that uses the standard GNU tools: *bash*, *cat*, *sed*, *awk*, *grep*, and *seq*.
+JSONPath.sh is a Bash script that uses the standard GNU tools: *bash*, *cat*,
+*sed*, *gawk*, *grep*, and *seq*. NOTICE that gawk, gnu awk, is required, not
+mawk or nawk, but gawk.
 
 ## Installation
 
