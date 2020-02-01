@@ -1,0 +1,3 @@
+FROM centos
+
+RUN yum -y install python2 diffutils which

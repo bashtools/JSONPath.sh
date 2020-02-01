@@ -84,7 +84,7 @@ sanity_checks() {
   # Reset some vars
   for binary in gawk grep sed; do
     if ! which $binary >& /dev/null; then
-      echo "$UNKNOWN: $binary binary not found in path. Aborting."
+      echo "ERROR: $binary binary not found in path. Aborting."
       exit 1
     fi
   done
