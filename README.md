@@ -4,6 +4,9 @@ yo, so it's a JSONPath implementation written in Bash - and it probably only wor
 
 [![travis](https://secure.travis-ci.org/mclarkson/JSONPath.sh.png?branch=master)](https://travis-ci.org/mclarkson/JSONPath.sh)
 
+See how JSONPath.sh compares to other implementations:
+https://cburgmer.github.io/json-path-comparison/
+
 Currently we rely on GNU implementations of the underlying tools. On OSX you can
 try wrapping the command like `./ensure_deps.sh ./JSONPath.sh`.
 
