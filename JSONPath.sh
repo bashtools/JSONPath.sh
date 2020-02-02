@@ -46,10 +46,10 @@ main() {
 
       [[ $MULTIPASS -eq 1 ]] && {
         # replace filter expression with index sequence
-        SET=$(sed -rn 's/.*,([0-9]+)[],].*/\1/p' $PASSFILE | tr '\n' ,)
+        SET=$(sed -rn 's/.*[[,"]+([0-9]+)[],].*/\1/p' $PASSFILE | tr '\n' ,)
         SET=${SET%,}
         QUERY=$(echo $QUERY | sed "s/?(@[^)]\+)/$SET/")
-        [[ $DEBUG -eq 1 ]] && echo "QUERY=$QUERY"
+        [[ $DEBUG -eq 1 ]] && echo "QUERY=$QUERY" >/dev/stderr
         reset
         continue
       }
@@ -120,7 +120,6 @@ usage() {
   echo "Usage: JSONPath.sh [-b] [j] [-h] [-f FILE] [pattern]"
   echo
   echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
-  #echo "-s      - Remove escaping of the solidus symbol (straight slash)."
   echo "-b      - Brief. Only show values."
   echo "-j      - JSON output."
   echo "-u      - Strip unnecessary leading path elements."
@@ -128,7 +127,6 @@ usage() {
   echo "-p      - Pass-through to the JSON parser."
   echo "-w      - Match whole words only (for filter script expression)."
   echo "-f FILE - Read a FILE instead of stdin."
-  #echo "-n      - No-head. Do not show nodes that have no path (lines that start with [])."
   echo "-h      - This help text."
   echo
 }
@@ -245,7 +243,6 @@ tokenize_path () {
     CHAR='[^[:cntrl:]"\\]'
   else
     GREP=awk_egrep
-    #CHAR='[^[:cntrl:]"\\\\]'
   fi
 
   local WILDCARD='\*'
@@ -265,10 +262,10 @@ tokenize_path () {
     $GREP "$INDEX|$STRING|$WORD|$WILDCARD|$FILTER|$DEEPSCAN|$SET|$INDEXALL|." | \
     egrep -v "^$SPACE$|^\\.$|^\[$|^\]$|^'$|^\\\$$|^\)$")
   [[ $DEBUG -eq 1 ]] && {
-    echo "egrep -o '$INDEX|$STRING|$WORD|$WILDCARD|$FILTER|$DEEPSCAN|$SET|$INDEXALL|.'"
+    echo "egrep -o '$INDEX|$STRING|$WORD|$WILDCARD|$FILTER|$DEEPSCAN|$SET|$INDEXALL|.'" >/dev/stderr
     echo -n "TOKENISED QUERY="; echo "$QUERY" | \
       $GREP "$INDEX|$STRING|$WORD|$WILDCARD|$FILTER|$DEEPSCAN|$SET|$INDEXALL|." | \
-      egrep -v "^$SPACE$|^\\.$|^\[$|^\]$|^'$|^\\\$$|^\)$"
+      egrep -v "^$SPACE$|^\\.$|^\[$|^\]$|^'$|^\\\$$|^\)$" >/dev/stderr
   }
   if [ $is_wordsplit_disabled != 0 ]; then unsetopt shwordsplit; fi
 }
@@ -396,7 +393,6 @@ create_filter() {
               else
                 [[ $i -gt 0 ]] && comma=","
               fi
-              #idx=$(echo "${PATHTOKENS[i]}" | tr -d "[]")
               query+="$comma$a"
             fi
             comma=","
@@ -410,7 +406,7 @@ create_filter() {
   done
 
   [[ -z $FILTER ]] && FILTER="$query[],]"
-  [[ $DEBUG -eq 1 ]] && echo "FILTER=$FILTER"
+  [[ $DEBUG -eq 1 ]] && echo "FILTER=$FILTER" >/dev/stderr
 }
 
 # ---------------------------------------------------------------------------
@@ -566,7 +562,7 @@ indexmatcher() {
 
   [[ $DEBUG -eq 1 ]] && {
     for i in `seq 0 $((${#INDEXMATCH_QUERY[*]}-1))`; do
-      echo "INDEXMATCH_QUERY[$i]=${INDEXMATCH_QUERY[i]}"
+      echo "INDEXMATCH_QUERY[$i]=${INDEXMATCH_QUERY[i]}" >/dev/stderr
     done
   }
 
@@ -591,11 +587,11 @@ indexmatcher() {
           [[ $i -eq $((${#INDEXMATCH_QUERY[*]}-1)) ]] && {
             if [[ $step -gt 1 ]]; then
               [[ $(((num[i]-a)%step)) -eq 0 ]] && {
-                [[ $DEBUG -eq 1 ]] && echo -n "($a,$b,${num[i]}) "
+                [[ $DEBUG -eq 1 ]] && echo -n "($a,$b,${num[i]}) " >/dev/stderr
                 echo "$line"
               }
             else
-              [[ $DEBUG -eq 1 ]] && echo -n "($a,$b,${num[i]}) "
+              [[ $DEBUG -eq 1 ]] && echo -n "($a,$b,${num[i]}) " >/dev/stderr
               echo "$line"
             fi
           }
@@ -814,7 +810,9 @@ filter() {
   [[ $NOCASE -eq 1 ]] && opts+="-i"
   [[ $WHOLEWORD -eq 1 ]] && opts+=" -w"
   if [[ -z $OPERATOR ]]; then
+    [[ $MULTIPASS -eq 1 ]] && FILTER="$FILTER[\"]?$"
     egrep $opts "$FILTER"
+    [[ $DEBUG -eq 1 ]] && echo "FILTER=$FILTER" >/dev/stderr
   else
     egrep $opts "$FILTER" | \
       while read line; do
@@ -837,7 +835,7 @@ filter() {
                [[ "${v,,}" < "${RHS,,}" ]] && echo "$line"
             ;;
         esac
-      done #< <(egrep $opts "$FILTER")
+      done
   fi
 }
 

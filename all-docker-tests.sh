@@ -21,8 +21,18 @@ cp test/docker/Dockerfile-centos test/docker/Dockerfile
 
 c=$(grep 'test(s) failed' $log)
 
-rm $log
+# Debian
+export IMAGE=json-path-debian-bash
+cp test/docker/Dockerfile-debian test/docker/Dockerfile
+./test/docker/wrap_in_docker.sh ./all-tests.sh | tee $log
 
+d=$(grep 'test(s) failed' $log)
+
+# Cleanup
+rm $log
+rm test/docker/Dockerfile
+
+# Results
 echo
 echo "Fedora tests"
 echo $a
@@ -30,3 +40,6 @@ echo "Ubuntu tests"
 echo $b
 echo "Centos tests"
 echo $c
+echo "Debian tests"
+echo $c
+
