@@ -1,0 +1,5 @@
+["some"]	"string"
+["int"]	42
+["object","key"]	"value"
+["array",0]	0
+["array",1]	1
