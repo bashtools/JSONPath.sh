@@ -2,7 +2,7 @@
 
 [![travis](https://secure.travis-ci.org/mclarkson/JSONPath.sh.png?branch=master)](https://travis-ci.org/mclarkson/JSONPath.sh)
 
-yo, so it's a JSONPath implementation written in Bash - and it probably only works in Bash.
+This is a JSONPath implementation written in Bash.
 
 See how JSONPath.sh compares to other implementations:
 https://cburgmer.github.io/json-path-comparison/
