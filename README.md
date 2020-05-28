@@ -468,10 +468,6 @@ idx=`JSONPath.sh -f /tmp/kpod '$.items[?(@.metadata.name=="kube-proxy.*")].apiVe
 }
 ```
 
-## Cool Links
-
-* [dominictarr/JSON.sh](https://github.com/dominictarr/JSON.sh) The original, the best, JSON.sh.
-
 ## Performance
 
 * Performance is acceptable for small data sizes
