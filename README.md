@@ -470,7 +470,7 @@ idx=`JSONPath.sh -f /tmp/kpod '$.items[?(@.metadata.name=="kube-proxy.*")].apiVe
 
 ## Performance
 
-* Performance is acceptable for small data sizes
+* Performance is acceptable for small data sizes (approximately 2x slower than `jq` - `sed` beat them both!)
 * Worse when using:
     * large data files (hundreds of kilobytes).
     * filter (script) expressions (An extra pass is required).
