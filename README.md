@@ -55,6 +55,10 @@ Install with npm:
 
 * `sudo npm install -g jsonpath.sh`
 
+Install with make:
+
+* `make install`
+
 Or copy the `JSONPath.sh` script to your PATH, for example:
 
 ``` bash
@@ -215,7 +219,7 @@ done
     -f test/valid/goessner.net.expanded.json \
     '$.store.book[?(@.price<4.20)].[title,price]'
 
-# The following does not work yet (TODO) 
+# The following does not work yet (TODO)
 ./JSONPath.sh \
     -f test/valid/goessner.net.expanded.json \
     '$.store.book[(@.length-1)].title'
@@ -340,7 +344,7 @@ Show all authors, without showing duplicates and output in JSON format.
 All authors with duplicates:
 
 ```
-$ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author' 
+$ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author'
 ... omitted ...
 ["store","book",9,"author"]     "James S. A. Corey"
 ["store","book",10,"author"]    "James S. A. Corey"
@@ -352,7 +356,7 @@ Use standard unix tools to remove duplicates:
 
 ```
 $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json '$..author' \
-    | sort -k2 | uniq -f 1 
+    | sort -k2 | uniq -f 1
 ... 11 lines of output ...
 ```
 
@@ -388,7 +392,7 @@ $ ./JSONPath.sh -f test/valid/goessner.net.expanded.json \
     "book":
     [
         {
-            "author":"Douglas E. Richards" 
+            "author":"Douglas E. Richards"
         },
         {
             "author":"Evelyn Waugh"
