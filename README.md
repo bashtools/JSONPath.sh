@@ -12,19 +12,13 @@ try wrapping the command like `./ensure_deps.sh ./JSONPath.sh`.
 
 ## Invocation
 
-    JSONPath.sh [-b] [-i] [-j] [-h] [-p] [-u] [-f FILE] [pattern]
+    JSONPath.sh [-h] [-b] [-j] [-u] [-i] [-p] [-w] [-f FILE] [-n] [-s] [-S] [-A] [-T] [pattern]
 
-pattern
-> the JSONPath query. Defaults to '$.\*' if not supplied.
+-h
+> Show help text.
 
 -b
 > Brief output. Only show the values, not the path and key.
-
--f FILE
-> Read a FILE instead of reading from standard input.
-
--i
-> Case insensitive searching.
 
 -j
 > Output in JSON format, instead of JSON.sh format.
@@ -32,12 +26,36 @@ pattern
 -u
 > Strip unnecessary leading path elements.
 
+-i
+> Case insensitive searching.
+
 -p
 > Pass JSON.sh formatted data through to the JSON parser only. Useful after
 > JSON.sh data has been manipulated.
 
--h
-> Show help text.
+-w
+> Match whole words only (for filter script expression).
+
+-f FILE
+> Read a FILE instead of reading from standard input.
+
+-n
+> Do not print header.
+
+-s
+> Normalize solidus.
+
+-S
+> Print spaces around :'s.
+
+-A
+> Start array on same line as JSON member.
+
+-T
+> Indent with tabs instead of 4 character spaces.
+
+pattern
+> the JSONPath query. Defaults to '$.\*' if not supplied.
 
 ## Requirements
 

@@ -120,9 +120,9 @@ usage() {
 # ---------------------------------------------------------------------------
 
   echo
-  echo "Usage: JSONPath.sh [-b] [j] [-h] [-f FILE] [-S] [-A] [-T] [pattern]"
+  echo "Usage: JSONPath.sh [-h] [-b] [-j] [-u] [-i] [-p] [-w] [-f FILE] [-n] [-s] [-S] [-A] [-T] [pattern]"
   echo
-  echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
+  echo "-h      - Print this help text."
   echo "-b      - Brief. Only show values."
   echo "-j      - JSON output."
   echo "-u      - Strip unnecessary leading path elements."
@@ -130,10 +130,12 @@ usage() {
   echo "-p      - Pass-through to the JSON parser."
   echo "-w      - Match whole words only (for filter script expression)."
   echo "-f FILE - Read a FILE instead of stdin."
-  echo "-h      - This help text."
-  echo "-S      - use spaces around :'s"
-  echo "-A      - start array on same line as JSON memner"
-  echo "-T      - indent with tabs instead of 4 character spaces"
+  echo "-n      - Do not print header."
+  echo "-s      - Normalize solidus."
+  echo "-S      - Print spaces around :'s."
+  echo "-A      - Start array on same line as JSON member."
+  echo "-T      - Indent with tabs instead of 4 character spaces."
+  echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
   echo
 }
 
@@ -142,45 +144,62 @@ parse_options() {
 # ---------------------------------------------------------------------------
 
   set -- "$@"
-  local ARGN=$#
-  while [ "$ARGN" -ne 0 ]
-  do
-    case $1 in
-      -h) usage
-          exit 0
-      ;;
-      -f) shift
-          FILE=$1
-      ;;
-      -i) NOCASE=1
-      ;;
-      -j) JSON=1
-      ;;
-      -n) NO_HEAD=1
-      ;;
-      -b) BRIEF=1
-      ;;
-      -u) FLATTEN=1
-      ;;
-      -p) PASSTHROUGH=1
-      ;;
-      -w) WHOLEWORD=1
-      ;;
-      -s) NORMALIZE_SOLIDUS=1
-      ;;
-      -S) COLON_SPACE=1
-      ;;
-      -A) ARRAY_SAME_LINE=1
-      ;;
-      -T) TAB_INDENT=1
-      ;;
-      ?*) QUERY=$1
-      ;;
+  while getopts :hbjuipwf:nsSAT flag; do
+    case "$flag" in
+      h) usage
+         exit 0
+         ;;
+      b) BRIEF=1
+         ;;
+      j) JSON=1
+         ;;
+      u) FLATTEN=1
+         ;;
+      i) NOCASE=1
+         ;;
+      p) PASSTHROUGH=1
+         ;;
+      w) WHOLEWORD=1
+         ;;
+      f) FILE="$OPTARG"
+         ;;
+      n) NO_HEAD=1
+         ;;
+      s) NORMALIZE_SOLIDUS=1
+         ;;
+      S) COLON_SPACE=1
+         ;;
+      A) ARRAY_SAME_LINE=1
+         ;;
+      T) TAB_INDENT=1
+         ;;
+      ?) echo "$0: ERROR: invalid option: -$OPTARG" 1>&2
+         usage
+         exit 3
+         ;;
+      :) echo "$0: ERROR: option -$OPTARG requires an argument" 1>&2
+         usage
+         exit 3
+         ;;
+      *) echo "$0: ERROR: unexpected value from getopts: $flag" 1>&2
+         usage
+         exit 3
+         ;;
     esac
-    shift 1
-    ARGN=$((ARGN-1))
   done
-  [[ -z $QUERY ]] && QUERY='$.*'
+  # remove the options
+  #
+  shift $(( OPTIND - 1 ));
+  # parse optional patten
+  case "$#" in
+  0) QUERY='$.*'
+     ;;
+  1) QUERY="$@"
+     ;;
+  *) echo "$0: ERROR: expected 0 or 1 args, found: $#" 1>&2
+     usage
+     ;;
+  esac
 }
 
 # ---------------------------------------------------------------------------
@@ -628,7 +647,7 @@ brief() {
       sed 's/^[^\t]*\t//;s/^"//;s/"$//;'
     else
       if [[ $TAB_INDENT == 1 ]]; then
-        sed -e 's/    /\t/g'
+        unexpand -t 4
       else
         cat
       fi
