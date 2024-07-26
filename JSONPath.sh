@@ -17,6 +17,9 @@ JSON=0
 PRINT=1
 MULTIPASS=0
 FLATTEN=0
+COLON_SPACE=0
+ARRAY_SAME_LINE=0
+TAB_INDENT=0
 STDINFILE=/var/tmp/JSONPath.$$.stdin
 STDINFILE2=/var/tmp/JSONPath.$$.stdin2
 PASSFILE=/var/tmp/JSONPath.$$.pass1
@@ -74,7 +77,7 @@ main() {
         json | brief
     fi
 
-  fi 
+  fi
 }
 
 # ---------------------------------------------------------------------------
@@ -117,7 +120,7 @@ usage() {
 # ---------------------------------------------------------------------------
 
   echo
-  echo "Usage: JSONPath.sh [-b] [j] [-h] [-f FILE] [pattern]"
+  echo "Usage: JSONPath.sh [-b] [j] [-h] [-f FILE] [-S] [-A] [-T] [pattern]"
   echo
   echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
   echo "-b      - Brief. Only show values."
@@ -128,6 +131,9 @@ usage() {
   echo "-w      - Match whole words only (for filter script expression)."
   echo "-f FILE - Read a FILE instead of stdin."
   echo "-h      - This help text."
+  echo "-S      - use spaces around :'s"
+  echo "-A      - start array on same line as JSON memner"
+  echo "-T      - indent with tabs instead of 4 character spaces"
   echo
 }
 
@@ -161,6 +167,12 @@ parse_options() {
       -w) WHOLEWORD=1
       ;;
       -s) NORMALIZE_SOLIDUS=1
+      ;;
+      -S) COLON_SPACE=1
+      ;;
+      -A) ARRAY_SAME_LINE=1
+      ;;
+      -T) TAB_INDENT=1
       ;;
       ?*) QUERY=$1
       ;;
@@ -402,7 +414,7 @@ create_filter() {
             comma=","
       ;;
     esac
-    i=i+1 
+    i=i+1
   done
 
   [[ -z $FILTER ]] && FILTER="$query[],]"
@@ -425,7 +437,7 @@ parse_array () {
       do
         parse_value "$1" "$index"
         index=$((index+1))
-        ary="$ary""$value" 
+        ary="$ary""$value"
         read -r token
         case "$token" in
           ']') break ;;
@@ -449,7 +461,7 @@ parse_object () {
   local obj=''
   read -r token
   case "$token" in
-    '}') 
+    '}')
          ;;
     *)
       while :
@@ -465,7 +477,7 @@ parse_object () {
         esac
         read -r token
         parse_value "$1" "$key"
-        obj="$obj$key:$value"        
+        obj="$obj$key:$value"
         read -r token
         case "$token" in
           '}') break ;;
@@ -515,7 +527,7 @@ flatten() {
 
   if [[ $FLATTEN -eq 1 ]]; then
     cat >"$STDINFILE2"
-    
+
     highest=9999
 
     while read line; do
@@ -540,11 +552,11 @@ flatten() {
 
       prevpath=("${path[@]}")
     done <"$STDINFILE2"
-    
+
     if [[ $highest -gt 0 ]]; then
       sed -r 's/\[(([0-9]+|"[^"]+")[],]){'$((highest))'}(.*)/[\3/' \
         "$STDINFILE2"
-    else 
+    else
       cat "$STDINFILE2"
     fi
   else
@@ -615,7 +627,11 @@ brief() {
     if [[ $BRIEF -eq 1 ]]; then
       sed 's/^[^\t]*\t//;s/^"//;s/"$//;'
     else
-      cat
+      if [[ $TAB_INDENT == 1 ]]; then
+        sed -e 's/    /\t/g'
+      else
+        cat
+      fi
     fi
 }
 
@@ -736,13 +752,22 @@ json() {
             comma[i]=
           }
           let indent=(i+1)*4
-          printf "${comma[i]}%${indent}s${path[i]}:\n" ""
+          if [[ $COLON_SPACE == 1 ]]; then
+            printf "${comma[i]}%${indent}s${path[i]} : " ""
+          else
+            printf "${comma[i]}%${indent}s${path[i]}:" ""
+          fi
+          if [[ $ARRAY_SAME_LINE == 0 ]]; then
+            echo
+          fi
           comma[i]=",\n"
         else
           # Array
           if [[ ${arrays[i]} != 1 ]]; then
             let indent=i*4
-            printf "%${indent}s" ""
+            if [[ $ARRAY_SAME_LINE == 0 ]]; then
+              printf "%${indent}s" ""
+            fi
             echo "["
             closers[i]=']'
             arrays[i]=1
@@ -768,7 +793,11 @@ json() {
         }
         let indent=(pathlen+1)*4
         printf "${comma[pathlen]}%${indent}s" ""
-        echo -n "${path[-1]}:$value"
+        if [[ $COLON_SPACE == 1 ]]; then
+          echo -n "${path[-1]} : $value"
+        else
+          echo -n "${path[-1]}:$value"
+        fi
         comma[pathlen]=",\n"
       else
         # Array
