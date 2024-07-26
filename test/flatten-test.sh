@@ -12,7 +12,7 @@ do
   expected="${argpfile%.*}_${argpfile##*.}.flattened"
   argp=$(cat $argpfile)
   i=$((i+1))
-  if ! ../JSONPath.sh "$argp" -u < "$input" | diff -u - "$expected" 
+  if ! ../JSONPath.sh -u -- "$argp" < "$input" | diff -u - "$expected"
   then
     echo "not ok $i - $argpfile"
     fails=$((fails+1))
