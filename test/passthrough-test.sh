@@ -1,34 +1,40 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-cd ${0%/*}
+shopt -s lastpipe
+CD_FAILED=
+cd "${0%/*}" || CD_FAILED="true"
+if [[ -n $CD_FAILED ]]; then
+   echo "$0: ERROR: cannot cd ${0%/*}" 1>&2
+   exit 1
+fi
 fails=0
 i=0
 declare -i tests
-tests=`ls valid/*.parsed | wc -l`
-tests+=`ls flatten/*.flattened | wc -l`
+tests=$(find valid -name '*.parsed' -print | wc -l)
+tests+=$(find flatten -name '*.flattened' -print | wc -l)
 echo "1..${tests##* }"
 # Json output tests
-for file in valid/*.parsed
+find valid -name '*.parsed' -print | while read -r file;
 do
-  i=$((i+1))
-  if ! ../JSONPath.sh -p < "$file" | python -mjson.tool >/dev/null
+  ((++i))
+  if ! ../JSONPath.sh -p < "$file" | python3 -mjson.tool >/dev/null
   then
     echo "not ok $i - $file"
-    fails=$((fails+1))
+    ((++fails))
   else
     echo "ok $i - JSON validated for $file"
   fi
 done
-for file in flatten/*.flattened
+find flatten -name '*.flattened' -print | while read -r file;
 do
-  i=$((i+1))
-  if ! ../JSONPath.sh -p < "$file" | python -mjson.tool >/dev/null
+  ((++i))
+  if ! ../JSONPath.sh -p < "$file" | python3 -mjson.tool >/dev/null
   then
     echo "not ok $i - $file"
-    fails=$((fails+1))
+    ((++fails))
   else
     echo "ok $i - JSON validated for $file"
   fi
 done
 echo "$fails test(s) failed"
-exit $fails
+exit "$fails"
