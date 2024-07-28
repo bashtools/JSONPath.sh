@@ -5,7 +5,6 @@
 # ---------------------------------------------------------------------------
 
 DEBUG=0
-INCLEMPTY=0
 NOCASE=0
 WHOLEWORD=0
 FILE=
@@ -14,7 +13,6 @@ NORMALIZE_SOLIDUS=0
 BRIEF=0
 PASSTHROUGH=0
 JSON=0
-PRINT=1
 MULTIPASS=0
 FLATTEN=0
 COLON_SPACE=0
@@ -38,26 +36,27 @@ main() {
   if [[ $QUERY == *'?(@'* ]]; then
     # This will be a multipass query
 
-    [[ -n $FILE ]] && STDINFILE=$FILE
-    [[ -z $FILE ]] && cat >$STDINFILE
+    [[ -n $FILE ]] && STDINFILE="$FILE"
+    [[ -z $FILE ]] && cat >"$STDINFILE"
 
     while true; do
       tokenize_path
       create_filter
 
-      cat "$STDINFILE" | tokenize | parse | filter | indexmatcher >$PASSFILE
+      tokenize < "$STDINFILE" | parse | filter | indexmatcher >"$PASSFILE"
 
       [[ $MULTIPASS -eq 1 ]] && {
         # replace filter expression with index sequence
-        SET=$(sed -rn 's/.*[[,"]+([0-9]+)[],].*/\1/p' $PASSFILE | tr '\n' ,)
+        SET=$(sed -rn 's/.*[[,"]+([0-9]+)[],].*/\1/p' "$PASSFILE" | tr '\n' ,)
         SET=${SET%,}
-        QUERY=$(echo $QUERY | sed "s/?(@[^)]\+)/$SET/")
+        # shellcheck disable=2001
+        QUERY=$(echo "$QUERY" | sed "s/?(@[^)]\+)/$SET/")
         [[ $DEBUG -eq 1 ]] && echo "QUERY=$QUERY" >/dev/stderr
         reset
         continue
       }
 
-      cat $PASSFILE | flatten | json | brief
+      flatten < "$PASSFILE" | json | brief
 
       break
     done
@@ -73,7 +72,7 @@ main() {
     elif [[ -z $FILE ]]; then
       tokenize | parse | filter | indexmatcher | flatten | json | brief
     else
-      cat "$FILE" | tokenize | parse | filter | indexmatcher | flatten | \
+      tokenize < "$FILE" | parse | filter | indexmatcher | flatten | \
         json | brief
     fi
 
@@ -86,7 +85,7 @@ sanity_checks() {
 
   # Reset some vars
   for binary in gawk grep sed; do
-    if ! which $binary >& /dev/null; then
+    if ! command -v "$binary" >& /dev/null; then
       echo "ERROR: $binary binary not found in path. Aborting."
       exit 1
     fi
@@ -173,7 +172,7 @@ parse_options() {
          ;;
       T) TAB_INDENT=1
          ;;
-      ?) echo "$0: ERROR: invalid option: -$OPTARG" 1>&2
+      \?) echo "$0: ERROR: invalid option: -$OPTARG" 1>&2
          usage
          exit 3
          ;;
@@ -194,7 +193,7 @@ parse_options() {
   case "$#" in
   0) QUERY='$.*'
      ;;
-  1) QUERY="$@"
+  1) QUERY="$*"
      ;;
   *) echo "$0: ERROR: expected 0 or 1 args, found: $#" 1>&2
      usage
@@ -205,7 +204,7 @@ parse_options() {
 # ---------------------------------------------------------------------------
 awk_egrep() {
 # ---------------------------------------------------------------------------
-  local pattern_string=$1
+  local pattern_string="$1"
 
   gawk '{
     while ($0) {
@@ -249,10 +248,11 @@ tokenize() {
   local SPACE='[[:space:]]+'
 
   # Force zsh to expand $A into multiple words
-  local is_wordsplit_disabled=$(unsetopt 2>/dev/null | grep -c '^shwordsplit$')
-  if [ $is_wordsplit_disabled != 0 ]; then setopt shwordsplit; fi
+  local is_wordsplit_disabled
+  is_wordsplit_disabled=$(unsetopt 2>/dev/null | grep -c '^shwordsplit$')
+  if [[ $is_wordsplit_disabled != 0 ]]; then setopt shwordsplit; fi
   $GREP "$STRING|$NUMBER|$KEYWORD|$SPACE|." | grep -E -v "^$SPACE$"
-  if [ $is_wordsplit_disabled != 0 ]; then unsetopt shwordsplit; fi
+  if [[ $is_wordsplit_disabled != 0 ]]; then unsetopt shwordsplit; fi
 }
 
 # ---------------------------------------------------------------------------
@@ -287,8 +287,9 @@ tokenize_path () {
   local SPACE='[[:space:]]+'
 
   # Force zsh to expand $A into multiple words
-  local is_wordsplit_disabled=$(unsetopt 2>/dev/null | grep -c '^shwordsplit$')
-  if [ $is_wordsplit_disabled != 0 ]; then setopt shwordsplit; fi
+  local is_wordsplit_disabled
+  is_wordsplit_disabled=$(unsetopt 2>/dev/null | grep -c '^shwordsplit$')
+  if [[ $is_wordsplit_disabled != 0 ]]; then setopt shwordsplit; fi
   readarray -t PATHTOKENS < <( echo "$QUERY" | \
     $GREP "$INDEX|$STRING|$WORD|$WILDCARD|$FILTER|$DEEPSCAN|$SET|$INDEXALL|." | \
     grep -E -v "^$SPACE$|^\\.$|^\[$|^\]$|^'$|^\\\$$|^\)$")
@@ -298,7 +299,7 @@ tokenize_path () {
       $GREP "$INDEX|$STRING|$WORD|$WILDCARD|$FILTER|$DEEPSCAN|$SET|$INDEXALL|." | \
       grep -E -v "^$SPACE$|^\\.$|^\[$|^\]$|^'$|^\\\$$|^\)$" >/dev/stderr
   }
-  if [ $is_wordsplit_disabled != 0 ]; then unsetopt shwordsplit; fi
+  if [[ $is_wordsplit_disabled != 0 ]]; then unsetopt shwordsplit; fi
 }
 
 # ---------------------------------------------------------------------------
@@ -316,72 +317,77 @@ create_filter() {
     case "${PATHTOKENS[i]}" in
       '"') :
       ;;
-      '..') query+="$comma[^]]*"
+      '..') query+="${comma}[^]]*"
             comma=
       ;;
-      '[*]') query+="$comma[^,]*"
+      '[*]') query+="${comma}[^,]*"
              comma=","
       ;;
-      '*') query+="$comma(\"[^\"]*\"|[0-9]+[^],]*)"
+      '*') query+="${comma}(\"[^\"]*\"|[0-9]+[^],]*)"
            comma=","
       ;;
       '?(@'*) a=${PATHTOKENS[i]#?(@.}
                elem="${a%%[<>=!]*}"
                rhs="${a##*[<>=!]}"
-               a="${a#$elem}"
+               a="${a#"$elem"}"
                elem="${elem//./[\",.]+}" # Allows child node matching
-               operator="${a%$rhs}"
+               operator="${a%"${rhs}"}"
                [[ -z $operator ]] && { operator="=="; rhs=; }
                if [[ $rhs == *'"'* || $rhs == *"'"* ]]; then
-                 case $operator in
+                 case "$operator" in
                    '=='|'=')  OPERATOR=
                           if [[ $elem == '?(@' ]]; then
                             # To allow search on @.property such as:
                             #   $..book[?(@.title==".*Book 1.*")]
-                            query+="$comma[0-9]+[],][[:space:]\"]*${rhs//\"/}"
+                            query+="${comma}[0-9]+[],][[:space:]\"]*${rhs//\"/}"
                           else
                             # To allow search on @ (this node) such as:
                             #   $..reviews[?(@==".*Fant.*")]
-                            query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*${rhs//\"/}"
+                            query+="${comma}[0-9]+,\"$elem\"[],][[:space:]\"]*${rhs//\"/}"
                           fi
                           FILTER="$query"
                      ;;
                    '>='|'>')  OPERATOR=">"
                               RHS="$rhs"
-                              query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                              query+="${comma}[0-9]+,\"$elem\"[],][[:space:]\"]*"
                               FILTER="$query"
                      ;;
                    '<='|'<')  OPERATOR="<"
                               RHS="$rhs"
-                              query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                              query+="${comma}[0-9]+,\"$elem\"[],][[:space:]\"]*"
                               FILTER="$query"
+                     ;;
+                  *)
                      ;;
                  esac
                else
                  case $operator in
                    '=='|'=')  OPERATOR=
-                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*$rhs"
+                          query+="${comma}[0-9]+,\"$elem\"[],][[:space:]\"]*$rhs"
                           FILTER="$query"
                      ;;
                    '>=')  OPERATOR="-ge"
                           RHS="$rhs"
-                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                          query+="${comma}[0-9]+,\"$elem\"[],][[:space:]\"]*"
                           FILTER="$query"
                      ;;
                    '>')   OPERATOR="-gt"
                           RHS="$rhs"
-                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                          query+="${comma}[0-9]+,\"$elem\"[],][[:space:]\"]*"
                           FILTER="$query"
                      ;;
                    '<=')  OPERATOR="-le"
                           RHS="$rhs"
-                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                          query+="${comma}[0-9]+,\"$elem\"[],][[:space:]\"]*"
                           FILTER="$query"
                      ;;
                    '<')   OPERATOR="-lt"
                           RHS="$rhs"
-                          query+="$comma[0-9]+,\"$elem\"[],][[:space:]\"]*"
+                          query+="${comma}[0-9]+,\"$elem\"[],][[:space:]\"]*"
                           FILTER="$query"
+                    ;;
+                  *)
+                     ;;
                  esac
                fi
                MULTIPASS=1
@@ -392,18 +398,18 @@ create_filter() {
               if [[ $a =~ [[:alpha:]] ]]; then
                 # converts only one comma: s/("[^"]+),([^"]+")/\1`\2/g;s/"//g
                 #a=$(echo $a | sed 's/\([[:alpha:]]*\)/"\1"/g')
-                a=$(echo $a | sed -r "s/[\"']//g;s/([^,]*)/\"\1\"/g")
+                a=$(echo "$a" | sed -r "s/[\"']//g;s/([^,]*)/\"\1\"/g")
               fi
-              query+="$comma(${a//,/|})"
+              query+="${comma}(${a//,/|})"
             elif [[ ${PATHTOKENS[i]} =~ : ]]; then
               if ! [[ ${PATHTOKENS[i]} =~ [0-9][0-9] || ${PATHTOKENS[i]} =~ :] ]]
               then
                 if [[ ${PATHTOKENS[i]#*:} =~ : ]]; then
                   INDEXMATCH_QUERY+=("${PATHTOKENS[i]}")
-                  query+="$comma[^,]*"
+                  query+="${comma}[^,]*"
                 else
                   # Index in the range of 0-9 can be handled by regex
-                  query+="${comma}$(echo ${PATHTOKENS[i]} | \
+                  query+="${comma}$(echo "${PATHTOKENS[i]}" |
                   gawk '/:/ { a=substr($0,0,index($0,":")-1);
                          b=substr($0,index($0,":")+1,index($0,"]")-index($0,":")-1);
                          if(b>0) { print a ":" b-1 "]" };
@@ -414,13 +420,13 @@ create_filter() {
                 fi
               else
                 INDEXMATCH_QUERY+=("${PATHTOKENS[i]}")
-                query+="$comma[^,]*"
+                query+="${comma}[^,]*"
               fi
             else
               a=${PATHTOKENS[i]#[}
               a=${a%]}
               if [[ $a =~ [[:alpha:]] ]]; then
-                a=$(echo $a | sed -r "s/[\"']//g;s/([^,]*)/\"\1\"/g")
+                a=$(echo "$a" | sed -r "s/[\"']//g;s/([^,]*)/\"\1\"/g")
               else
                 [[ $i -gt 0 ]] && comma=","
               fi
@@ -433,10 +439,10 @@ create_filter() {
             comma=","
       ;;
     esac
-    i=i+1
+    ((++i))
   done
 
-  [[ -z $FILTER ]] && FILTER="$query[],]"
+  [[ -z $FILTER ]] && FILTER="${query}[],]"
   [[ $DEBUG -eq 1 ]] && echo "FILTER=$FILTER" >/dev/stderr
 }
 
@@ -486,7 +492,7 @@ parse_object () {
       while :
       do
         case "$token" in
-          '"'*'"') key=$token ;;
+          '"'*'"') key="$token" ;;
           *) throw "EXPECTED string GOT ${token:-EOF}" ;;
         esac
         read -r token
@@ -522,18 +528,19 @@ parse_value () {
     '[') parse_array  "$jpath" ;;
     # At this point, the only valid single-character tokens are digits.
     ''|[!0-9]) throw "EXPECTED value GOT ${token:-EOF}" ;;
-    *) value=$token
+    *) value="$token"
        # if asked, replace solidus ("\/") in json strings with normalized value: "/"
-       [ "$NORMALIZE_SOLIDUS" -eq 1 ] && value=$(echo "$value" | sed 's#\\/#/#g')
+       # shellcheck disable=SC2001
+       [[ "$NORMALIZE_SOLIDUS" -eq 1 ]] && value=$(echo "$value" | sed 's#\\/#/#g')
        isleaf=1
-       [ "$value" = '""' ] && isempty=1
+       [[ "$value" = '""' ]] && isempty=1
        ;;
   esac
-  [[ -z INCLEMPTY ]] && [ "$value" = '' ] && return
-  [ "$NO_HEAD" -eq 1 ] && [ -z "$jpath" ] && return
+  [[ "$value" = '' ]] && return
+  [[ "$NO_HEAD" -eq 1 && -z "$jpath" ]] && return
 
-  [ "$isleaf" -eq 1 ] && [ $isempty -eq 0 ] && print=1
-  [ "$print" -eq 1 ] && printf "[%s]\t%s\n" "$jpath" "$value"
+  [[ "$isleaf" -eq 1 && $isempty -eq 0 ]] && print=1
+  [[ "$print" -eq 1 ]] && printf "[%s]\t%s\n" "$jpath" "$value"
   :
 }
 
@@ -549,8 +556,8 @@ flatten() {
 
     highest=9999
 
-    while read line; do
-      a=${line#[};a=${a%%]*}
+    while read -r line; do
+      a=${line#[}; a=${a%%]*}
       readarray -t path < <(grep -o "[^,]*"<<<"$a")
       [[ -z $prevpath ]] && {
         prevpath=("${path[@]}")
@@ -560,14 +567,14 @@ flatten() {
 
       pathlen=$((${#path[*]}-1))
 
-      for i in `seq 0 $pathlen`; do
-        [[ ${path[i]} != ${prevpath[i]} ]] && {
-          high=$i
+      for i in $(seq 0 "$pathlen"); do
+        [[ ${path[i]} != "${prevpath[i]}" ]] && {
+          high="$i"
           break
         }
       done
 
-      [[ $high -lt $highest ]] && highest=$high
+      [[ $high -lt $highest ]] && highest="$high"
 
       prevpath=("${path[@]}")
     done <"$STDINFILE2"
@@ -592,7 +599,7 @@ indexmatcher() {
   local a b
 
   [[ $DEBUG -eq 1 ]] && {
-    for i in `seq 0 $((${#INDEXMATCH_QUERY[*]}-1))`; do
+    for i in $(seq 0 $((${#INDEXMATCH_QUERY[*]}-1))); do
       echo "INDEXMATCH_QUERY[$i]=${INDEXMATCH_QUERY[i]}" >/dev/stderr
     done
   }
@@ -602,7 +609,7 @@ indexmatcher() {
   step=
   if [[ ${#INDEXMATCH_QUERY[*]} -gt 0 ]]; then
     while read -r line; do
-      for i in `seq 0 $((${#INDEXMATCH_QUERY[*]}-1))`; do
+      for i in $(seq 0 $((${#INDEXMATCH_QUERY[*]}-1))); do
         [[ ${INDEXMATCH_QUERY[i]#*:} =~ : ]] && {
           step=${INDEXMATCH_QUERY[i]##*:}
           step=${step%]}
@@ -612,7 +619,7 @@ indexmatcher() {
         a=${q%:*}                     # <- number before ':'
         b=${q#*:}                     # <- number after ':'
         [[ -z $b ]] && b=99999999999
-        readarray -t num < <( (grep -Eo '[0-9]+[],]' | tr -d ,])<<<$line )
+        readarray -t num < <( (grep -Eo '[0-9]+[],]' | tr -d ,])<<<"$line" )
         if [[ ${num[i]} -ge $a && ${num[i]} -lt $b && matched -eq 1 ]]; then
           matched=1
           [[ $i -eq $((${#INDEXMATCH_QUERY[*]}-1)) ]] && {
@@ -659,73 +666,75 @@ json() {
 # ---------------------------------------------------------------------------
 # Turn output into JSON
 
-  local a tab=$(echo -e "\t")
+  local a tab
+  tab=$(echo -e "\t")
   local UP=1 DOWN=2 SAME=3
   local prevpathlen=-1 prevpath=() path a
+  local QUOTE_STAR='"*'
   declare -a closers
 
   if [[ $JSON -eq 0 ]]; then
     cat -
   else
     while read -r line; do
-      a=${line#[};a=${a%%]*}
+      a=${line#[}; a=${a%%]*}
       readarray -t path < <(grep -o "[^,]*"<<<"$a")
-      value=${line#*$tab}
+      value=${line#*"$tab"}
 
       # Not including the object itself (last item)
       pathlen=$((${#path[*]}-1))
 
       # General direction
 
-      direction=$SAME
-      [[ $pathlen -gt $prevpathlen ]] && direction=$DOWN
-      [[ $pathlen -lt $prevpathlen ]] && direction=$UP
+      direction="$SAME"
+      [[ $pathlen -gt $prevpathlen ]] && direction="$DOWN"
+      [[ $pathlen -lt $prevpathlen ]] && direction="$UP"
 
       # Handle jumps UP the tree (close previous paths)
 
       [[ $prevpathlen != -1 ]] && {
-        for i in `seq 0 $((pathlen-1))`; do
-          [[ ${prevpath[i]} == ${path[i]} ]] && continue
+        for i in $(seq 0 $((pathlen-1))); do
+          [[ ${prevpath[i]} == "${path[i]}" ]] && continue
           [[ ${path[i]} != '"'* ]] && {
-            a=(${!arrays[*]})
-            [[ -n $a ]] && {
-              for k in `seq $((i+1)) ${a[-1]}`; do
+            a=("${!arrays[@]}")
+            [[ -n ${a[*]} ]] && {
+              for k in $(seq $((i+1)) "${a[-1]}"); do
                 arrays[k]=
               done
             }
-            a=(${!comma[*]})
-            [[ -n $a ]] && {
-              for k in `seq $((i+1)) ${a[-1]}`; do
+            a=("${!comma[@]}")
+            [[ -n ${a[*]} ]] && {
+              for k in $(seq $((i+1)) "${a[-1]}"); do
                 comma[k]=
               done
             }
-            for j in `seq $((prevpathlen)) -1 $((i+2))`
+            for j in $(seq $((prevpathlen)) -1 $((i+2)))
             do
               arrays[j]=
               [[ -n ${closers[j]} ]] && {
-                let indent=j*4
+                ((indent=j*4))
                 printf "\n%${indent}s${closers[j]}" ""
-                unset closers[j]
+                unset 'closers[j]'
                 comma[j]=
               }
             done
-            direction=$DOWN
+            direction="$DOWN"
             break
           }
-          direction=$DOWN
-          for j in `seq $((prevpathlen)) -1 $((i+1))`
+          direction="$DOWN"
+          for j in $(seq $((prevpathlen)) -1 $((i+1)))
           do
             arrays[j]=
             [[ -n ${closers[j]} ]] && {
-              let indent=j*4
+              ((indent=j*4))
               printf "\n%${indent}s${closers[j]}" ""
-              unset closers[j]
+              unset 'closers[j]'
               comma[j]=
             }
           done
-          a=(${!arrays[*]})
-          [[ -n $a ]] && {
-            for k in `seq $i ${a[-1]}`; do
+          a=("${!arrays[@]}")
+          [[ -n ${a[*]} ]] && {
+            for k in $(seq "$i" "${a[-1]}"); do
               arrays[k]=
             done
           }
@@ -735,19 +744,19 @@ json() {
 
       [[ $direction -eq $UP ]] && {
         [[ $prevpathlen != -1 ]] && comma[prevpathlen]=
-        for i in `seq $((prevpathlen+1)) -1 $((pathlen+1))`
+        for i in $(seq $((prevpathlen+1)) -1 $((pathlen+1)))
         do
           arrays[i]=
           [[ -n ${closers[i]} ]] && {
-            let indent=i*4
+            ((indent=i*4))
             printf "\n%${indent}s${closers[i]}" ""
-            unset closers[i]
+            unset 'closers[i]'
             comma[i]=
           }
         done
-        a=(${!arrays[*]})
-        [[ -n $a ]] && {
-          for k in `seq $i ${a[-1]}`; do
+        a=("${!arrays[@]}")
+        [[ -n ${a[*]} ]] && {
+          for k in $(seq "$i" "$a"); do
             arrays[k]=
           done
         }
@@ -756,21 +765,22 @@ json() {
       # Opening braces (the path leading up to the key)
 
       broken=
-      for i in `seq 0 $((pathlen-1))`; do
-        [[ -z $broken && ${prevpath[i]} == ${path[i]} ]] && continue
+      for i in $(seq 0 $((pathlen-1))); do
+        [[ -z $broken && ${prevpath[i]} == "${path[i]}" ]] && continue
         [[ -z $broken ]] && {
-          broken=$i
+          broken="$i"
           [[ $prevpathlen -ne -1 ]] && broken=$((i+1))
         }
-        if [[ ${path[i]} == '"'* ]]; then
+        # shellcheck disable=2053
+        if [[ ${path[i]} == $QUOTE_STAR ]]; then
           # Object
           [[ $i -ge $broken ]] && {
-            let indent=i*4
+            ((indent=i*4))
             printf "${comma[i]}%${indent}s{\n" ""
             closers[i]='}'
             comma[i]=
           }
-          let indent=(i+1)*4
+          ((indent=(i+1)*4))
           if [[ $COLON_SPACE == 1 ]]; then
             printf "${comma[i]}%${indent}s${path[i]} : " ""
           else
@@ -783,7 +793,7 @@ json() {
         else
           # Array
           if [[ ${arrays[i]} != 1 ]]; then
-            let indent=i*4
+            ((indent=i*4))
             if [[ $ARRAY_SAME_LINE == 0 ]]; then
               printf "%${indent}s" ""
             fi
@@ -792,9 +802,9 @@ json() {
             arrays[i]=1
             comma[i]=
           else
-            let indent=(i+1)*4
+            ((indent=(i+1)*4))
             printf "\n%${indent}s${closers[i-1]}" ""
-            direction=$DOWN
+            direction="$DOWN"
             comma[i+1]=",\n"
           fi
         fi
@@ -805,12 +815,12 @@ json() {
       if [[ ${path[-1]} == '"'* ]]; then
         # Object
         [[ $direction -eq $DOWN ]] && {
-          let indent=pathlen*4
+          ((indent=pathlen*4))
           printf "${comma[pathlen]}%${indent}s{\n" ""
           closers[pathlen]='}'
           comma[pathlen]=
         }
-        let indent=(pathlen+1)*4
+        ((indent=(pathlen+1)*4))
         printf "${comma[pathlen]}%${indent}s" ""
         if [[ $COLON_SPACE == 1 ]]; then
           echo -n "${path[-1]} : $value"
@@ -821,27 +831,27 @@ json() {
       else
         # Array
         [[ ${arrays[i]} != 1 ]] && {
-          let indent=(pathlen-0)*4
+          ((indent=(pathlen-0)*4))
           printf "%${indent}s[\n" ""
           closers[pathlen]=']'
           comma[pathlen]=
           arrays[i]=1
         }
-        let indent=(pathlen+1)*4
+        ((indent=(pathlen+1)*4))
         printf "${comma[pathlen]}%${indent}s" ""
         echo -n "$value"
         comma[pathlen]=",\n"
       fi
 
       prevpath=("${path[@]}")
-      prevpathlen=$pathlen
+      prevpathlen="$pathlen"
     done
 
     # closing braces
 
-    for i in `seq $((pathlen)) -1 0`
+    for i in $(seq $((pathlen)) -1 0)
     do
-      let indent=i*4
+      ((indent=i*4))
       printf "\n%${indent}s${closers[i]}" ""
     done
     echo
@@ -853,19 +863,22 @@ filter() {
 # ---------------------------------------------------------------------------
 # Apply the query filter
 
-  local a tab=$(echo -e "\t") v
+  local a tab v
+  tab=$(echo -e "\t")
+  unset opts
+  declare -ag opts
 
-  [[ $NOCASE -eq 1 ]] && opts+="-i"
-  [[ $WHOLEWORD -eq 1 ]] && opts+=" -w"
+  [[ $NOCASE -eq 1 ]] && opts+=("-i")
+  [[ $WHOLEWORD -eq 1 ]] && opts+=("-w")
   if [[ -z $OPERATOR ]]; then
-    [[ $MULTIPASS -eq 1 ]] && FILTER="$FILTER[\"]?$"
-    grep -E $opts "$FILTER"
+    [[ $MULTIPASS -eq 1 ]] && FILTER="${FILTER}[\"]?$"
+    grep -E "${opts[@]}" "$FILTER"
     [[ $DEBUG -eq 1 ]] && echo "FILTER=$FILTER" >/dev/stderr
   else
-    grep -E $opts "$FILTER" | \
-      while read line; do
-        v=${line#*$tab}
-        case $OPERATOR in
+    grep -E "${opts[@]}" "$FILTER" | \
+      while read -r line; do
+        v=${line#*"$tab"}
+        case "$OPERATOR" in
           '-ge') if gawk '{exit !($1>=$2)}'<<<"$v $RHS";then echo "$line"; fi
             ;;
           '-gt') if gawk '{exit !($1>$2) }'<<<"$v $RHS";then echo "$line"; fi
@@ -874,13 +887,15 @@ filter() {
             ;;
           '-lt') if gawk '{exit !($1<$2) }'<<<"$v $RHS";then echo "$line"; fi
             ;;
-          '>') v=${v#\"};v=${v%\"}
-               RHS=${RHS#\"};RHS=${RHS%\"}
+          '>') v=${v#\"}; v=${v%\"}
+               RHS=${RHS#\"}; RHS=${RHS%\"}
                [[ "${v,,}" > "${RHS,,}" ]] && echo "$line"
             ;;
-          '<') v=${v#\"};v=${v%\"}
-               RHS=${RHS#\"};RHS=${RHS%\"}
+          '<') v=${v#\"}; v=${v%\"}
+               RHS=${RHS#\"}; RHS=${RHS%\"}
                [[ "${v,,}" < "${RHS,,}" ]] && echo "$line"
+            ;;
+          *)
             ;;
         esac
       done
@@ -895,11 +910,9 @@ parse () {
   read -r token
   parse_value
   read -r token
-  case "$token" in
-    '') ;;
-    *) throw "EXPECTED EOF GOT $token"
-       exit 1;;
-  esac
+  if [[ -n $token ]]; then
+    throw "EXPECTED EOF GOT $token"
+  fi
 }
 
 # ---------------------------------------------------------------------------
@@ -909,7 +922,7 @@ throw() {
   exit 1
 }
 
-if ([ "$0" = "$BASH_SOURCE" ] || ! [ -n "$BASH_SOURCE" ]);
+if [[ "$0" = "${BASH_SOURCE[*]}" || -z "${BASH_SOURCE[*]}" ]];
 then
   main "$@"
 fi
