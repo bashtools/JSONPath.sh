@@ -119,7 +119,7 @@ usage() {
 # ---------------------------------------------------------------------------
 
   echo
-  echo "Usage: JSONPath.sh [-h] [-b] [-j] [-u] [-i] [-p] [-w] [-f FILE] [-n] [-s] [-S] [-A] [-T] [pattern]"
+  echo "Usage: JSONPath.sh [-hbjuipwnsSAT] [-f FILE] [pattern]"
   echo
   echo "-h      - Print this help text."
   echo "-b      - Brief. Only show values."

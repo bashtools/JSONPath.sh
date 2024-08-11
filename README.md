@@ -12,7 +12,7 @@ try wrapping the command like `./ensure_deps.sh ./JSONPath.sh`.
 
 ## Invocation
 
-    JSONPath.sh [-h] [-b] [-j] [-u] [-i] [-p] [-w] [-f FILE] [-n] [-s] [-S] [-A] [-T] [pattern]
+    JSONPath.sh [-hbjuipwnsSAT] [-f FILE] [pattern]
 
 -h
 > Show help text.
