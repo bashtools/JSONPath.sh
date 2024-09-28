@@ -1,6 +1,6 @@
 {
   "name": "jsonpath.sh",
-  "version": "0.0.19",
+  "version": "0.0.18",
   "description": "JSONPath implementation written in Bash",
   "homepage": "http://github.com/mclarkson/JSONPath.sh",
   "repository": {
