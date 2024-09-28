@@ -65,7 +65,7 @@ mawk or nawk, but gawk.
 
 Install with pip:
 
-* `sudo pip install git+https://github.com/mclarkson/JSONPath.sh#egg=JSONPath.sh`
+* `pip install JSONPath.sh`
 
 Install with npm:
 
