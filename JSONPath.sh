@@ -4,6 +4,7 @@
 # GLOBALS
 # ---------------------------------------------------------------------------
 
+VERSION="0.0.21"
 DEBUG=0
 NOCASE=0
 WHOLEWORD=0
@@ -119,8 +120,9 @@ usage() {
 # ---------------------------------------------------------------------------
 
   echo
-  echo "Usage: JSONPath.sh [-[hbjuipwnsSAT]] [-f FILE] [pattern]"
+  echo "Usage: JSONPath.sh [-[vhbjuipwnsSAT]] [-f FILE] [pattern]"
   echo
+  echo "-v      - Print the version of this script."
   echo "-h      - Print this help text."
   echo "-b      - Brief. Only show values."
   echo "-j      - JSON output."
@@ -130,8 +132,8 @@ usage() {
   echo "-w      - Match whole words only (for filter script expression)."
   echo "-f FILE - Read a FILE instead of stdin."
   echo "-n      - Do not print header."
-  echo "-s      - Normalize solidus."
-  echo "-S      - Print spaces around :'s."
+  echo "-s      - Normalize solidus, e.g. convert \"\/\" to \"/\"."
+  echo "-S      - Print spaces around colons, producing ' : '."
   echo "-A      - Start array on same line as JSON member."
   echo "-T      - Indent with tabs instead of 4 character spaces."
   echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
@@ -143,62 +145,77 @@ parse_options() {
 # ---------------------------------------------------------------------------
 
   set -- "$@"
-  while getopts :hbjuipwf:nsSAT flag; do
-    case "$flag" in
-      h) usage
-         exit 0
-         ;;
-      b) BRIEF=1
-         ;;
-      j) JSON=1
-         ;;
-      u) FLATTEN=1
-         ;;
-      i) NOCASE=1
-         ;;
-      p) PASSTHROUGH=1
-         ;;
-      w) WHOLEWORD=1
-         ;;
-      f) FILE="$OPTARG"
-         ;;
-      n) NO_HEAD=1
-         ;;
-      s) NORMALIZE_SOLIDUS=1
-         ;;
-      S) COLON_SPACE=1
-         ;;
-      A) ARRAY_SAME_LINE=1
-         ;;
-      T) TAB_INDENT=1
-         ;;
-      \?) echo "$0: ERROR: invalid option: -$OPTARG" 1>&2
-         usage
-         exit 3
-         ;;
-      :) echo "$0: ERROR: option -$OPTARG requires an argument" 1>&2
-         usage
-         exit 3
-         ;;
-      *) echo "$0: ERROR: unexpected value from getopts: $flag" 1>&2
-         usage
-         exit 3
-         ;;
-    esac
+
+  local arg ARGN=$#
+  declare -a expanded_args
+
+  # Expand args like -abc to -a -b -c
+  while [ "$ARGN" -ne 0 ]; do
+    arg="$1"
+    if [[ $arg == -[a-zA-Z][a-zA-Z]* ]]; then
+        # Remove the leading dash
+        arg="${arg#-}"
+        # Split the remaining characters and add dashes
+        for i in ${arg//[a-zA-Z]/ -&}; do
+            expanded_args+=("$i")
+        done
+    else
+        expanded_args+=("$arg")
+    fi
+    ARGN=$((ARGN-1))
+    shift 1
   done
-  # remove the options
-  #
-  shift $(( OPTIND - 1 ));
-  # parse optional patten
-  case "$#" in
-  0) QUERY='$.*'
-     ;;
-  1) QUERY="$*"
-     ;;
-  *) echo "$0: ERROR: expected 0 or 1 args, found: $#" 1>&2
-     usage
-     ;;
-  esac
+
+  set -- "${expanded_args[@]}"
+  ARGN=$#
+  while [ "$ARGN" -ne 0 ]
+  do
+    case $1 in
+      -h) usage
+          exit 0
+      ;;
+      -v) echo "Version: $VERSION"
+          exit 0
+      ;;
+      -f) shift
+          [[ ! -e $1 ]] && {
+            echo "ERROR: -f '$1' does not exist." 1>&2
+            exit 1
+          }
+          FILE=$1
+      ;;
+      -i) NOCASE=1
+      ;;
+      -j) JSON=1
+      ;;
+      -n) NO_HEAD=1
+      ;;
+      -b) BRIEF=1
+      ;;
+      -u) FLATTEN=1
+      ;;
+      -p) PASSTHROUGH=1
+      ;;
+      -w) WHOLEWORD=1
+      ;;
+      -s) NORMALIZE_SOLIDUS=1
+      ;;
+      -S) COLON_SPACE=1
+         ;;
+      -A) ARRAY_SAME_LINE=1
+         ;;
+      -T) TAB_INDENT=1
+         ;;
+      -?*) usage
+           echo "$0: ERROR: invalid option: $1" 1>&2
+           exit 3
+      ;;
+      ?*) QUERY=$1
+      ;;
+    esac
+    shift 1
+    ARGN=$((ARGN-1))
+  done
 }
 
 # ---------------------------------------------------------------------------
