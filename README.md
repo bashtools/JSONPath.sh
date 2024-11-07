@@ -15,6 +15,9 @@ try wrapping the command like `./ensure_deps.sh ./JSONPath.sh`.
 -h
 > Show help text.
 
+-v
+> Show version information.
+
 -b
 > Brief output. Only show the values, not the path and key.
 
@@ -41,13 +44,13 @@ try wrapping the command like `./ensure_deps.sh ./JSONPath.sh`.
 > Do not print header.
 
 -s
-> Normalize solidus.
+> Normalize solidus, e.g. convert "\\/" to "/".
 
 -S
 > Print spaces around :'s.
 
--A
-> Start array on same line as JSON member.
+-c
+> Output JSON in dense/condensed form.
 
 -T
 > Indent with tabs instead of 4 character spaces.

@@ -17,7 +17,7 @@ do
   input="${argpfile%.*}.json"
   argp=$(< "$argpfile")
   ((++i))
-  if ! ../JSONPath.sh -j -- "$argp" < "$input" | python3 -mjson.tool >/dev/null
+  if ! ../JSONPath.sh -j "$argp" < "$input" | python3 -mjson.tool >/dev/null
   then
     echo "not ok $i - $argpfile"
     ((++fails))

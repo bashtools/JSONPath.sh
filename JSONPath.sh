@@ -17,7 +17,7 @@ JSON=0
 MULTIPASS=0
 FLATTEN=0
 COLON_SPACE=0
-ARRAY_SAME_LINE=0
+CONDENSED=0
 TAB_INDENT=0
 STDINFILE=/var/tmp/JSONPath.$$.stdin
 STDINFILE2=/var/tmp/JSONPath.$$.stdin2
@@ -125,17 +125,17 @@ usage() {
   echo "-v      - Print the version of this script."
   echo "-h      - Print this help text."
   echo "-b      - Brief. Only show values."
-  echo "-j      - JSON output."
-  echo "-u      - Strip unnecessary leading path elements."
   echo "-i      - Case insensitive."
   echo "-p      - Pass-through to the JSON parser."
   echo "-w      - Match whole words only (for filter script expression)."
   echo "-f FILE - Read a FILE instead of stdin."
   echo "-n      - Do not print header."
-  echo "-s      - Normalize solidus, e.g. convert \"\/\" to \"/\"."
-  echo "-S      - Print spaces around colons, producing ' : '."
-  echo "-A      - Start array on same line as JSON member."
   echo "-T      - Indent with tabs instead of 4 character spaces."
+  echo "-u      - Strip unnecessary leading path elements."
+  echo "-j      - Output in JSON format."
+  echo "-s      - JSON output: Normalize solidus, e.g. convert \"\/\" to \"/\"."
+  echo "-S      - JSON output: Print spaces around colons, producing ' : '."
+  echo "-c      - JSON output: Condensed output."
   echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
   echo
 }
@@ -184,6 +184,8 @@ parse_options() {
           }
           FILE=$1
       ;;
+      -c) CONDENSED=1
+      ;;
       -i) NOCASE=1
       ;;
       -j) JSON=1
@@ -202,8 +204,6 @@ parse_options() {
       ;;
       -S) COLON_SPACE=1
          ;;
-      -A) ARRAY_SAME_LINE=1
-         ;;
       -T) TAB_INDENT=1
          ;;
       -?*) usage
@@ -216,6 +216,8 @@ parse_options() {
     shift 1
     ARGN=$((ARGN-1))
   done
+
+  [[ -z $QUERY ]] && QUERY='.*'
 }
 
 # ---------------------------------------------------------------------------
@@ -671,6 +673,8 @@ brief() {
       sed 's/^[^\t]*\t//;s/^"//;s/"$//;'
     else
       if [[ $TAB_INDENT == 1 ]]; then
+        # TODO should not be using another external tool
+        # Only gawk, grep and sed are allowed
         unexpand -t 4
       else
         cat
@@ -679,199 +683,178 @@ brief() {
 }
 
 # ---------------------------------------------------------------------------
+typeof() {
+# ---------------------------------------------------------------------------
+# Helper function for json()
+
+  [[ -z $1 ]] && return 1
+  if [[ $1 == \"* ]]; then
+    echo OBJECT
+  else
+    echo ARRAY
+  fi
+  return 0
+}
+
+# ---------------------------------------------------------------------------
+get_path_stats() {
+# ---------------------------------------------------------------------------
+# Compare the current path to the previous path
+# Helper function for json()
+
+  num_same=0; rest_is_new=
+  num_new=0; num_dropped=0; num_changed=0
+  new_objs=(); dropped_objs=(); changed_objs=()
+
+  for i in $(seq 0 $((${#curpath[*]}-1))); do
+    if [[ -n "${rest_is_new}" ]]; then
+      num_new+=1
+      new_objs+=("$(typeof "${curpath[i]}")")
+      num_dropped+=1
+      dropped_objs+=("$(typeof "${prvpath[i]}")")
+    elif ! typeof "${prvpath[i]}" >/dev/null; then
+      num_new+=1
+      new_objs+=("$(typeof "${curpath[i]}")")
+      rest_is_new=1
+      num_dropped+=1
+      dropped_objs+=("$(typeof "${prvpath[i]}")")
+    elif [[ "${curpath[i]}" != "${prvpath[i]}" ]]; then
+      if [[ $(typeof "${curpath[i]}") == "OBJECT" ]]; then
+        num_changed+=1
+        changed_objs+=("$(typeof "${curpath[i]}")")
+      else
+        num_same+=1
+      fi
+      rest_is_new=1
+    elif [[ "${num_new}" -eq 0 && "${num_changed}" -eq 0 ]]; then
+      num_same+=1
+    fi
+  done
+  if [[ ${#prvpath[*]} -gt ${#curpath[*]} ]]; then
+    num_dropped=$((${#prvpath[*]}-${#curpath[*]}))
+    for i in $(seq $((${#prvpath[*]}-num_dropped)) $((${#prvpath[*]}-1)))
+    do
+      dropped_objs+=("$(typeof "${prvpath[i]}")")
+    done
+  fi
+}
+
+# ---------------------------------------------------------------------------
 json() {
 # ---------------------------------------------------------------------------
 # Turn output into JSON
 
-  local a tab
+  local rawpath tab comma nl spc first_time=1
+  # using declare makes these variables available to called functions
+  declare -a curpath prvpath new_objs dropped_objs changed_objs
+  declare -i num_same=0 num_new=0 num_dropped=0
+  declare -i num_changed=0 indent=0 tabsize=0 tsc=0
+
   tab=$(echo -e "\t")
-  local UP=1 DOWN=2 SAME=3
-  local prevpathlen=-1 prevpath=() path a
-  local QUOTE_STAR='"*'
-  declare -a closers
+
+  [[ $CONDENSED -eq 0 ]] && { nl='\n'; spc=' '; tabsize=2; tsc=2; }
+  [[ $COLON_SPACE -eq 1 ]] && cs=" "
 
   if [[ $JSON -eq 0 ]]; then
     cat -
   else
     while read -r line; do
-      a=${line#[}; a=${a%%]*}
-      readarray -t path < <(grep -o "[^,]*"<<<"$a")
+      rawpath=${line#[}; rawpath=${rawpath%%]*}
+      readarray -t curpath < <(grep -o "[^,]*"<<<"$rawpath")
       value=${line#*"$tab"}
 
-      # Not including the object itself (last item)
-      pathlen=$((${#path[*]}-1))
+      get_path_stats
 
-      # General direction
-
-      direction="$SAME"
-      [[ $pathlen -gt $prevpathlen ]] && direction="$DOWN"
-      [[ $pathlen -lt $prevpathlen ]] && direction="$UP"
-
-      # Handle jumps UP the tree (close previous paths)
-
-      [[ $prevpathlen != -1 ]] && {
-        for i in $(seq 0 $((pathlen-1))); do
-          [[ ${prevpath[i]} == "${path[i]}" ]] && continue
-          [[ ${path[i]} != '"'* ]] && {
-            a=("${!arrays[@]}")
-            [[ -n ${a[*]} ]] && {
-              for k in $(seq $((i+1)) "${a[-1]}"); do
-                arrays[k]=
-              done
-            }
-            a=("${!comma[@]}")
-            [[ -n ${a[*]} ]] && {
-              for k in $(seq $((i+1)) "${a[-1]}"); do
-                comma[k]=
-              done
-            }
-            for j in $(seq $((prevpathlen)) -1 $((i+2)))
-            do
-              arrays[j]=
-              [[ -n ${closers[j]} ]] && {
-                ((indent=j*4))
-                printf "\n%${indent}s${closers[j]}" ""
-                unset 'closers[j]'
-                comma[j]=
-              }
-            done
-            direction="$DOWN"
-            break
-          }
-          direction="$DOWN"
-          for j in $(seq $((prevpathlen)) -1 $((i+1)))
-          do
-            arrays[j]=
-            [[ -n ${closers[j]} ]] && {
-              ((indent=j*4))
-              printf "\n%${indent}s${closers[j]}" ""
-              unset 'closers[j]'
-              comma[j]=
-            }
-          done
-          a=("${!arrays[@]}")
-          [[ -n ${a[*]} ]] && {
-            for k in $(seq "$i" "${a[-1]}"); do
-              arrays[k]=
-            done
-          }
-          break
+      if [[ ${num_dropped} -gt 0 && first_time -eq 0 ]]; then
+        for i in $(seq $((${#dropped_objs[*]}-1)) -1 0); do
+          case "${dropped_objs[i]}" in
+            ARRAY)
+              indent=$((indent-1))
+              printf "%b%*s]" "$nl" "$((indent*tabsize))" ""
+              ;;
+            OBJECT)
+              indent=$((indent-1))
+              printf "%b%*s}" "$nl" "$((indent*tabsize))" ""
+              ;;
+          esac
         done
-      }
-
-      [[ $direction -eq $UP ]] && {
-        [[ $prevpathlen != -1 ]] && comma[prevpathlen]=
-        for i in $(seq $((prevpathlen+1)) -1 $((pathlen+1)))
-        do
-          arrays[i]=
-          [[ -n ${closers[i]} ]] && {
-            ((indent=i*4))
-            printf "\n%${indent}s${closers[i]}" ""
-            unset 'closers[i]'
-            comma[i]=
-          }
-        done
-        a=("${!arrays[@]}")
-        [[ -n ${a[*]} ]] && {
-          for k in $(seq "$i" "$a"); do
-            arrays[k]=
-          done
-        }
-      }
-
-      # Opening braces (the path leading up to the key)
-
-      broken=
-      for i in $(seq 0 $((pathlen-1))); do
-        [[ -z $broken && ${prevpath[i]} == "${path[i]}" ]] && continue
-        [[ -z $broken ]] && {
-          broken="$i"
-          [[ $prevpathlen -ne -1 ]] && broken=$((i+1))
-        }
-        # shellcheck disable=2053
-        if [[ ${path[i]} == $QUOTE_STAR ]]; then
-          # Object
-          [[ $i -ge $broken ]] && {
-            ((indent=i*4))
-            printf "${comma[i]}%${indent}s{\n" ""
-            closers[i]='}'
-            comma[i]=
-          }
-          ((indent=(i+1)*4))
-          if [[ $COLON_SPACE == 1 ]]; then
-            printf "${comma[i]}%${indent}s${path[i]} : " ""
-          else
-            printf "${comma[i]}%${indent}s${path[i]}:" ""
-          fi
-          if [[ $ARRAY_SAME_LINE == 0 ]]; then
-            echo
-          fi
-          comma[i]=",\n"
+        if [[ -n ${comma} ]]; then
+          printf "%s%b" "${comma}" "$nl"
+          comma=
         else
-          # Array
-          if [[ ${arrays[i]} != 1 ]]; then
-            ((indent=i*4))
-            if [[ $ARRAY_SAME_LINE == 0 ]]; then
-              printf "%${indent}s" ""
-            fi
-            echo "["
-            closers[i]=']'
-            arrays[i]=1
-            comma[i]=
-          else
-            ((indent=(i+1)*4))
-            printf "\n%${indent}s${closers[i-1]}" ""
-            direction="$DOWN"
-            comma[i+1]=",\n"
-          fi
+          printf "%b" "$nl"
         fi
-      done
-
-      # keys & values
-
-      if [[ ${path[-1]} == '"'* ]]; then
-        # Object
-        [[ $direction -eq $DOWN ]] && {
-          ((indent=pathlen*4))
-          printf "${comma[pathlen]}%${indent}s{\n" ""
-          closers[pathlen]='}'
-          comma[pathlen]=
-        }
-        ((indent=(pathlen+1)*4))
-        printf "${comma[pathlen]}%${indent}s" ""
-        if [[ $COLON_SPACE == 1 ]]; then
-          echo -n "${path[-1]} : $value"
-        else
-          echo -n "${path[-1]}:$value"
-        fi
-        comma[pathlen]=",\n"
-      else
-        # Array
-        [[ ${arrays[i]} != 1 ]] && {
-          ((indent=(pathlen-0)*4))
-          printf "%${indent}s[\n" ""
-          closers[pathlen]=']'
-          comma[pathlen]=
-          arrays[i]=1
-        }
-        ((indent=(pathlen+1)*4))
-        printf "${comma[pathlen]}%${indent}s" ""
-        echo -n "$value"
-        comma[pathlen]=",\n"
       fi
 
-      prevpath=("${path[@]}")
-      prevpathlen="$pathlen"
+      if [[ ${num_changed} -gt 0 ]]; then
+        [[ -n ${comma} ]] && { printf "%s%b" "${comma}" "$nl"; comma=; }
+        for i in $(seq 0 $((${#changed_objs[*]}-1))); do
+          case "${changed_objs[i]}" in
+            OBJECT)
+              printf "%*s%s%s:%s" "$((indent*tabsize))" "" "${curpath[num_same+i]}" "$cs" "$spc"
+              ;;
+          esac
+        done
+      fi
+
+      if [[ num_new -gt 0 ]]; then
+        [[ -n ${comma} ]] && { printf "%s%b" "${comma}" "$nl"; comma=; }
+        for i in $(seq 0 $((${#new_objs[*]}-1))); do
+          case "${new_objs[i]}" in
+            ARRAY)
+              printf "[%b" "$nl"
+              indent=$((indent+1))
+              ;;
+            OBJECT)
+              [[ $((num_same+num_changed+i)) -gt 0 && $CONDENSED -eq 0 ]] && {
+                if [[ $(typeof "${curpath[num_same+num_changed+i-1]}") == 'ARRAY' ]]; then
+                  [[ ${curpath[num_same+num_changed+i-1]} != "${prvpath[num_same+num_changed+i-1]}" ]] &&
+                    tsc=2
+                fi
+              }
+              printf "%*s{%b%*s%s%s:%s" \
+                "$((indent*tsc))" "" \
+                "$nl" \
+                "$(((indent+1)*tabsize))" "" \
+                "${curpath[num_same+num_changed+i]}" \
+                "$cs" "$spc"
+              indent=$((indent+1))
+              tsc=0
+              ;;
+          esac
+        done
+      fi
+      
+      [[ ${num_dropped} -eq 0 && ${num_changed} -eq 0
+         && ${num_new} -eq 0 && -n ${comma} ]] &&
+        printf "%s%b" "${comma}" "$nl"; comma=;
+
+      if [[ $(typeof "${curpath[-1]}") == "ARRAY"  && $CONDENSED -eq 0 ]]; then
+        printf "%*s%s" "$((indent*tabsize))" "" "$value"
+      else
+        printf "%s" "$value"
+      fi
+      comma=","
+      first_time=0
+      prvpath=("${curpath[@]}")
     done
 
-    # closing braces
-
-    for i in $(seq $((pathlen)) -1 0)
-    do
-      ((indent=i*4))
-      printf "\n%${indent}s${closers[i]}" ""
-    done
-    echo
+    curpath=()
+    if [[ ${#prvpath[*]} -gt ${#curpath[*]} ]]; then
+      printf "%b" "$nl"
+      for i in $(seq $((${#prvpath[*]}-1)) -1 0)
+      do
+        case $(typeof "${prvpath[i]}") in
+          ARRAY)
+            printf "%*s]%b" "$((i*tabsize))" "" "$nl"
+            ;;
+          OBJECT)
+            printf "%*s}%b" "$((i*tabsize))" "" "$nl"
+            ;;
+        esac
+      done
+    fi
+    [[ ${CONDENSED} -eq 1 ]] && echo
   fi
 }
 

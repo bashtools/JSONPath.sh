@@ -18,7 +18,7 @@ do
   expected="${argpfile%.*}_${argpfile##*.}.parsed"
   argp=$(< "$argpfile")
   ((++i))
-  if ! ../JSONPath.sh -- "$argp" < "$input" | diff -u -- - "$expected"
+  if ! ../JSONPath.sh "$argp" < "$input" | diff -u -- - "$expected"
   then
     echo "not ok $i - $argpfile"
     ((++fails))
