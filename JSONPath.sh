@@ -4,7 +4,7 @@
 # GLOBALS
 # ---------------------------------------------------------------------------
 
-VERSION="0.0.21"
+VERSION="0.0.22"
 DEBUG=0
 NOCASE=0
 WHOLEWORD=0
@@ -19,6 +19,7 @@ FLATTEN=0
 COLON_SPACE=0
 CONDENSED=0
 TAB_INDENT=0
+INDENT_SIZE=2
 STDINFILE=/var/tmp/JSONPath.$$.stdin
 STDINFILE2=/var/tmp/JSONPath.$$.stdin2
 PASSFILE=/var/tmp/JSONPath.$$.pass1
@@ -120,22 +121,23 @@ usage() {
 # ---------------------------------------------------------------------------
 
   echo
-  echo "Usage: JSONPath.sh [-[vhbjuipwnsSAT]] [-f FILE] [pattern]"
+  echo "Usage: JSONPath.sh [-[vhbjuipwnsSTc4]] [-f FILE] [pattern]"
   echo
   echo "-v      - Print the version of this script."
   echo "-h      - Print this help text."
   echo "-b      - Brief. Only show values."
+  echo "-j      - Output in JSON format."
+  echo "-u      - Strip unnecessary leading path elements."
   echo "-i      - Case insensitive."
   echo "-p      - Pass-through to the JSON parser."
   echo "-w      - Match whole words only (for filter script expression)."
-  echo "-f FILE - Read a FILE instead of stdin."
   echo "-n      - Do not print header."
-  echo "-T      - Indent with tabs instead of 4 character spaces."
-  echo "-u      - Strip unnecessary leading path elements."
-  echo "-j      - Output in JSON format."
   echo "-s      - JSON output: Normalize solidus, e.g. convert \"\/\" to \"/\"."
   echo "-S      - JSON output: Print spaces around colons, producing ' : '."
+  echo "-T      - Indent with tabs instead of character spaces."
   echo "-c      - JSON output: Condensed output."
+  echo "-4      - indent using 4 spaces instead of 2."
+  echo "-f FILE - Read a FILE instead of stdin."
   echo "pattern - the JSONPath query. Defaults to '$.*' if not supplied."
   echo
 }
@@ -150,7 +152,7 @@ parse_options() {
   declare -a expanded_args
 
   # Expand args like -abc to -a -b -c
-  while [ "$ARGN" -ne 0 ]; do
+  while [[ "$ARGN" -ne 0 ]]; do
     arg="$1"
     if [[ $arg == -[a-zA-Z][a-zA-Z]* ]]; then
         # Remove the leading dash
@@ -168,8 +170,9 @@ parse_options() {
 
   set -- "${expanded_args[@]}"
   ARGN=$#
-  while [ "$ARGN" -ne 0 ]
+  while [[ "$ARGN" -ne 0 ]]
   do
+    # shellcheck disable=2249
     case $1 in
       -h) usage
           exit 0
@@ -206,6 +209,8 @@ parse_options() {
          ;;
       -T) TAB_INDENT=1
          ;;
+      -4) INDENT_SIZE=4
+      ;;
       -?*) usage
            echo "$0: ERROR: invalid option: $1" 1>&2
            exit 3
@@ -675,7 +680,7 @@ brief() {
       if [[ $TAB_INDENT == 1 ]]; then
         # TODO should not be using another external tool
         # Only gawk, grep and sed are allowed
-        unexpand -t 4
+        unexpand -t "$INDENT_SIZE"
       else
         cat
       fi
@@ -752,7 +757,7 @@ json() {
 
   tab=$(echo -e "\t")
 
-  [[ $CONDENSED -eq 0 ]] && { nl='\n'; spc=' '; tabsize=2; tsc=2; }
+  [[ $CONDENSED -eq 0 ]] && { nl='\n'; spc=' '; tabsize=2; tsc="$INDENT_SIZE"; }
   [[ $COLON_SPACE -eq 1 ]] && cs=" "
 
   if [[ $JSON -eq 0 ]]; then
@@ -776,6 +781,8 @@ json() {
               indent=$((indent-1))
               printf "%b%*s}" "$nl" "$((indent*tabsize))" ""
               ;;
+            *)
+              ;;
           esac
         done
         if [[ -n ${comma} ]]; then
@@ -792,6 +799,8 @@ json() {
           case "${changed_objs[i]}" in
             OBJECT)
               printf "%*s%s%s:%s" "$((indent*tabsize))" "" "${curpath[num_same+i]}" "$cs" "$spc"
+              ;;
+            *)
               ;;
           esac
         done
@@ -821,10 +830,12 @@ json() {
               indent=$((indent+1))
               tsc=0
               ;;
+            *)
+              ;;
           esac
         done
       fi
-      
+
       [[ ${num_dropped} -eq 0 && ${num_changed} -eq 0
          && ${num_new} -eq 0 && -n ${comma} ]] &&
         printf "%s%b" "${comma}" "$nl"; comma=;
@@ -850,6 +861,8 @@ json() {
             ;;
           OBJECT)
             printf "%*s}%b" "$((i*tabsize))" "" "$nl"
+            ;;
+          *)
             ;;
         esac
       done
